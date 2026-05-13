@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<!--
+  STUDENT PORTAL STANDARD (PDF popup)
+  Newton School / Live Classroom — Kenny portal v2 (2026-05-13)
+  Student: Natalie Yoo
+  Theme: rose pink (#fd79a8 / #fff0f6 / #c0276c / #fff8fb)
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Natalie Yoo · Newton School Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;600&family=Noto+Serif+KR:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --student: #fd79a8;
+    --student-soft: #fff0f6;
+    --student-deep: #c0276c;
+    --ink: #1a1a1a;
+    --ink-soft: #555;
+    --paper: #ffffff;
+    --bg: #fff8fb;
+    --line: #e8e8e8;
+    --serif: 'Playfair Display', 'Noto Serif KR', Georgia, serif;
+    --sans: 'Inter', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--sans); background: var(--bg); color: var(--ink); line-height: 1.6; }
+  body.modal-open { overflow: hidden; }
+  .container { max-width: 680px; margin: 0 auto; background: var(--paper); box-shadow: 0 1px 6px rgba(0,0,0,0.05); }
+  .masthead { text-align: center; padding: 48px 32px 24px; border-bottom: 3px double var(--student); }
+  .masthead .school { font-size: 11px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--student); font-weight: 600; margin-bottom: 12px; }
+  .masthead h1 { font-family: var(--serif); font-size: 42px; font-weight: 700; line-height: 1.1; margin-bottom: 6px; }
+  .masthead .subtitle { font-family: var(--serif); font-style: italic; font-size: 16px; color: var(--ink-soft); }
+  .masthead .info { margin-top: 18px; font-size: 12px; color: var(--ink-soft); letter-spacing: 0.05em; }
+  .masthead .info span { margin: 0 8px; }
+  section { padding: 28px 32px; border-bottom: 1px solid var(--line); }
+  section .label { font-size: 10px; letter-spacing: 0.32em; text-transform: uppercase; color: var(--student); font-weight: 600; margin-bottom: 8px; }
+  section h2 { font-family: var(--serif); font-size: 24px; font-weight: 700; margin-bottom: 12px; line-height: 1.2; }
+  section p { font-size: 14px; color: var(--ink-soft); margin-bottom: 12px; }
+  ul.timeline { list-style: none; padding-left: 16px; border-left: 2px solid var(--student); }
+  ul.timeline li { padding: 10px 0 10px 16px; position: relative; font-size: 13px; display: flex; align-items: baseline; gap: 0; flex-wrap: wrap; }
+  ul.timeline li::before { content: ""; position: absolute; left: -22px; top: 16px; width: 8px; height: 8px; border-radius: 50%; background: var(--student); }
+  ul.timeline .date { font-weight: 600; color: var(--student); margin-right: 8px; white-space: nowrap; flex-shrink: 0; }
+  .popup-link { font-weight: 500; color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent; transition: all 0.15s; cursor: pointer; }
+  .popup-link:hover { color: var(--student); border-bottom-color: var(--student); }
+  .pdf-badge { display: inline-block; margin-left: 6px; font-size: 10px; font-weight: 600; letter-spacing: 0.05em; background: var(--student-soft); color: var(--student-deep); border-radius: 3px; padding: 1px 5px; vertical-align: middle; }
+  .teacher-note { background: var(--bg); padding: 16px 20px; border-radius: 8px; border-left: 3px solid var(--student); margin-top: 12px; font-style: italic; color: var(--ink); font-size: 14px; line-height: 1.7; }
+  footer { text-align: center; padding: 32px; font-size: 11px; color: var(--ink-soft); }
+  footer .copyright { margin-top: 8px; font-style: italic; }
+  .modal-overlay { position: fixed; inset: 0; background: rgba(40,10,25,0.78); display: none; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+  .modal-overlay.open { display: flex; }
+  .modal-box { background: #fff; border-radius: 12px; width: 92vw; max-width: 1100px; height: 92vh; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.4); }
+  .modal-header { padding: 10px 16px; border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; font-family: var(--serif); font-size: 14px; color: var(--ink-soft); flex-shrink: 0; }
+  .modal-header-left { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .modal-title { font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .modal-esc { font-size: 11px; color: var(--ink-soft); opacity: 0.6; white-space: nowrap; }
+  .modal-close { background: transparent; border: none; font-size: 22px; cursor: pointer; color: var(--ink-soft); padding: 0 6px; flex-shrink: 0; line-height: 1; }
+  .modal-close:hover { color: var(--student); }
+  .modal-iframe { flex: 1; border: none; width: 100%; }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="masthead">
+    <div class="school">Newton School Weekly</div>
+    <h1>Natalie Yoo</h1>
+    <div class="subtitle">Pre-Algebra</div>
+    <div class="info">
+      <span>Spring 2026</span>
+      <span>&middot;</span>
+      <span>Mr. Kenny</span>
+      <span>&middot;</span>
+      <span>Pre-Algebra</span>
+    </div>
+  </header>
+
+  <section>
+    <div class="label">Recent Work</div>
+    <h2>This Month</h2>
+    <ul class="timeline">
+      <li>
+        <span class="date">5/7</span>
+        <a class="popup-link"
+           data-src="2026-05-07/NatalieYoo-2026-05-07-Geometry_AnglesAndRelationships_Worksheet.pdf"
+           data-fallback="2026-05-07/NatalieYoo-2026-05-07-Geometry_AnglesAndRelationships_Worksheet.html">
+          Angles &amp; Relationships Worksheet
+        </a>
+        <span class="pdf-badge">PDF</span>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="label">From Mr. Kenny</div>
+    <h2>A note</h2>
+    <div class="teacher-note">
+      "Natalie &mdash; Great work on angles. Understanding geometry shapes is the secret to everything ahead. &mdash; Mr. K"
+    </div>
+  </section>
+
+  <footer>
+    <div>Newton School &middot; Spring 2026</div>
+    <div class="copyright">&copy; 2026 &middot; Made with care for Natalie Yoo</div>
+  </footer>
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-header-left">
+        <span class="modal-title" id="modalTitle"></span>
+        <span class="modal-esc">ESC to close</span>
+      </div>
+      <button class="modal-close" id="modalClose" aria-label="Close">&times;</button>
+    </div>
+    <iframe class="modal-iframe" id="modalIframe" src="about:blank"></iframe>
+  </div>
+</div>
+
+<script>
+  const overlay = document.getElementById('modalOverlay');
+  const iframe  = document.getElementById('modalIframe');
+  const title   = document.getElementById('modalTitle');
+  const openModal = (src, label) => {
+    iframe.src = src; title.textContent = label;
+    overlay.classList.add('open'); document.body.classList.add('modal-open');
+  };
+  const closeModal = () => {
+    overlay.classList.remove('open'); document.body.classList.remove('modal-open');
+    iframe.src = 'about:blank';
+  };
+  document.querySelectorAll('.popup-link').forEach(a => {
+    a.addEventListener('click', e => { e.preventDefault(); openModal(a.dataset.src, a.textContent.trim()); });
+  });
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  overlay.addEventListener('click', e => { if (e.target === overlay) closeModal(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>

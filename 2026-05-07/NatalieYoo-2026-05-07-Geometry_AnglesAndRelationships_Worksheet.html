@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Geometry Homework: Angles & Angle Relationships — Natalie Yoo (2026-05-07)</title>
+
+<script>
+window.MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+    startup: { ready: () => { MathJax.startup.defaultReady(); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+<style>
+/* ===== base-print.css ===== */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+    .problem, .answer-block, .reminder, .parent-note, .example, .word-problem {
+        page-break-inside: avoid; break-inside: avoid;
+    }
+    .part-header, .directions, .problem-header, h1, h2, h3 {
+        page-break-after: avoid; break-after: avoid;
+    }
+    .page-break { page-break-before: always; break-before: page; }
+}
+
+/* ===== theme-girl.css ===== */
+:root {
+    --color-primary:        #c2185b;
+    --color-primary-dark:   #880e4f;
+    --color-accent:         #7b1fa2;
+    --color-header-border:  #c2185b;
+    --color-final-answer:   #2e7d32;
+    --color-warning:        #d84315;
+    --color-parent-note:    #6a1b9a;
+    --color-tag-bg:         transparent;
+    --color-tag-border:     #c2185b;
+    --color-tag-text:       #c2185b;
+    --color-muted:          #555;
+    --color-rule:           #ccc;
+}
+
+/* ===== level-middle.css ===== */
+body { font-family: 'Times New Roman', serif; font-size: 11pt; line-height: 1.5; }
+.header { text-align: center; padding-bottom: 12px; margin-bottom: 18px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag, .key-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 8px 3px; font-weight: bold; }
+.subject-tag { border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 15pt; margin: 6px 0 10px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 5px; color: var(--color-muted); }
+.part-header { font-size: 12pt; font-weight: bold; color: var(--color-primary); margin: 22px 0 6px 0; padding-bottom: 3px; border-bottom: 2px solid var(--color-primary); }
+.directions { font-size: 10pt; font-style: italic; color: #333; margin-bottom: 12px; line-height: 1.5; }
+.directions strong { color: #000; font-style: normal; }
+.problem { margin: 12px 0; font-size: 11pt; line-height: 1.6; }
+.q-num { display: inline-block; min-width: 26px; font-weight: bold; color: var(--color-primary); }
+.ans-line { display: inline-block; border-bottom: 1.5px solid #000; min-width: 80px; height: 18px; margin: 0 4px; vertical-align: bottom; }
+.work-space { min-height: 100px; margin-left: 28px; margin-top: 4px; }
+.word-problem .work-space { min-height: 110px; }
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 22px; padding-top: 6px; }
+
+/* ===== Local additions for this worksheet ===== */
+.vocab-table { width: 100%; border-collapse: collapse; margin: 8px 0 14px 28px; font-size: 10.5pt; }
+.vocab-table th, .vocab-table td { border: 1px solid #888; padding: 6px 8px; text-align: left; vertical-align: top; }
+.vocab-table th { font-weight: bold; color: var(--color-primary); width: 30%; }
+.vocab-table td.def { width: 70%; }
+.angle-fig { display: block; margin: 8px auto; }
+.choice-row { margin-left: 28px; font-size: 10.5pt; color: #333; }
+.choice-row strong { color: #000; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">GEOMETRY</div>
+    <h1>Angles &amp; Angle Relationships</h1>
+    <div class="info">
+        <span><strong>Student:</strong> Natalie Yoo</span>
+        <span><strong>Date:</strong> 2026-05-07</span>
+    </div>
+    <div class="standard"><strong>Standard:</strong> CCSS.MATH.CONTENT.7.G.B.5 — Use facts about supplementary, complementary, vertical, and adjacent angles in a multi-step problem to write and solve simple equations for an unknown angle.</div>
+</div>
+
+<div class="part-header">Part A — Vocabulary</div>
+<div class="directions"><strong>Directions:</strong> Match each term in the table to its correct definition. Write the letter (A&ndash;E) on the line.</div>
+
+<table class="vocab-table">
+    <tr><th>Term</th><th class="def">Definition (choose one: A, B, C, D, or E)</th></tr>
+    <tr><td>1a. Point</td><td class="def">Answer: <span class="ans-line"></span></td></tr>
+    <tr><td>1b. Line Segment</td><td class="def">Answer: <span class="ans-line"></span></td></tr>
+    <tr><td>1c. Ray</td><td class="def">Answer: <span class="ans-line"></span></td></tr>
+    <tr><td>1d. Vertex</td><td class="def">Answer: <span class="ans-line"></span></td></tr>
+    <tr><td>1e. Angle</td><td class="def">Answer: <span class="ans-line"></span></td></tr>
+</table>
+
+<div class="choice-row">
+    <strong>A.</strong> A figure formed by two rays that share a common endpoint.<br>
+    <strong>B.</strong> A part of a line that has two endpoints.<br>
+    <strong>C.</strong> A location with no length, width, or height.<br>
+    <strong>D.</strong> The point where two lines or segments meet.<br>
+    <strong>E.</strong> A part of a line that starts at one point and extends forever in one direction.
+</div>
+
+<div class="problem">
+    <span class="q-num">2.</span>
+    The figure below shows an angle with vertex $B$ and rays $\overrightarrow{BA}$ and $\overrightarrow{BC}$.
+    Write <strong>three different names</strong> for this angle.
+    <div class="work-space">
+        <svg class="angle-fig" width="220" height="110" viewBox="0 0 220 110">
+            <line x1="40" y1="90" x2="200" y2="40" stroke="#000" stroke-width="1.5"/>
+            <line x1="40" y1="90" x2="200" y2="90" stroke="#000" stroke-width="1.5"/>
+            <circle cx="40" cy="90" r="2.5" fill="#000"/>
+            <circle cx="200" cy="40" r="2.5" fill="#000"/>
+            <circle cx="200" cy="90" r="2.5" fill="#000"/>
+            <text x="32" y="103" font-size="14" font-family="Times New Roman" font-style="italic">B</text>
+            <text x="205" y="38" font-size="14" font-family="Times New Roman" font-style="italic">A</text>
+            <text x="205" y="100" font-size="14" font-family="Times New Roman" font-style="italic">C</text>
+        </svg>
+        <p>(i) <span class="ans-line" style="min-width:120px;"></span> &nbsp;&nbsp;
+           (ii) <span class="ans-line" style="min-width:120px;"></span> &nbsp;&nbsp;
+           (iii) <span class="ans-line" style="min-width:120px;"></span></p>
+    </div>
+</div>
+
+<div class="part-header">Part B — Classify the Angle</div>
+<div class="directions"><strong>Directions:</strong> Classify each angle as <em>acute</em>, <em>right</em>, <em>obtuse</em>, or <em>straight</em>.</div>
+
+<div class="problem">
+    <span class="q-num">3.</span> $\angle 1$ measures $35^\circ$.
+    Classification: <span class="ans-line" style="min-width:140px;"></span>
+    <div class="work-space"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">4.</span> $\angle 2$ measures $90^\circ$.
+    Classification: <span class="ans-line" style="min-width:140px;"></span>
+    <div class="work-space"></div>
+</div>
+
+<div class="problem page-break">
+    <span class="q-num">5.</span> $\angle 3$ measures $142^\circ$.
+    Classification: <span class="ans-line" style="min-width:140px;"></span>
+    <div class="work-space"></div>
+</div>
+
+<div class="problem">
+    <span class="q-num">6.</span> $\angle 4$ measures $180^\circ$.
+    Classification: <span class="ans-line" style="min-width:140px;"></span>
+    <div class="work-space"></div>
+</div>
+
+<div class="part-header">Part C — Angle Relationships</div>
+<div class="directions"><strong>Directions:</strong> Use what you know about complementary, supplementary, vertical, and adjacent angles. Show your work.</div>
+
+<div class="problem">
+    <span class="q-num">7.</span> Two angles are <strong>complementary</strong>. One angle measures $27^\circ$. What is the measure of the other angle?
+    <div class="work-space">
+        <p style="margin-top:80px;">Answer: <span class="ans-line" style="min-width:100px;"></span></p>
+    </div>
+</div>
+
+<div class="problem">
+    <span class="q-num">8.</span> Two angles are <strong>supplementary</strong>. One angle measures $118^\circ$. What is the measure of the other angle?
+    <div class="work-space">
+        <p style="margin-top:80px;">Answer: <span class="ans-line" style="min-width:100px;"></span></p>
+    </div>
+</div>
+
+<div class="problem page-break">
+    <span class="q-num">9.</span> $\angle 1$ and $\angle 2$ are <strong>vertical angles</strong>. If $m\angle 1 = 64^\circ$, find $m\angle 2$. Briefly explain why.
+    <div class="work-space">
+        <svg class="angle-fig" width="180" height="120" viewBox="0 0 180 120">
+            <line x1="20" y1="100" x2="160" y2="20" stroke="#000" stroke-width="1.5"/>
+            <line x1="20" y1="20" x2="160" y2="100" stroke="#000" stroke-width="1.5"/>
+            <text x="80" y="50" font-size="13" font-family="Times New Roman">$\angle 1$</text>
+            <text x="80" y="85" font-size="13" font-family="Times New Roman">$\angle 2$</text>
+        </svg>
+        <p>$m\angle 2 = $ <span class="ans-line" style="min-width:100px;"></span></p>
+        <p>Why?</p>
+    </div>
+</div>
+
+<div class="problem word-problem">
+    <span class="q-num">10.</span> $\angle ABC$ and $\angle CBD$ are <strong>adjacent angles</strong> that together form a <strong>straight angle</strong>. If $m\angle ABC = 75^\circ$, find $m\angle CBD$.
+    <div class="work-space">
+        <p style="margin-top:90px;">$m\angle CBD = $ <span class="ans-line" style="min-width:100px;"></span></p>
+    </div>
+</div>
+
+<div class="footer">
+    Created by Newton School 2026-05-07 &copy; Copyright
+</div>
+
+</div>
+</body>
+</html>
