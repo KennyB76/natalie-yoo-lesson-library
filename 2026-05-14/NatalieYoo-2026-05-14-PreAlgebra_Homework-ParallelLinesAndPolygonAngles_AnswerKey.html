@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pre-Algebra Homework Answer Key: Parallel Lines, Transversals &amp; Polygon Angles</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'],['\\(','\\)']] },
+  startup: { ready: () => { MathJax.startup.defaultReady(); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+<style>
+/* ===== base-print.css ===== */
+@page { size: letter; margin: 1in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+  html, body { background: #fff; }
+  .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+  .answer-block { page-break-inside: avoid; break-inside: avoid; margin-bottom: 0; }
+  .part-header, .problem-header, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+  .page-break { page-break-before: always; break-before: page; }
+  .footer { display: none !important; }
+}
+
+/* ===== theme-girl.css (rose pink for Natalie) ===== */
+:root {
+  --color-primary:        #c0276c;
+  --color-primary-dark:   #8b0044;
+  --color-accent:         #fd79a8;
+  --color-header-border:  #fd79a8;
+  --color-final-answer:   #2e7d32;
+  --color-warning:        #d84315;
+  --color-tag-bg:         transparent;
+  --color-tag-border:     #fd79a8;
+  --color-tag-text:       #c0276c;
+  --color-muted:          #555;
+  --color-rule:           #fcc;
+}
+body { background: #fff8fb; }
+.page { background: #fff; }
+
+/* ===== level-middle.css ===== */
+body { font-family: 'Times New Roman', serif; font-size: 10pt; line-height: 1.5; }
+.header { text-align: center; padding-bottom: 12px; margin-bottom: 18px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag, .key-tag {
+  display: inline-block; padding: 2px 10px; font-size: 8pt;
+  letter-spacing: 2px; margin: 5px 3px 8px 3px; font-weight: bold;
+}
+.subject-tag { border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 15pt; margin: 6px 0 10px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 5px; color: var(--color-muted); }
+.part-header {
+  font-size: 12pt; font-weight: bold; color: var(--color-primary);
+  margin: 22px 0 6px 0; padding-bottom: 3px; border-bottom: 2px solid var(--color-primary);
+}
+.answer-block { margin: 12px 0; padding: 10px 14px; border: 1px solid #ddd; border-radius: 4px; }
+.problem-header { font-weight: bold; color: var(--color-primary); font-size: 11pt; margin-bottom: 5px; }
+.problem-text { font-size: 10pt; padding: 6px 10px; background: #f7f7f7; border-left: 3px solid #bbb; margin-bottom: 8px; line-height: 1.5; }
+.concept-tag { display: inline-block; font-size: 8pt; padding: 2px 8px; margin: 2px 3px 5px 0; border: 1px solid var(--color-tag-border); color: var(--color-tag-text); border-radius: 10px; }
+.solution { margin: 6px 0; padding-left: 8px; border-left: 3px solid var(--color-final-answer); }
+.solution-step { margin: 4px 0; font-size: 10pt; line-height: 1.6; }
+.final-answer { display: inline-block; border: 2px solid var(--color-final-answer); color: var(--color-final-answer); font-weight: bold; padding: 4px 12px; border-radius: 4px; margin-top: 6px; font-size: 11pt; }
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 22px; padding-top: 6px; }
+
+/* ===== editor-widget.css ===== */
+:root {
+  --ed-accent:        #c0276c;
+  --ed-bg:            #fff;
+  --ed-border:        #e0e0e0;
+  --ed-shadow:        rgba(0,0,0,0.12);
+  --ed-sticky-bg:     #fef9c3;
+  --ed-sticky-border: #f59e0b;
+  --ed-sticky-handle: #fde68a;
+  --ed-bar-bg:        #1e2d3d;
+  --ed-bar-text:      #e2e8f0;
+  --ed-btn-hover:     rgba(255,255,255,0.12);
+  --ed-radius:        5px;
+}
+.ed-commentable { position: relative; }
+.ed-comment-btn { position: absolute; top: 3px; right: -30px; width: 22px; height: 22px; padding: 0; display: inline-flex; align-items: center; justify-content: center; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; color: #64748b; cursor: pointer; font-size: 12px; opacity: 0; transition: opacity 0.15s ease; z-index: 10; }
+.ed-commentable:hover .ed-comment-btn { opacity: 0.75; }
+.ed-comment-btn:hover { opacity: 1 !important; color: var(--ed-accent); background: #fce4ec; }
+.ed-comment-btn.has-comment { opacity: 1; background: #fef3c7; border-color: #f59e0b; color: #92400e; }
+.ed-commentable.has-ed-comment { border-left: 3px solid #f59e0b; padding-left: 10px; background: rgba(245,158,11,0.05); }
+.ed-dot { position: absolute; top: 1px; right: -12px; width: 7px; height: 7px; border-radius: 50%; background: #3b82f6; pointer-events: none; }
+.ed-dot[hidden] { display: none; }
+.ed-comment-box { margin: 6px 0 10px; padding: 10px 12px; background: #fafafa; border: 1px solid #e2e8f0; border-radius: var(--ed-radius); display: none; }
+.ed-comment-box.open { display: block; }
+.ed-comment-box textarea { width: 100%; min-height: 64px; padding: 7px 9px; background: #fff; border: 1px solid #d1d5db; border-radius: 4px; font-family: 'Times New Roman', serif; font-size: 10pt; resize: vertical; }
+.ed-comment-box-actions { margin-top: 6px; display: flex; gap: 6px; justify-content: flex-end; }
+.ed-comment-box-actions button { padding: 4px 12px; font-size: 11px; cursor: pointer; background: #f1f5f9; border: 1px solid #cbd5e1; border-radius: 4px; color: #475569; font-family: inherit; }
+.ed-comment-box-actions button.ed-save { background: var(--ed-accent); color: #fff; border-color: var(--ed-accent); }
+.ed-sticky { position: absolute; z-index: 990; width: 240px; min-height: 110px; background: var(--ed-sticky-bg); border: 1px solid var(--ed-sticky-border); border-radius: 5px; display: flex; flex-direction: column; }
+.ed-sticky-handle { padding: 5px 9px; cursor: move; font-size: 10px; font-weight: 700; color: #78350f; background: var(--ed-sticky-handle); border-bottom: 1px solid var(--ed-sticky-border); user-select: none; display: flex; align-items: center; justify-content: space-between; }
+.ed-sticky textarea { flex: 1; padding: 7px 9px; border: none; background: transparent; font-family: 'Times New Roman', serif; font-size: 10pt; resize: none; outline: none; min-height: 70px; }
+.ed-sticky-close { background: transparent; border: none; color: #92400e; cursor: pointer; font-size: 14px; }
+.ed-bar { position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000; height: 38px; background: var(--ed-bar-bg); border-top: 1px solid #334155; display: flex; align-items: center; gap: 4px; padding: 0 12px; font-family: ui-sans-serif, system-ui, sans-serif; }
+.ed-bar-label { font-size: 10px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.08em; margin-right: 6px; }
+.ed-bar-btn { height: 26px; padding: 0 10px; font-size: 11px; cursor: pointer; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12); border-radius: 4px; color: var(--ed-bar-text); display: inline-flex; align-items: center; gap: 5px; font-family: inherit; }
+.ed-bar-btn.ed-bar-primary { background: var(--ed-accent); border-color: var(--ed-accent); color: #fff; }
+.ed-bar-count { background: #3b82f6; color: #fff; border-radius: 9px; font-size: 10px; font-weight: 700; min-width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; padding: 0 4px; }
+.ed-bar-sep { width: 1px; height: 20px; background: rgba(255,255,255,0.12); margin: 0 4px; }
+.ed-bar-spacer { flex: 1; }
+.ed-bar-status { font-size: 10px; color: #64748b; }
+body { padding-bottom: 46px; }
+mark.ed-annotation { background: rgba(245,158,11,0.25); color: inherit; padding: 0 2px; border-bottom: 2px solid #f59e0b; cursor: pointer; }
+@media print {
+  .ed-bar, .ed-comment-btn, .ed-comment-box, .ed-dot, .ed-sticky { display: none !important; }
+  body { padding-bottom: 0 !important; }
+  .ed-commentable.has-ed-comment { border-left: none !important; padding-left: 0 !important; background: transparent !important; }
+  mark.ed-annotation { background: transparent !important; border-bottom: none !important; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ===== HEADER ===== -->
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-ALGEBRA</div>
+    <div class="key-tag">ANSWER KEY</div>
+    <h1>Homework Answer Key: Parallel Lines, Transversals &amp; Polygon Angles</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Natalie Yoo</span>
+      <span><strong>Date:</strong> 2026-05-14</span>
+    </div>
+    <div class="standard">
+      <strong>Standard:</strong> CCSS.MATH.CONTENT.8.G.A.5 — Angle relationships with parallel lines and transversals; interior angle sum of polygons.
+    </div>
+  </div>
+
+  <!-- ===== PART A ===== -->
+  <div class="part-header">Part A — Name the Angle Pair (Q1–5)</div>
+
+  <!-- Q1 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 1</div>
+    <div class="problem-text">&angle;3 and &angle;7 — Angle pair name: ___________</div>
+    <span class="concept-tag">Alternate Interior Angles</span>
+    <span class="concept-tag">Parallel Lines</span>
+    <div class="solution">
+      <div class="solution-step">&angle;3 is below line \(\ell\) (inside the parallel lines), on the right side of the transversal.</div>
+      <div class="solution-step">&angle;7 is above line \(m\) (inside the parallel lines), on the right side of the transversal.</div>
+      <div class="solution-step">They are on <em>opposite</em> sides of the transversal, both <em>between</em> the two parallel lines → <strong>Alternate Interior</strong>.</div>
+    </div>
+    <div class="final-answer">Alternate Interior Angles</div>
+  </div>
+
+  <!-- Q2 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 2</div>
+    <div class="problem-text">&angle;1 and &angle;5 — Angle pair name: ___________</div>
+    <span class="concept-tag">Corresponding Angles</span>
+    <span class="concept-tag">Parallel Lines</span>
+    <div class="solution">
+      <div class="solution-step">&angle;1 is in the upper-left position at the upper intersection.</div>
+      <div class="solution-step">&angle;5 is in the upper-left position at the lower intersection.</div>
+      <div class="solution-step">Same position at each intersection → <strong>Corresponding</strong>. (They are equal when lines are parallel.)</div>
+    </div>
+    <div class="final-answer">Corresponding Angles</div>
+  </div>
+
+  <!-- Q3 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 3</div>
+    <div class="problem-text">&angle;4 and &angle;5 — Angle pair name: ___________</div>
+    <span class="concept-tag">Co-Interior (Consecutive Interior) Angles</span>
+    <span class="concept-tag">Supplementary</span>
+    <div class="solution">
+      <div class="solution-step">&angle;4 is on the left of the transversal, below line \(\ell\).</div>
+      <div class="solution-step">&angle;5 is on the left of the transversal, above line \(m\).</div>
+      <div class="solution-step">Both are between the parallel lines on the <em>same</em> side of the transversal → <strong>Co-Interior (Consecutive Interior)</strong>. They add up to 180°.</div>
+    </div>
+    <div class="final-answer">Co-Interior (Consecutive Interior) Angles</div>
+  </div>
+
+  <!-- Q4 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 4</div>
+    <div class="problem-text">&angle;2 and &angle;6 — Angle pair name: ___________</div>
+    <span class="concept-tag">Corresponding Angles</span>
+    <div class="solution">
+      <div class="solution-step">&angle;2 is upper-right at the top intersection; &angle;6 is upper-right at the bottom intersection.</div>
+      <div class="solution-step">Same corner, different intersection → <strong>Corresponding</strong>.</div>
+    </div>
+    <div class="final-answer">Corresponding Angles</div>
+  </div>
+
+  <!-- Q5 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 5</div>
+    <div class="problem-text">&angle;1 and &angle;7 — Angle pair name: ___________</div>
+    <span class="concept-tag">Alternate Exterior Angles</span>
+    <div class="solution">
+      <div class="solution-step">&angle;1 is above line \(\ell\) (outside the parallel lines), upper-left.</div>
+      <div class="solution-step">&angle;7 is below line \(m\) (outside the parallel lines), lower-right.</div>
+      <div class="solution-step">Both are <em>outside</em> the parallel lines on <em>opposite</em> sides of the transversal → <strong>Alternate Exterior</strong>.</div>
+    </div>
+    <div class="final-answer">Alternate Exterior Angles</div>
+  </div>
+
+  <!-- ===== PART B ===== -->
+  <div class="part-header page-break">Part B — Solve for x (Q6–10)</div>
+
+  <!-- Q6 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 6</div>
+    <div class="problem-text">Corresponding angles: \(75°\) and \((11x - 2)°\). Solve for \(x\).</div>
+    <span class="concept-tag">Corresponding Angles</span>
+    <span class="concept-tag">Equal</span>
+    <div class="solution">
+      <div class="solution-step">Corresponding angles are equal when lines are parallel:</div>
+      <div class="solution-step">\(11x - 2 = 75\)</div>
+      <div class="solution-step">\(11x = 75 + 2 = 77\)</div>
+      <div class="solution-step">\(x = 77 \div 11 = 7\)</div>
+    </div>
+    <div class="final-answer">\(x = 7\)</div>
+  </div>
+
+  <!-- Q7 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 7</div>
+    <div class="problem-text">Alternate interior angles: \((3x + 15)°\) and \(51°\). Solve for \(x\).</div>
+    <span class="concept-tag">Alternate Interior Angles</span>
+    <span class="concept-tag">Equal</span>
+    <div class="solution">
+      <div class="solution-step">Alternate interior angles are equal:</div>
+      <div class="solution-step">\(3x + 15 = 51\)</div>
+      <div class="solution-step">\(3x = 51 - 15 = 36\)</div>
+      <div class="solution-step">\(x = 36 \div 3 = 12\)</div>
+    </div>
+    <div class="final-answer">\(x = 12\)</div>
+  </div>
+
+  <!-- Q8 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 8</div>
+    <div class="problem-text">Co-interior angles sum to \(180°\): \(110°\) and \((7x + 5)°\). Solve for \(x\).</div>
+    <span class="concept-tag">Co-Interior Angles</span>
+    <span class="concept-tag">Supplementary</span>
+    <div class="solution">
+      <div class="solution-step">Co-interior (consecutive interior) angles add to 180°:</div>
+      <div class="solution-step">\(110 + (7x + 5) = 180\)</div>
+      <div class="solution-step">\(115 + 7x = 180\)</div>
+      <div class="solution-step">\(7x = 180 - 115 = 65\)</div>
+      <div class="solution-step">\(x = 65 \div 7\) — Wait, let's check: \(7 \times 9 = 63\), \(7 \times 10 = 70\). Hmm, let's re-verify: \(7x = 65\). Actually \(x = 65/7\). Recheck setup: \(110 + 7x + 5 = 180\) → \(7x = 65\) → \(x = \frac{65}{7} \approx 9.3\). Clean integer check: this is correct as given.</div>
+      <div class="solution-step"><strong>Re-approach for clean answer:</strong> \(7x = 180 - 115 = 65\) → \(x = \frac{65}{7}\). Note: the problem yields \(x = \frac{65}{7}\). Verify: \(7(\frac{65}{7}) + 5 = 65 + 5 = 70\); \(110 + 70 = 180\). ✓</div>
+    </div>
+    <div class="final-answer">\(x = \dfrac{65}{7} \approx 9.3\)</div>
+  </div>
+
+  <!-- Q9 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 9</div>
+    <div class="problem-text">Alternate exterior angles: \((5x - 10)°\) and \(60°\). Solve for \(x\).</div>
+    <span class="concept-tag">Alternate Exterior Angles</span>
+    <span class="concept-tag">Equal</span>
+    <div class="solution">
+      <div class="solution-step">Alternate exterior angles are equal:</div>
+      <div class="solution-step">\(5x - 10 = 60\)</div>
+      <div class="solution-step">\(5x = 60 + 10 = 70\)</div>
+      <div class="solution-step">\(x = 70 \div 5 = 14\)</div>
+    </div>
+    <div class="final-answer">\(x = 14\)</div>
+  </div>
+
+  <!-- Q10 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 10</div>
+    <div class="problem-text">Co-interior angles: \((4x + 12)°\) and \((2x + 24)°\) sum to \(180°\). Solve for \(x\).</div>
+    <span class="concept-tag">Co-Interior Angles</span>
+    <span class="concept-tag">Two-Step</span>
+    <div class="solution">
+      <div class="solution-step">\((4x + 12) + (2x + 24) = 180\)</div>
+      <div class="solution-step">\(6x + 36 = 180\)</div>
+      <div class="solution-step">\(6x = 180 - 36 = 144\)</div>
+      <div class="solution-step">\(x = 144 \div 6 = 24\)</div>
+      <div class="solution-step">Check: \((4(24)+12) + (2(24)+24) = 108 + 72 = 180\) ✓</div>
+    </div>
+    <div class="final-answer">\(x = 24\)</div>
+  </div>
+
+  <!-- ===== PART C ===== -->
+  <div class="part-header page-break">Part C — Quadrilaterals (Q11–13)</div>
+
+  <!-- Q11 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 11</div>
+    <div class="problem-text">A quadrilateral has all four sides equal and all four angles equal to \(90°\). Most specific name?</div>
+    <span class="concept-tag">Quadrilateral Classification</span>
+    <span class="concept-tag">Square</span>
+    <div class="solution">
+      <div class="solution-step">All 4 sides equal → could be rhombus or square.</div>
+      <div class="solution-step">All 4 angles = 90° → rectangle or square.</div>
+      <div class="solution-step">Both conditions together → <strong>Square</strong> (most specific name).</div>
+    </div>
+    <div class="final-answer">Square</div>
+  </div>
+
+  <!-- Q12 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 12</div>
+    <div class="problem-text">A quadrilateral has angles \(80°\), \(100°\), \(80°\). Find the missing fourth angle.</div>
+    <span class="concept-tag">Angle Sum = 360°</span>
+    <span class="concept-tag">Missing Angle</span>
+    <div class="solution">
+      <div class="solution-step">Sum of all four angles in any quadrilateral = 360°.</div>
+      <div class="solution-step">\(80 + 100 + 80 + x = 360\)</div>
+      <div class="solution-step">\(260 + x = 360\)</div>
+      <div class="solution-step">\(x = 360 - 260 = 100\)</div>
+    </div>
+    <div class="final-answer">Missing angle = \(100°\)</div>
+  </div>
+
+  <!-- Q13 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 13</div>
+    <div class="problem-text">Exactly one pair of parallel sides; angles \(65°\), \(115°\), \(65°\), \(115°\). Type?</div>
+    <span class="concept-tag">Trapezoid</span>
+    <span class="concept-tag">Quadrilateral</span>
+    <div class="solution">
+      <div class="solution-step">Exactly one pair of parallel sides → <strong>Trapezoid</strong>.</div>
+      <div class="solution-step">Co-interior angles on the same leg add to 180°: \(65° + 115° = 180°\) ✓ (confirms the parallel sides).</div>
+    </div>
+    <div class="final-answer">Trapezoid</div>
+  </div>
+
+  <!-- ===== PART D ===== -->
+  <div class="part-header">Part D — Polygon Basics (Q14–17)</div>
+
+  <!-- Q14 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 14</div>
+    <div class="problem-text">Stop sign: 8 equal sides, 8 equal angles. Name? Regular or Irregular?</div>
+    <span class="concept-tag">Octagon</span>
+    <span class="concept-tag">Regular</span>
+    <div class="solution">
+      <div class="solution-step">8 sides → <strong>Octagon</strong>.</div>
+      <div class="solution-step">All sides equal AND all angles equal → <strong>Regular</strong>.</div>
+    </div>
+    <div class="final-answer">Regular Octagon</div>
+  </div>
+
+  <!-- Q15 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 15</div>
+    <div class="problem-text">Is a circle a polygon? Yes or No?</div>
+    <span class="concept-tag">Polygon Definition</span>
+    <div class="solution">
+      <div class="solution-step">A polygon must be a closed figure made of <em>straight</em> line segments.</div>
+      <div class="solution-step">A circle has no straight sides — it is a curved shape.</div>
+    </div>
+    <div class="final-answer">No — a circle is not a polygon because it has no straight sides.</div>
+  </div>
+
+  <!-- Q16 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 16</div>
+    <div class="problem-text">10 sides, one interior angle &gt; 180°. Name and convex/concave?</div>
+    <span class="concept-tag">Decagon</span>
+    <span class="concept-tag">Concave</span>
+    <div class="solution">
+      <div class="solution-step">10 sides → <strong>Decagon</strong>.</div>
+      <div class="solution-step">An interior angle &gt; 180° means the shape "caves in" — it is <strong>Concave</strong>.</div>
+    </div>
+    <div class="final-answer">Concave Decagon</div>
+  </div>
+
+  <!-- Q17 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 17</div>
+    <div class="problem-text">12 sides, sides not all the same length. Name and regular/irregular?</div>
+    <span class="concept-tag">Dodecagon</span>
+    <span class="concept-tag">Irregular</span>
+    <div class="solution">
+      <div class="solution-step">12 sides → <strong>Dodecagon</strong>.</div>
+      <div class="solution-step">Sides not all equal → <strong>Irregular</strong>.</div>
+    </div>
+    <div class="final-answer">Irregular Dodecagon</div>
+  </div>
+
+  <!-- ===== PART E ===== -->
+  <div class="part-header page-break">Part E — Interior Angle Sum (Q18–20)</div>
+
+  <!-- Q18 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 18</div>
+    <div class="problem-text">Find the sum of interior angles of an 11-gon (hendecagon).</div>
+    <span class="concept-tag">Interior Angle Sum Formula</span>
+    <span class="concept-tag">\((n-2) \times 180°\)</span>
+    <div class="solution">
+      <div class="solution-step">Formula: \((n - 2) \times 180°\)</div>
+      <div class="solution-step">\(n = 11\): \(\;(11 - 2) \times 180 = 9 \times 180\)</div>
+      <div class="solution-step">\(9 \times 180 = 1{,}620\)</div>
+    </div>
+    <div class="final-answer">Sum = \(1{,}620°\)</div>
+  </div>
+
+  <!-- Q19 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 19</div>
+    <div class="problem-text">Find the sum of interior angles of a 25-gon.</div>
+    <span class="concept-tag">Interior Angle Sum Formula</span>
+    <div class="solution">
+      <div class="solution-step">\(n = 25\): \(\;(25 - 2) \times 180 = 23 \times 180\)</div>
+      <div class="solution-step">\(23 \times 180 = 23 \times 100 + 23 \times 80 = 2{,}300 + 1{,}840 = 4{,}140\)</div>
+    </div>
+    <div class="final-answer">Sum = \(4{,}140°\)</div>
+  </div>
+
+  <!-- Q20 -->
+  <div class="answer-block">
+    <div class="problem-header">Problem 20</div>
+    <div class="problem-text">A regular octagon has 8 equal angles. What is the measure of each interior angle?</div>
+    <span class="concept-tag">Regular Polygon</span>
+    <span class="concept-tag">Each Interior Angle</span>
+    <div class="solution">
+      <div class="solution-step">Step 1 — Find the total sum: \((8 - 2) \times 180 = 6 \times 180 = 1{,}080°\)</div>
+      <div class="solution-step">Step 2 — Divide equally: \(1{,}080 \div 8 = 135°\)</div>
+    </div>
+    <div class="final-answer">Each interior angle = \(135°\)</div>
+  </div>
+
+  <!-- ===== QUICK REFERENCE ===== -->
+  <div style="margin-top: 24px; padding: 10px 14px; border: 1.5px solid #fd79a8; border-radius: 6px; font-size: 9.5pt; line-height: 1.7;">
+    <strong style="color: #c0276c;">Quick Reference — Angle Pair Summary</strong><br>
+    <strong>Corresponding:</strong> same position, different intersection → <em>equal</em><br>
+    <strong>Alternate Interior:</strong> between lines, opposite sides → <em>equal</em><br>
+    <strong>Alternate Exterior:</strong> outside lines, opposite sides → <em>equal</em><br>
+    <strong>Co-Interior (Consecutive Interior):</strong> between lines, same side → <em>add to 180°</em><br>
+    <strong>Vertical:</strong> across the intersection point → <em>equal</em><br>
+    <strong>Linear Pair:</strong> adjacent, form a straight line → <em>add to 180°</em>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <div class="footer">Created by Newton School 2026-05-14 &copy; Copyright — ANSWER KEY</div>
+
+</div><!-- .page -->
+
+<!-- ===== Editor Widget JS (condensed) ===== -->
+<script>
+(function () {
+  'use strict';
+  var pageSlug = (function () { var s = window.location.pathname.split('/').pop() || 'key'; return s.replace(/\.[^.]+$/, '').replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 60); })();
+  var C_PREFIX = 'hw_comment_' + pageSlug + '_';
+  var S_KEY    = 'hw_sticky_' + pageSlug;
+  function lsGet(k) { try { return localStorage.getItem(k); } catch(e){ return null; } }
+  function lsSet(k, v) { try { localStorage.setItem(k, v); } catch(e){} }
+  function lsRm(k)  { try { localStorage.removeItem(k); } catch(e){} }
+  function lsGetJSON(k) { try { return JSON.parse(lsGet(k) || '[]'); } catch(e){ return []; } }
+  function lsSetJSON(k, v) { lsSet(k, JSON.stringify(v)); }
+  var counter = 0;
+  function nextBid() { return 'b' + (++counter); }
+  function wrapCommentable(el) {
+    if (el.classList.contains('ed-commentable')) return;
+    var bid = nextBid(); el.classList.add('ed-commentable'); el.setAttribute('data-bid', bid);
+    var btn = document.createElement('button'); btn.className = 'ed-comment-btn'; btn.type = 'button'; btn.title = 'Add comment'; btn.textContent = '✏';
+    btn.addEventListener('click', function () { toggleCommentBox(el, bid); }); el.appendChild(btn);
+    var dot = document.createElement('span'); dot.className = 'ed-dot'; dot.hidden = true; el.appendChild(dot);
+    var saved = lsGet(C_PREFIX + bid); if (saved && saved.trim()) { dot.hidden = false; btn.classList.add('has-comment'); el.classList.add('has-ed-comment'); }
+  }
+  function initCommentableBlocks() { ['.answer-block', '.part-header'].forEach(function (sel) { document.querySelectorAll(sel).forEach(wrapCommentable); }); }
+  function toggleCommentBox(el, bid) {
+    var existing = el.querySelector('.ed-comment-box');
+    if (existing) { existing.classList.toggle('open'); if (existing.classList.contains('open')) existing.querySelector('textarea').focus(); return; }
+    var saved = lsGet(C_PREFIX + bid) || '';
+    var box = document.createElement('div'); box.className = 'ed-comment-box open';
+    box.innerHTML = '<textarea placeholder="Comment on this answer..."></textarea><div class="ed-comment-box-actions"><button type="button" class="ed-cancel">Cancel</button><button type="button" class="ed-save">Save</button></div>';
+    el.appendChild(box); var ta = box.querySelector('textarea'); ta.value = saved; ta.focus();
+    box.querySelector('.ed-cancel').addEventListener('click', function () { box.classList.remove('open'); });
+    box.querySelector('.ed-save').addEventListener('click', function () { saveBlockComment(el, bid, ta.value.trim()); box.classList.remove('open'); updateBarStatus(); });
+  }
+  function saveBlockComment(el, bid, txt) {
+    var dot = el.querySelector('.ed-dot'); var btn = el.querySelector('.ed-comment-btn');
+    if (txt) { lsSet(C_PREFIX + bid, txt); if (dot) dot.hidden = false; if (btn) btn.classList.add('has-comment'); el.classList.add('has-ed-comment'); }
+    else { lsRm(C_PREFIX + bid); if (dot) dot.hidden = true; if (btn) btn.classList.remove('has-comment'); el.classList.remove('has-ed-comment'); }
+    updateBarStatus();
+  }
+  function buildStickyDOM(id, x, y, text) {
+    var note = document.createElement('div'); note.className = 'ed-sticky'; note.setAttribute('data-sid', id);
+    note.style.top = y + 'px'; note.style.left = x + 'px';
+    note.innerHTML = '<div class="ed-sticky-handle">📌 Note <button class="ed-sticky-close" title="Delete">✕</button></div><textarea placeholder="Free note..."></textarea>';
+    var ta = note.querySelector('textarea'); ta.value = text;
+    ta.addEventListener('input', function () { var list = lsGetJSON(S_KEY); var item = list.find(function(s){return s.id===id;}); if (item){item.text=ta.value;lsSetJSON(S_KEY,list);} clearTimeout(ta._t); ta._t = setTimeout(updateBarStatus, 300); });
+    note.querySelector('.ed-sticky-close').addEventListener('click', function () { lsSetJSON(S_KEY, lsGetJSON(S_KEY).filter(function(s){return s.id!==id;})); note.remove(); updateBarStatus(); });
+    var sx,sy,ox,oy,drag=false; var handle=note.querySelector('.ed-sticky-handle');
+    handle.addEventListener('mousedown',function(e){if(e.target.classList.contains('ed-sticky-close'))return;drag=true;sx=e.pageX;sy=e.pageY;ox=parseInt(note.style.left)||0;oy=parseInt(note.style.top)||0;e.preventDefault();});
+    document.addEventListener('mousemove',function(e){if(!drag)return;note.style.left=Math.max(0,ox+(e.pageX-sx))+'px';note.style.top=Math.max(0,oy+(e.pageY-sy))+'px';});
+    document.addEventListener('mouseup',function(){if(!drag)return;drag=false;var list=lsGetJSON(S_KEY);var item=list.find(function(s){return s.id===id;});if(item){item.x=parseInt(note.style.left)||0;item.y=parseInt(note.style.top)||0;lsSetJSON(S_KEY,list);}});
+    return note;
+  }
+  lsGetJSON(S_KEY).forEach(function(s){document.body.appendChild(buildStickyDOM(s.id,s.x,s.y,s.text));});
+  function countAllComments() {
+    var n = 0; for(var i=0;i<localStorage.length;i++){var k=localStorage.key(i);if(k&&k.indexOf(C_PREFIX)===0&&(lsGet(k)||'').trim())n++;} n+=lsGetJSON(S_KEY).filter(function(s){return s.text&&s.text.trim();}).length; return n;
+  }
+  function updateBarStatus() {
+    var n = countAllComments(); var c=document.getElementById('ed-bar-count'); if(c)c.textContent=n; var st=document.getElementById('ed-bar-status'); if(st)st.textContent=n>0?n+' comment'+(n!==1?'s':'')+' saved':'No comments yet';
+  }
+  function buildBar() {
+    var bar = document.createElement('div'); bar.className='ed-bar'; bar.id='ed-bar';
+    bar.innerHTML='<span class="ed-bar-label">Editor</span><button class="ed-bar-btn ed-bar-primary" id="ed-bar-sticky">+ Note</button><span class="ed-bar-spacer"></span><span class="ed-bar-status" id="ed-bar-status">No comments yet</span><span class="ed-bar-sep"></span><span class="ed-bar-count" id="ed-bar-count">0</span>';
+    document.body.appendChild(bar);
+    document.getElementById('ed-bar-sticky').addEventListener('click', function(){
+      var x=window.scrollX+Math.max(60,window.innerWidth/2-120); var y=window.scrollY+100;
+      var id='s'+Date.now()+Math.random().toString(36).slice(2,5);
+      var note=buildStickyDOM(id,x,y,''); document.body.appendChild(note);
+      var list=lsGetJSON(S_KEY); list.push({id:id,x:x,y:y,text:''}); lsSetJSON(S_KEY,list);
+      var ta=note.querySelector('textarea'); if(ta)ta.focus(); updateBarStatus();
+    });
+  }
+  function init(){initCommentableBlocks();buildBar();updateBarStatus();}
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',function(){setTimeout(init,500);});}else{setTimeout(init,500);}
+})();
+</script>
+</html>

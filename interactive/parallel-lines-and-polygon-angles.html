@@ -1,0 +1,1584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Parallel Lines &amp; Polygon Angles — Interactive (Natalie Yoo · Geometry Intro)</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$','$'], ['\\(','\\)']], displayMath: [['$$','$$'], ['\\[','\\]']] },
+  svg: { fontCache: 'global' }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+
+<style>
+  :root {
+    --student:      #fd79a8;
+    --student-soft: #fff0f6;
+    --student-deep: #c0276c;
+    --ink:          #1a1a1a;
+    --ink-soft:     #555;
+    --bg:           #fff8fb;
+    --paper:        #fff;
+    --line:         #e8e8e8;
+    --ok:           #2e7d32;
+    --ok-soft:      #e8f5e9;
+    --warn:         #c62828;
+    --warn-soft:    #ffebee;
+
+    /* angle-pair colors */
+    --pair-corresponding:   #e17055;
+    --pair-alt-interior:    #6c5ce7;
+    --pair-alt-exterior:    #00b894;
+    --pair-co-interior:     #fdcb6e;
+    --pair-vertical:        #0984e3;
+    --pair-linear:          #e84393;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--ink); padding: 16px; line-height: 1.55; }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+
+  /* Header */
+  header { padding: 20px 24px; background: var(--paper); border-radius: 10px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 16px; border-top: 3px solid var(--student); }
+  header h1 { font-size: 24px; font-weight: 700; color: var(--student-deep); margin-bottom: 4px; }
+  header .meta { font-size: 12px; color: var(--ink-soft); letter-spacing: 0.04em; }
+  header .tagline { margin-top: 8px; font-size: 13px; color: var(--ink-soft); font-style: italic; }
+
+  /* Grid */
+  .grid { display: grid; grid-template-columns: 320px 1fr; gap: 16px; }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+
+  /* Section divider */
+  .section-divider { margin: 28px 0 20px; display: flex; align-items: center; gap: 14px; }
+  .section-divider .sd-line { flex: 1; height: 1px; background: var(--line); }
+  .section-divider .sd-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--student-deep); background: var(--student-soft); border: 1px solid var(--student); padding: 4px 14px; border-radius: 20px; }
+
+  /* Panel */
+  .panel { background: var(--paper); border-radius: 10px; padding: 18px 20px; box-shadow: 0 1px 4px rgba(0,0,0,0.06); margin-bottom: 14px; }
+  .panel h2 { font-size: 12px; color: var(--student-deep); margin-bottom: 14px; letter-spacing: 0.09em; text-transform: uppercase; font-weight: 700; border-bottom: 1px solid var(--line); padding-bottom: 8px; }
+
+  /* Controls */
+  .field { margin-bottom: 16px; }
+  .field:last-child { margin-bottom: 0; }
+  .ctrl-label { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; font-weight: 600; margin-bottom: 5px; }
+  .ctrl-label .val { font-family: 'JetBrains Mono', monospace; color: var(--student-deep); font-size: 13px; font-weight: 700; }
+  input[type=range] { width: 100%; accent-color: var(--student); }
+  .help { font-size: 11px; color: var(--ink-soft); line-height: 1.4; margin-top: 2px; }
+
+  /* Pair Buttons */
+  .pair-row { display: flex; flex-direction: column; gap: 6px; margin-top: 6px; }
+  .pair-btn {
+    padding: 8px 12px; font-size: 12px; font-weight: 600;
+    border: 1.5px solid var(--student); background: var(--paper);
+    color: var(--student-deep); border-radius: 6px; cursor: pointer;
+    transition: all 0.15s; text-align: left; display: flex; justify-content: space-between; align-items: center;
+  }
+  .pair-btn:hover { background: var(--student-soft); }
+  .pair-btn.active { background: var(--student); color: #fff; border-color: var(--student); }
+  .pair-btn .pb-tag { font-size: 10px; font-family: 'JetBrains Mono', monospace; opacity: 0.75; }
+
+  /* Canvas area */
+  .stage-wrap { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  canvas { display: block; width: 100%; }
+
+  .stage-foot { padding: 10px 14px; border-top: 1px solid var(--line); font-size: 12px; color: var(--ink-soft); display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .anim-btn { background: var(--student); color: #fff; border: none; padding: 6px 14px; font-size: 11px; font-weight: 600; border-radius: 4px; cursor: pointer; letter-spacing: 0.05em; font-family: 'Inter', sans-serif; }
+  .anim-btn:hover { filter: brightness(0.92); }
+
+  /* Info Panel */
+  .info-panel { background: var(--student-soft); border: 1px solid var(--student); border-radius: 8px; padding: 14px 16px; min-height: 120px; }
+  .info-panel .ip-name { font-size: 16px; font-weight: 700; color: var(--student-deep); margin-bottom: 6px; }
+  .info-panel .ip-pairs { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink); margin-bottom: 8px; line-height: 1.7; }
+  .info-panel .ip-rel { font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .info-panel .ip-formula { font-family: 'JetBrains Mono', monospace; font-size: 12px; background: var(--paper); border: 1px solid var(--line); padding: 6px 10px; border-radius: 4px; margin-bottom: 8px; color: var(--student-deep); }
+  .info-panel .ip-desc { font-size: 12px; color: var(--ink-soft); line-height: 1.5; }
+
+  /* Stats */
+  .stats-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
+  @media (max-width: 600px) { .stats-grid { grid-template-columns: 1fr; } }
+  .stat { background: var(--student-soft); border-left: 3px solid var(--student); padding: 9px 12px; border-radius: 4px; }
+  .stat .key { font-size: 10px; color: var(--student-deep); font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; margin-bottom: 3px; }
+  .stat .v   { font-family: 'JetBrains Mono', monospace; font-size: 13px; font-weight: 700; color: var(--ink); }
+  .stat.ok   { background: var(--ok-soft); border-left-color: var(--ok); }
+  .stat.ok .key, .stat.ok .v { color: var(--ok); }
+
+  /* Formula box */
+  .formula-box { background: #fff8fb; border: 1px solid var(--line); border-left: 4px solid var(--student); padding: 12px 14px; border-radius: 4px; margin-top: 12px; font-size: 13px; }
+  .formula-box .ftitle { font-weight: 700; color: var(--student-deep); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+  .formula-box .fnum { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink); margin-top: 6px; word-break: break-word; }
+
+  /* Proof Steps */
+  .proof-steps { margin-top: 14px; }
+  .proof-step { background: var(--paper); border: 1px solid var(--line); border-left: 3px solid var(--student); padding: 10px 14px; margin-bottom: 8px; border-radius: 4px; font-size: 13px; line-height: 1.6; }
+  .proof-step.active { background: var(--student-soft); border-left-color: var(--student-deep); }
+  .proof-step .pn { display: inline-block; background: var(--student); color: #fff; font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 700; padding: 2px 6px; border-radius: 3px; margin-right: 8px; vertical-align: middle; }
+
+  /* Method Tabs */
+  .method-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
+  .method-tab {
+    padding: 8px 14px; font-size: 12px; font-weight: 600;
+    border: 1.5px solid var(--student); background: var(--paper);
+    color: var(--student-deep); border-radius: 6px; cursor: pointer;
+    transition: all 0.15s; font-family: 'Inter', sans-serif;
+  }
+  .method-tab:hover { background: var(--student-soft); }
+  .method-tab.active { background: var(--student); color: #fff; border-color: var(--student); }
+
+  /* Legend */
+  .angle-legend { padding: 10px 14px; border-top: 1px solid var(--line); font-size: 11px; color: var(--ink-soft); display: flex; gap: 14px; flex-wrap: wrap; }
+  .al-item { display: flex; align-items: center; gap: 5px; }
+  .al-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  footer { text-align: center; padding: 22px; font-size: 11px; color: var(--ink-soft); margin-top: 8px; }
+  footer .heart { color: var(--student); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Lines, Angles &amp; Polygons — Live Exploration</h1>
+    <div class="meta">Natalie Yoo &nbsp;&middot;&nbsp; Pre-Algebra &nbsp;&middot;&nbsp; HM 6th Grade &nbsp;&middot;&nbsp; Geometry Intro &nbsp;&middot;&nbsp; drag sliders, click buttons, watch angles light up</div>
+    <div class="tagline">"Geometry is not true — it is advantageous." — Henri Poincaré</div>
+  </header>
+
+  <!-- ======================================================= -->
+  <!-- SECTION 1: Parallel Lines & Angle Pair Names            -->
+  <!-- ======================================================= -->
+  <div class="section-divider">
+    <div class="sd-line"></div>
+    <div class="sd-label">Section 1 — Parallel Lines &amp; Angle Pairs</div>
+    <div class="sd-line"></div>
+  </div>
+
+  <div class="grid">
+
+    <!-- LEFT: Controls -->
+    <div>
+      <div class="panel">
+        <h2>Transversal Angle</h2>
+        <div class="field">
+          <div class="ctrl-label">Angle from horizontal <span class="val"><span id="angVal">55</span>°</span></div>
+          <input type="range" id="angSlider" min="20" max="160" value="55" step="1">
+          <div class="help">Drag to tilt the transversal. All 8 angles update instantly.</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Angle Pair — Click to Highlight</h2>
+        <div class="pair-row">
+          <button class="pair-btn" data-pair="none" id="pb-none">
+            <span>Clear / Reset</span><span class="pb-tag">—</span>
+          </button>
+          <button class="pair-btn" data-pair="corresponding" id="pb-corresponding">
+            <span>Corresponding</span><span class="pb-tag">∠1↔∠5, ∠2↔∠6…</span>
+          </button>
+          <button class="pair-btn" data-pair="alt-interior" id="pb-alt-interior">
+            <span>Alternate Interior</span><span class="pb-tag">∠3↔∠6, ∠4↔∠5</span>
+          </button>
+          <button class="pair-btn" data-pair="alt-exterior" id="pb-alt-exterior">
+            <span>Alternate Exterior</span><span class="pb-tag">∠1↔∠8, ∠2↔∠7</span>
+          </button>
+          <button class="pair-btn" data-pair="co-interior" id="pb-co-interior">
+            <span>Co-Interior / Same-Side</span><span class="pb-tag">∠3+∠5=180°</span>
+          </button>
+          <button class="pair-btn" data-pair="vertical" id="pb-vertical">
+            <span>Vertical Angles</span><span class="pb-tag">∠1↔∠3, ∠2↔∠4…</span>
+          </button>
+          <button class="pair-btn" data-pair="linear" id="pb-linear">
+            <span>Linear Pair</span><span class="pb-tag">∠1+∠2=180°…</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Angle Convention</h2>
+        <div style="font-size:12px; color:var(--ink-soft); line-height:1.8;">
+          <strong style="color:var(--student-deep);">Top intersection:</strong><br>
+          ∠1 top-left &nbsp; ∠2 top-right<br>
+          ∠4 bottom-left &nbsp; ∠3 bottom-right<br><br>
+          <strong style="color:var(--student-deep);">Bottom intersection:</strong><br>
+          ∠5 top-left &nbsp; ∠6 top-right<br>
+          ∠8 bottom-left &nbsp; ∠7 bottom-right
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Canvas + Info -->
+    <div>
+      <div class="panel" style="padding-bottom:0;">
+        <h2>Parallel Lines with Transversal</h2>
+        <div class="stage-wrap">
+          <canvas id="parallelCanvas" width="760" height="420"></canvas>
+        </div>
+        <div class="angle-legend" id="parallelLegend">
+          <span style="color:var(--ink-soft); font-size:12px;">Click a pair button on the left to highlight angle pairs.</span>
+        </div>
+      </div>
+
+      <div class="panel" style="margin-top:0;">
+        <h2>Pair Info</h2>
+        <div class="info-panel" id="pairInfo">
+          <div class="ip-name" id="ip-name">Select an angle pair</div>
+          <div class="ip-pairs" id="ip-pairs">Click any button on the left to see which angles are highlighted and why they are related.</div>
+          <div class="ip-rel" id="ip-rel"></div>
+          <div class="ip-formula" id="ip-formula" style="display:none;"></div>
+          <div class="ip-desc" id="ip-desc"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================= -->
+  <!-- SECTION 2: Polygon Explorer — Sum of Interior Angles    -->
+  <!-- ======================================================= -->
+  <div class="section-divider">
+    <div class="sd-line"></div>
+    <div class="sd-label">Section 2 — Polygon Interior Angles (3 Methods)</div>
+    <div class="sd-line"></div>
+  </div>
+
+  <div class="grid">
+
+    <!-- LEFT: Controls -->
+    <div>
+      <div class="panel">
+        <h2>Polygon Controls</h2>
+        <div class="field">
+          <div class="ctrl-label">Sides $n$ <span class="val"><span id="nVal">6</span></span></div>
+          <input type="range" id="nSlider" min="3" max="12" value="6" step="1">
+          <div class="help">Drag to change the number of sides: 3 (triangle) to 12 (dodecagon).</div>
+        </div>
+
+        <div class="field">
+          <div class="ctrl-label" style="margin-bottom:6px;">Method</div>
+          <div class="method-tabs">
+            <button class="method-tab active" data-method="triangulation">1 Triangulation</button>
+            <button class="method-tab" data-method="walking">2 Walking</button>
+            <button class="method-tab" data-method="circle">3 Circle</button>
+          </div>
+          <div class="help" style="margin-top:8px;">Each method proves the same formula a different way. Switch methods to auto-play the animation.</div>
+        </div>
+
+        <div class="field">
+          <button class="anim-btn" id="polyPlayBtn" style="width:100%;">&#9654; Play</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Live Stats</h2>
+        <div class="stats-grid" style="grid-template-columns:1fr;">
+          <div class="stat">
+            <div class="key">Polygon name</div>
+            <div class="v" id="polyName">Hexagon</div>
+          </div>
+          <div class="stat ok">
+            <div class="key">Sum of interior angles</div>
+            <div class="v" id="polySum">720°</div>
+          </div>
+          <div class="stat">
+            <div class="key">Each interior angle (regular)</div>
+            <div class="v" id="polyOneInt">120.0°</div>
+          </div>
+          <div class="stat">
+            <div class="key">Each exterior angle (regular)</div>
+            <div class="v" id="polyOneExt">60.0°</div>
+          </div>
+          <div class="stat ok">
+            <div class="key">Sum of exterior angles</div>
+            <div class="v">360° always</div>
+          </div>
+        </div>
+
+        <div class="formula-box">
+          <div class="ftitle">Interior angle sum formula</div>
+          $$S = (n - 2) \times 180°$$
+          <div class="ftitle" style="margin-top:10px;">Your current polygon</div>
+          <div class="fnum" id="polyFormula">S = (6 − 2) × 180° = 4 × 180° = 720°</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Canvas + Proof -->
+    <div>
+      <div class="panel" style="padding-bottom:0;">
+        <h2 id="polyMethodTitle">Method 1 — Triangulation from One Vertex</h2>
+        <div class="stage-wrap">
+          <canvas id="polygonCanvas" width="760" height="460"></canvas>
+        </div>
+        <div class="stage-foot">
+          <div class="step" id="polyStepText">Watch diagonals divide the polygon into triangles. Each triangle adds 180°.</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2 id="polyProofTitle">Proof — Triangulation</h2>
+        <div class="proof-steps" id="polyProofSteps">
+          <!-- filled dynamically -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Newton School &nbsp;&middot;&nbsp; Natalie Yoo &nbsp;&middot;&nbsp; Geometry Intro &nbsp;&middot;&nbsp; made with <span class="heart">&#9829;</span> by Mr. Kenny
+  </footer>
+
+</div><!-- .wrap -->
+
+<script>
+// ============================================================
+// UTILITY
+// ============================================================
+const $ = id => document.getElementById(id);
+const DEG = Math.PI / 180;
+
+// ============================================================
+// SECTION 1: PARALLEL LINES
+// ============================================================
+const S1 = { angle: 55, pair: 'none' };
+
+// Angle numbering convention (CONSISTENT, clearly documented):
+// At TOP intersection (T):  ∠1 top-left, ∠2 top-right, ∠3 bottom-right, ∠4 bottom-left
+// At BOTTOM intersection(B):∠5 top-left, ∠6 top-right, ∠7 bottom-right, ∠8 bottom-left
+//
+// If transversal makes angle θ with horizontal (going up-right):
+//   At each intersection, the transversal divides space into 4 angles.
+//   For the TOP intersection, going clockwise from the left part of the parallel line:
+//     ∠1 (top-left) = 180° − θ ... actually let's be careful:
+//   The transversal goes UP-RIGHT at angle θ above horizontal.
+//   Above-left region = ∠1. Above-right = ∠2. Below-right = ∠3. Below-left = ∠4.
+//   θ measured from horizontal:
+//     ∠1 = 180° - θ (supplementary to the acute angle on the right)
+//     ∠2 = θ
+//     ∠3 = 180° - θ
+//     ∠4 = θ
+// Wait — standard labeling more carefully:
+//   The transversal cuts the line. On the left side of the transversal it goes up-left at angle (180-θ) from horizontal.
+//   ∠1 (between left-going line and up-going transversal) = 180° - θ? No.
+//   Let's define simply:
+//   The transversal at angle θ from horizontal (acute = θ, obtuse = 180-θ if θ<90, etc.)
+//   At the TOP intersection:
+//     ∠1 (upper-left region) = 180° - θ
+//     ∠2 (upper-right region) = θ         [between the right ray and the up-transversal]
+//     ∠3 (lower-right region) = 180° - θ  [vertical with ∠1]
+//     ∠4 (lower-left region)  = θ          [vertical with ∠2]
+//   Hmm, this gives ∠1=∠3 and ∠2=∠4, which matches vertical angles. ✓
+//   At the BOTTOM intersection (same parallel lines, same transversal):
+//     ∠5 = 180° - θ
+//     ∠6 = θ
+//     ∠7 = 180° - θ
+//     ∠8 = θ
+//
+//   With θ as the angle the transversal makes ABOVE the parallel line on the right:
+//   More intuitively: let α = angle transversal makes above-right of TOP intersection.
+//   Then: ∠2 = α, ∠1 = 180-α, ∠3 = α (wait, ∠3 is below-right = vertical to ∠1 = 180-α)
+//   Actually verticals: ∠1 ↔ ∠3 (vertical), ∠2 ↔ ∠4 (vertical)
+//   So if ∠2 = α (top-right), then ∠4 = α (bottom-left), ∠1 = 180-α (top-left), ∠3 = 180-α (bottom-right).
+//   Similarly ∠6 = α, ∠8 = α, ∠5 = 180-α, ∠7 = 180-α.
+//
+// FINAL convention (θ = slider value = transversal angle from left horizontal, going up):
+//   Let α = θ if θ <= 90, or 180-θ if θ > 90. α is the acute angle.
+//   ∠2 = θ, ∠1 = 180-θ, ∠3 = 180-θ (=∠1, vertical), ∠4 = θ (=∠2, vertical)
+//   ∠6 = θ, ∠5 = 180-θ, ∠7 = 180-θ (=∠5), ∠8 = θ (=∠6)
+//   (all mod 180, keeping values between 0 and 180)
+//
+//   Named pairs:
+//   Corresponding:   (∠1,∠5), (∠2,∠6), (∠3,∠7), (∠4,∠8) → equal
+//   Alt Interior:    (∠3,∠6), (∠4,∠5) → equal (both = θ or both = 180-θ as appropriate)
+//      Wait: ∠3 = 180-θ, ∠6 = θ … these are NOT equal unless θ=90. Something's off.
+//
+// Let me redo this cleanly.
+// The slider gives θ (20–160 degrees from horizontal).
+// At each intersection the transversal makes four angles. Label them by position.
+// I'll use θ as the acute angle the transversal makes with the parallel line.
+// If slider gives angle A (20-160), the acute angle α = A <= 90 ? A : 180-A.
+// (But to handle non-symmetric case, let's just track: the right-going transversal goes up at angle θ from horizontal left.)
+//
+// At TOP intersection:
+//   The horizontal line goes LEFT and RIGHT.
+//   Transversal goes UPPER-RIGHT at angle θ, and LOWER-LEFT at angle θ+180 (same line).
+//
+//   Regions (going clockwise from upper-left):
+//     ∠1 = angle between LEFT horizontal ray and UPPER-RIGHT transversal = 180° - θ
+//     ∠2 = angle between UPPER-RIGHT transversal and RIGHT horizontal ray = θ
+//     ∠3 = angle between RIGHT horizontal ray and LOWER-LEFT transversal = 180° - θ  [vertical with ∠1]
+//     ∠4 = angle between LOWER-LEFT transversal and LEFT horizontal ray = θ           [vertical with ∠2]
+//
+// At BOTTOM intersection (same setup):
+//     ∠5 = 180° - θ  (top-left)
+//     ∠6 = θ          (top-right)
+//     ∠7 = 180° - θ  (bottom-right, vertical with ∠5)
+//     ∠8 = θ          (bottom-left, vertical with ∠6)
+//
+// Now check pairs:
+// Corresponding: ∠1↔∠5: (180-θ) = (180-θ) ✓ Equal
+//                ∠2↔∠6: θ = θ ✓ Equal
+//                ∠3↔∠7: (180-θ) = (180-θ) ✓ Equal
+//                ∠4↔∠8: θ = θ ✓ Equal
+//
+// Alt Interior: ∠4↔∠5: θ = 180-θ? NOT equal unless θ=90. That's wrong.
+//   Standard alt interior: ∠4 (lower-left at top) ↔ ∠6 (top-right at bottom)
+//                          θ = θ ✓ Equal ← correct!
+//   And ∠3 (bottom-right at top) ↔ ∠5 (top-left at bottom):
+//                          180-θ = 180-θ ✓ Equal
+// So Alt Interior: (∠3,∠5) and (∠4,∠6)
+//
+// Alt Exterior: ∠1 (top-left at top) ↔ ∠7 (bottom-right at bottom):
+//               180-θ = 180-θ ✓ Equal
+//              ∠2 (top-right at top) ↔ ∠8 (bottom-left at bottom):
+//               θ = θ ✓ Equal
+// So Alt Exterior: (∠1,∠7) and (∠2,∠8)
+//
+// Co-interior (same-side interior):
+//   ∠4 (lower-left at top) ↔ ∠5 (top-left at bottom): θ + (180-θ) = 180 ✓ Supplementary
+//   ∠3 (lower-right at top) ↔ ∠6 (top-right at bottom): (180-θ) + θ = 180 ✓ Supplementary
+// So Co-interior: (∠3,∠6) supplementary, (∠4,∠5) supplementary
+//   Wait — ∠3 and ∠6 are on the SAME side (right side of transversal), interior → ✓
+//   ∠4 and ∠5 are on the SAME side (left side of transversal), interior → ✓
+//
+// Vertical: (∠1,∠3), (∠2,∠4) at top; (∠5,∠7), (∠6,∠8) at bottom
+//
+// Linear Pair (supplementary adjacent): (∠1,∠2),(∠2,∠3),(∠3,∠4),(∠4,∠1) at top;
+//                                       (∠5,∠6),(∠6,∠7),(∠7,∠8),(∠8,∠5) at bottom
+
+const pairData = {
+  none: {
+    name: 'Select an angle pair',
+    pairs: [],
+    rel: '',
+    formula: '',
+    desc: 'Click a button to highlight angle pairs on the diagram.',
+    color: null
+  },
+  corresponding: {
+    name: 'Corresponding Angles',
+    pairs: [[1,5],[2,6],[3,7],[4,8]],
+    rel: 'EQUAL — they are always the same measure',
+    formula: '∠1 = ∠5,  ∠2 = ∠6,  ∠3 = ∠7,  ∠4 = ∠8',
+    desc: 'When a transversal crosses two parallel lines, corresponding angles are in the same position at each intersection — like matching corners. They are always equal.',
+    color: '#e17055'
+  },
+  'alt-interior': {
+    name: 'Alternate Interior Angles',
+    pairs: [[3,5],[4,6]],
+    rel: 'EQUAL — they are always the same measure',
+    formula: '∠3 = ∠5,  ∠4 = ∠6',
+    desc: 'Alternate interior angles are between the parallel lines, on opposite sides of the transversal. They are always equal when the lines are parallel — a "Z" or "N" shape.',
+    color: '#6c5ce7'
+  },
+  'alt-exterior': {
+    name: 'Alternate Exterior Angles',
+    pairs: [[1,7],[2,8]],
+    rel: 'EQUAL — they are always the same measure',
+    formula: '∠1 = ∠7,  ∠2 = ∠8',
+    desc: 'Alternate exterior angles are outside both parallel lines, on opposite sides of the transversal. They are always equal — a big "Z" shape on the outside.',
+    color: '#00b894'
+  },
+  'co-interior': {
+    name: 'Co-Interior (Same-Side Interior)',
+    pairs: [[3,6],[4,5]],
+    rel: 'SUPPLEMENTARY — they always add up to 180°',
+    formula: '∠3 + ∠6 = 180°,  ∠4 + ∠5 = 180°',
+    desc: 'Co-interior angles (also called consecutive interior or same-side interior angles) lie between the parallel lines on the same side of the transversal. They always add up to 180° — they are supplementary.',
+    color: '#fdcb6e'
+  },
+  vertical: {
+    name: 'Vertical Angles',
+    pairs: [[1,3],[2,4],[5,7],[6,8]],
+    rel: 'EQUAL — opposite angles formed by two crossing lines',
+    formula: '∠1 = ∠3,  ∠2 = ∠4,  ∠5 = ∠7,  ∠6 = ∠8',
+    desc: 'Vertical angles are opposite each other when two lines cross. This works at any intersection — not just with parallel lines. They are always equal because they share the same vertex and are formed by the same two lines.',
+    color: '#0984e3'
+  },
+  linear: {
+    name: 'Linear Pair',
+    pairs: [[1,2],[2,3],[3,4],[4,1],[5,6],[6,7],[7,8],[8,5]],
+    rel: 'SUPPLEMENTARY — adjacent angles on a straight line always add to 180°',
+    formula: '∠1 + ∠2 = 180°,  ∠2 + ∠3 = 180°,  etc.',
+    desc: 'A linear pair is two adjacent angles that together form a straight line (180°). Every time a transversal crosses a line, each angle and its neighbor form a linear pair.',
+    color: '#e84393'
+  }
+};
+
+// Angle measures given θ (slider value 20–160)
+function angleMeasures(theta) {
+  // ∠1,∠3,∠5,∠7 = 180-theta;  ∠2,∠4,∠6,∠8 = theta
+  // But if theta > 90, visually the "acute" angle is on the other side.
+  // We keep the raw values — the arcs will show them correctly.
+  const b = Math.min(theta, 180 - theta);  // not used for labels, just for info
+  return {
+    1: 180 - theta,
+    2: theta,
+    3: 180 - theta,
+    4: theta,
+    5: 180 - theta,
+    6: theta,
+    7: 180 - theta,
+    8: theta
+  };
+}
+
+const pCanvas = $('parallelCanvas');
+const pCtx = pCanvas.getContext('2d');
+
+function drawParallel() {
+  const W = pCanvas.width, H = pCanvas.height;
+  const measures = angleMeasures(S1.angle);
+  const pd = pairData[S1.pair];
+  const highlightedAngles = new Set();
+  const highlightPairs = [];
+
+  if (pd && pd.pairs) {
+    pd.pairs.forEach(pair => {
+      pair.forEach(a => highlightedAngles.add(a));
+      highlightPairs.push(pair);
+    });
+  }
+
+  pCtx.clearRect(0, 0, W, H);
+  pCtx.fillStyle = '#fff';
+  pCtx.fillRect(0, 0, W, H);
+
+  const lineY1 = H * 0.32;  // top parallel line y
+  const lineY2 = H * 0.68;  // bottom parallel line y
+  const margin = 60;
+  const lx1 = margin, lx2 = W - margin;
+
+  // Arrow marker function
+  function drawArrow(x, y, dir) {
+    const sz = 8;
+    pCtx.beginPath();
+    if (dir === 'right') {
+      pCtx.moveTo(x - sz, y - sz*0.5);
+      pCtx.lineTo(x, y);
+      pCtx.lineTo(x - sz, y + sz*0.5);
+    }
+    pCtx.stroke();
+  }
+
+  // Draw parallel lines
+  [lineY1, lineY2].forEach(ly => {
+    pCtx.strokeStyle = '#888';
+    pCtx.lineWidth = 2.5;
+    pCtx.beginPath();
+    pCtx.moveTo(lx1, ly);
+    pCtx.lineTo(lx2, ly);
+    pCtx.stroke();
+    // Parallel arrows
+    pCtx.strokeStyle = '#c0276c';
+    pCtx.lineWidth = 1.5;
+    drawArrow(W*0.38, ly, 'right');
+    drawArrow(W*0.62, ly, 'right');
+  });
+
+  // Label lines
+  pCtx.fillStyle = '#888';
+  pCtx.font = '13px Inter, sans-serif';
+  pCtx.textAlign = 'left';
+  pCtx.fillText('l₁', lx1 - 18, lineY1 + 5);
+  pCtx.fillText('l₂', lx1 - 18, lineY2 + 5);
+  pCtx.fillStyle = '#c0276c';
+  pCtx.font = 'italic bold 11px Inter, sans-serif';
+  pCtx.fillText('parallel', W*0.5 - 30, lineY1 - 10);
+
+  // Compute transversal intersection points
+  const thetaRad = S1.angle * DEG;
+  const dx = Math.cos(thetaRad), dy = -Math.sin(thetaRad);
+
+  // Transversal crosses at some x for each y
+  // Center the transversal at x = W/2
+  const cx = W / 2;
+  // At lineY1: transversal passes through (cx, lineY1) going in direction (dx, dy)
+  const ix1 = cx, iy1 = lineY1;
+  const ix2 = cx + (lineY2 - lineY1) * (dx / (-dy)); // parametric; dy = -sin(θ), so t = (lineY2-lineY1)/dy_pixel
+  // Actually: parametric: y = iy1 + t*dy_pixel where dy_pixel = -Math.sin(thetaRad)
+  // lineY2 = iy1 + t*(-Math.sin(thetaRad))  → t = (lineY2 - iy1)/(-Math.sin(thetaRad))
+  const t2 = (lineY2 - iy1) / (-Math.sin(thetaRad));
+  const ix2v = ix1 + t2 * Math.cos(thetaRad);
+  const iy2v = lineY2;
+
+  // Extend transversal beyond both intersections
+  const extLen = 120;
+  const tx0 = ix1 - extLen * Math.cos(thetaRad);
+  const ty0 = iy1 + extLen * Math.sin(thetaRad);
+  const tx3 = ix2v + extLen * Math.cos(thetaRad);
+  const ty3 = iy2v - extLen * Math.sin(thetaRad);
+
+  // Draw transversal
+  pCtx.strokeStyle = '#555';
+  pCtx.lineWidth = 2.5;
+  pCtx.beginPath();
+  pCtx.moveTo(tx0, ty0);
+  pCtx.lineTo(tx3, ty3);
+  pCtx.stroke();
+
+  // Label transversal
+  pCtx.fillStyle = '#555';
+  pCtx.font = 'italic 13px Inter, sans-serif';
+  pCtx.textAlign = 'center';
+  pCtx.fillText('t', tx3 + 14, ty3 + 4);
+
+  // Draw angle arcs and numbers
+  const arcR = 28;
+
+  // Angle positions and arc parameters
+  // At each intersection, we have 4 quadrants.
+  // θ = slider angle from horizontal (going up-right)
+  // Direction of transversal up-right: angle thetaRad from +x axis, going UP (so y decreases)
+  // The parallel line direction: 0 radians (right) and π (left)
+  //
+  // For TOP intersection at (ix1, iy1):
+  //   Right-going horizontal: angle 0
+  //   Upper transversal: angle = π - thetaRad (pointing upper-right, y decreasing)
+  //     Wait: Math angles go counterclockwise from +x, but canvas y increases downward.
+  //     Transversal goes upper-right visually: in canvas coords, dx=cos(θ), dy=-sin(θ) (y decreases).
+  //     Angle in standard math coords: θ from +x, counterclockwise.
+  //     In canvas coords (y-down): the angle from +x axis counterclockwise (which is clockwise visually) = -thetaRad from +x.
+  //   Let's use canvas angle system (y-down, so clockwise is positive):
+  //     Right ray: angle 0
+  //     Left ray: angle π
+  //     Upper transversal (going to ty0): angle = -thetaRad (going left-down, so... let me just compute)
+  //     The transversal from intersection goes: upper dir = (cos(thetaRad), -sin(thetaRad)) in canvas
+  //     → canvas angle = atan2(-sin(thetaRad), cos(thetaRad)) = -thetaRad
+  //     lower dir = (-cos(thetaRad), sin(thetaRad)) → canvas angle = π - (-thetaRad) = π + ... = atan2(sin,−cos)
+  //     Actually lower = negative of upper: angle = π + (-thetaRad) = π - thetaRad
+
+  // For drawing arcs, I'll define the 4 angular regions at each intersection:
+  // ∠1 (top-left): between left horizontal (angle=π) and upper transversal (angle=-θ or equivalently 2π-θ)
+  //   arc from -thetaRad going counterclockwise (ccw in canvas = clockwise visually? careful!)
+  //   In canvas 2D ctx.arc(x,y,r, startAngle, endAngle, anticlockwise):
+  //     angles are in radians, measured clockwise from +x axis (because y is down).
+  //   So: Right ray = 0, Down ray = π/2, Left ray = π, Up ray = -π/2 (or 3π/2)
+  //   Upper transversal direction (going upper-right): canvas angle = -thetaRad (going up and right)
+  //   Lower transversal direction (going lower-left): canvas angle = π - thetaRad
+  //
+  //   ∠1 (top-left region): between upper transversal and left horizontal
+  //     From upper transversal (-thetaRad) to left (π), going counterclockwise (= anticlockwise=true, but canvas y-down makes ccw = visually clockwise going left-upward)
+  //     Hmm, let's just find the angular sweep:
+  //     Arc start = upper transversal angle = -thetaRad
+  //     Arc end   = left ray = π
+  //     The region is the top-left, so we go from -thetaRad counterclockwise (in canvas = clockwise direction = going up then left) to π.
+  //     But the sweep = π - (-thetaRad) = π + thetaRad if going ccw... which could be > π.
+  //     Let me just track: the 4 angles in the "standard" way and draw arcs accordingly.
+
+  // Actually, let me simplify: draw angle label text and a small arc for each angle.
+  // I'll compute the "bisector" direction of each angle and place the arc+label there.
+
+  function drawAngleAtIntersection(ix, iy, angleNum, quadrant, theta, isHighlighted, pairColor) {
+    // quadrant: 'TL','TR','BR','BL' (top-left, top-right, bottom-right, bottom-left)
+    // Upper transversal direction (canvas angle from +x, clockwise because y-down): -theta*DEG
+    // But theta is in degrees here (already * DEG if I pass DEG)
+    // Let me receive theta in degrees and convert here.
+    const thR = theta * DEG;
+    // Directions (canvas angles, clockwise from +x):
+    const rightAngle = 0;
+    const leftAngle  = Math.PI;
+    const upTransAngle   = -thR;          // upper-right transversal
+    const downTransAngle = Math.PI - thR; // lower-left transversal
+
+    let bisector; // bisector direction for label placement
+    let arcStart, arcEnd, arcCCW;
+
+    if (quadrant === 'TL') {
+      // Between upper transversal and left horizontal
+      bisector = (upTransAngle + leftAngle) / 2;
+      // The top-left region: from upTransAngle going CCW (decreasing angle) to leftAngle?
+      // Actually in canvas (y-down), arc with anticlockwise=false goes from start to end CLOCKWISE.
+      // The top-left wedge: start at leftAngle (π), go clockwise to upTransAngle (-thR)
+      arcStart = leftAngle; arcEnd = upTransAngle; arcCCW = false;
+      bisector = (leftAngle + upTransAngle + 2*Math.PI) / 2;
+      if (bisector > Math.PI) bisector -= Math.PI;
+      // Simpler: bisector is in the top-left direction
+      bisector = Math.PI + thR/2; // between π (left) and π+thR (lower-left if thR>0...)
+      // Actually: top-left bisector should be between left ray (π) and upper-trans (-thR).
+      // Average going the short way:
+      const a1 = Math.PI, a2 = -thR;
+      // Going from a1 ccw to a2 in canvas (y-down ccw means counter-clockwise which is visually going up-left-ish)
+      // This is getting complex. Let me use a direct formula:
+      bisector = (Math.PI + (-thR) + 2*Math.PI) / 2; // average, shifted to [0, 2π]
+      // Normalize:
+      bisector = bisector % (2*Math.PI);
+      // For TL, the bisector should point into upper-left of the intersection:
+      // upTransAngle = -thR = angle going upper-right; so the region is between left and upper-right
+      // bisector = midpoint going from left (π) counter-clockwise to upper-right (-thR):
+      // counter-clockwise distance from π to -thR = -(thR + π)?? no...
+      // Let's just hardcode the 4 bisectors geometrically:
+      // TL: between horizontal-left and transversal-up-right → bisector should point upper-left
+      // midangle = average of π and (2π-thR): (π + 2π-thR)/2 = (3π-thR)/2
+      bisector = (3*Math.PI - thR)/2;
+    } else if (quadrant === 'TR') {
+      // Between upper transversal (upper-right) and right horizontal
+      // bisector = (0 + (-thR))/2 = -thR/2 = pointing upper-right
+      bisector = -thR / 2;
+    } else if (quadrant === 'BR') {
+      // Between right horizontal and lower transversal (lower-left going down-left)
+      // lower trans canvas angle = Math.PI - thR (going lower-left = π+thR in canvas? let me recalc)
+      // Lower transversal goes lower-left: dir = (-cosθ, sinθ) → canvas angle = atan2(sinθ, -cosθ) = π - thR (for θ in 0,π)
+      // So BR is between right (0) and lower (π-thR)... wait: π-thR with thR=55°≈0.96rad gives ≈2.18rad≈124.7° which is lower-left not lower-right...
+      // Hmm. The transversal goes upper-RIGHT at angle θ from horizontal.
+      // Its "lower" end goes lower-LEFT. Canvas angle of lower-left direction:
+      //   direction vector: (-cosθ, sinθ) (x decreases, y increases → lower-left)
+      //   canvas angle = atan2(sinθ, -cosθ) = π - θ (in radians, for θ ∈ (0,π))
+      // So lower trans at canvas angle = π - thR.
+      // For θ=55°, lower trans points at 180-55=125° (measuring CW from +x in canvas).
+      // That's the lower-LEFT direction. ✓
+      // BR region: between right (0) and... lower trans going lower-left (π-thR)?
+      // BR should be the region to the lower-right: between right (0) going CW to lower-trans (π-thR).
+      // Sweep going CW from 0 to π-thR is π-thR.
+      // For θ=55°, π-thR ≈ 2.18 rad ≈ 125°. So the BR region spans 125°?
+      // But ∠3 (BR) = 180-θ = 125° for θ=55°. ✓
+      bisector = (Math.PI - thR) / 2;
+    } else { // BL
+      // Between lower transversal (lower-left, angle π-thR) and left horizontal (π)
+      // BL should point lower-left
+      // sweep from π-thR to π going CCW (= CW in canvas?) is thR.
+      // For θ=55°, ∠4 = 55°. The BL region is 55° wide. ✓
+      bisector = (Math.PI - thR + Math.PI) / 2; // = π - thR/2, pointing lower-left
+    }
+
+    const r = arcR;
+    const lx = ix + Math.cos(bisector) * (r + 12);
+    const ly = iy + Math.sin(bisector) * (r + 12);
+    const angMeas = angleMeasures(theta)[angleNum];
+
+    // Draw arc
+    if (isHighlighted && pairColor) {
+      pCtx.save();
+      pCtx.globalAlpha = 0.35;
+      pCtx.fillStyle = pairColor;
+      pCtx.beginPath();
+      pCtx.moveTo(ix, iy);
+      // Arc from one edge to another:
+      let as, ae, acw;
+      if (quadrant === 'TL') {
+        as = -thR; ae = Math.PI; acw = true; // CCW from upTrans to left
+      } else if (quadrant === 'TR') {
+        as = -thR; ae = 0; acw = false; // CW from upTrans to right? No—
+        // TR is from right (0) to upTrans (-thR) going CCW (counter-clockwise = decreasing angle in canvas):
+        as = 0; ae = -thR; acw = true;
+      } else if (quadrant === 'BR') {
+        // from right (0) to lower trans (π-thR) going CW
+        as = 0; ae = Math.PI - thR; acw = false;
+      } else { // BL
+        // from lower trans (π-thR) to left (π) going CW
+        as = Math.PI - thR; ae = Math.PI; acw = false;
+      }
+      pCtx.arc(ix, iy, r, as, ae, acw);
+      pCtx.closePath();
+      pCtx.fill();
+      pCtx.restore();
+
+      // Stroke arc
+      pCtx.save();
+      pCtx.strokeStyle = pairColor;
+      pCtx.lineWidth = 2;
+      pCtx.beginPath();
+      pCtx.arc(ix, iy, r, as, ae, acw);
+      pCtx.stroke();
+      pCtx.restore();
+    } else {
+      // Faint arc always
+      let as, ae, acw;
+      if (quadrant === 'TL') { as = -thR; ae = Math.PI; acw = true; }
+      else if (quadrant === 'TR') { as = 0; ae = -thR; acw = true; }
+      else if (quadrant === 'BR') { as = 0; ae = Math.PI - thR; acw = false; }
+      else { as = Math.PI - thR; ae = Math.PI; acw = false; }
+      pCtx.save();
+      pCtx.strokeStyle = '#ccc';
+      pCtx.lineWidth = 1;
+      pCtx.beginPath();
+      pCtx.arc(ix, iy, r * 0.7, as, ae, acw);
+      pCtx.stroke();
+      pCtx.restore();
+    }
+
+    // Label text
+    pCtx.fillStyle = isHighlighted && pairColor ? pairColor : '#999';
+    pCtx.font = isHighlighted ? 'bold 13px Inter,sans-serif' : '12px Inter,sans-serif';
+    pCtx.textAlign = 'center';
+    pCtx.textBaseline = 'middle';
+    pCtx.fillText(`∠${angleNum}`, lx, ly);
+
+    // Degree measure (smaller)
+    const mLx = ix + Math.cos(bisector) * (r + 28);
+    const mLy = iy + Math.sin(bisector) * (r + 28);
+    pCtx.fillStyle = isHighlighted && pairColor ? pairColor : '#bbb';
+    pCtx.font = '10px JetBrains Mono, monospace';
+    pCtx.textAlign = 'center';
+    pCtx.fillText(`${angMeas}°`, mLx, mLy + 13);
+  }
+
+  // Get highlighted angles set and their color
+  const currentPD = pairData[S1.pair];
+  const hSet = new Set();
+  if (currentPD && currentPD.pairs) {
+    currentPD.pairs.forEach(p => p.forEach(a => hSet.add(a)));
+  }
+  const hColor = currentPD ? currentPD.color : null;
+
+  // Draw connectors between highlighted pairs
+  if (currentPD && currentPD.pairs && currentPD.color) {
+    currentPD.pairs.forEach(pair => {
+      if (pair.length === 2) {
+        // find pixel centers of each angle
+        function angleCenter(aNum) {
+          const isTop = aNum <= 4;
+          const ixP = isTop ? ix1 : ix2v;
+          const iyP = isTop ? iy1 : iy2v;
+          const thR = S1.angle * DEG;
+          const quad = { 1:'TL', 2:'TR', 3:'BR', 4:'BL', 5:'TL', 6:'TR', 7:'BR', 8:'BL' }[aNum];
+          let bisector;
+          if (quad === 'TL') bisector = (3*Math.PI - thR)/2;
+          else if (quad === 'TR') bisector = -thR / 2;
+          else if (quad === 'BR') bisector = (Math.PI - thR) / 2;
+          else bisector = Math.PI - thR/2;
+          return [ixP + Math.cos(bisector) * 20, iyP + Math.sin(bisector) * 20];
+        }
+        const [c1x, c1y] = angleCenter(pair[0]);
+        const [c2x, c2y] = angleCenter(pair[1]);
+        pCtx.save();
+        pCtx.strokeStyle = currentPD.color;
+        pCtx.lineWidth = 1.5;
+        pCtx.setLineDash([5, 4]);
+        pCtx.globalAlpha = 0.5;
+        pCtx.beginPath();
+        pCtx.moveTo(c1x, c1y);
+        pCtx.lineTo(c2x, c2y);
+        pCtx.stroke();
+        pCtx.restore();
+      }
+    });
+  }
+
+  // Draw angles at top intersection
+  const topAngles = [
+    { num: 1, quad: 'TL' },
+    { num: 2, quad: 'TR' },
+    { num: 3, quad: 'BR' },
+    { num: 4, quad: 'BL' }
+  ];
+  const botAngles = [
+    { num: 5, quad: 'TL' },
+    { num: 6, quad: 'TR' },
+    { num: 7, quad: 'BR' },
+    { num: 8, quad: 'BL' }
+  ];
+
+  topAngles.forEach(({ num, quad }) => {
+    drawAngleAtIntersection(ix1, iy1, num, quad, S1.angle, hSet.has(num), hColor);
+  });
+  botAngles.forEach(({ num, quad }) => {
+    drawAngleAtIntersection(ix2v, iy2v, num, quad, S1.angle, hSet.has(num), hColor);
+  });
+
+  // Draw dots at intersections
+  [{ x: ix1, y: iy1 }, { x: ix2v, y: iy2v }].forEach(({ x, y }) => {
+    pCtx.fillStyle = '#c0276c';
+    pCtx.beginPath();
+    pCtx.arc(x, y, 4, 0, Math.PI * 2);
+    pCtx.fill();
+  });
+
+  // "Interior" zone shading
+  pCtx.save();
+  pCtx.globalAlpha = 0.04;
+  pCtx.fillStyle = '#fd79a8';
+  pCtx.fillRect(lx1, lineY1, lx2 - lx1, lineY2 - lineY1);
+  pCtx.restore();
+
+  // "Interior" label
+  pCtx.fillStyle = '#fd79a8';
+  pCtx.globalAlpha = 0.5;
+  pCtx.font = '10px Inter, sans-serif';
+  pCtx.textAlign = 'right';
+  pCtx.fillText('interior region', lx2 - 4, (lineY1 + lineY2)/2 + 4);
+  pCtx.globalAlpha = 1;
+}
+
+// Update the info panel
+function updatePairInfo() {
+  const pd = pairData[S1.pair];
+  const measures = angleMeasures(S1.angle);
+
+  $('ip-name').textContent = pd.name;
+
+  if (pd.pairs && pd.pairs.length > 0) {
+    let pairText = pd.pairs.map(pair => {
+      if (pair.length === 2) {
+        const op = (S1.pair === 'co-interior' || S1.pair === 'linear') ? '+' : '=';
+        const val = (S1.pair === 'co-interior' || S1.pair === 'linear') ? 180 : measures[pair[0]];
+        return `∠${pair[0]} ${op} ∠${pair[1]} ${op==='='?'= '+measures[pair[0]]+'°':'= 180°'}`;
+      }
+      return '';
+    }).join('\n');
+    $('ip-pairs').textContent = pairText;
+  } else {
+    $('ip-pairs').textContent = 'Click any button on the left to see which angles are highlighted and why they are related.';
+  }
+
+  $('ip-rel').textContent = pd.rel;
+  $('ip-rel').style.color = pd.color || 'var(--ink)';
+
+  if (pd.formula) {
+    $('ip-formula').textContent = pd.formula;
+    $('ip-formula').style.display = 'block';
+    $('ip-formula').style.borderLeftColor = pd.color || 'var(--student)';
+    $('ip-formula').style.color = pd.color || 'var(--student-deep)';
+  } else {
+    $('ip-formula').style.display = 'none';
+  }
+
+  $('ip-desc').textContent = pd.desc;
+}
+
+// Wire up section 1 controls
+$('angSlider').addEventListener('input', e => {
+  S1.angle = +e.target.value;
+  $('angVal').textContent = S1.angle;
+  drawParallel();
+  updatePairInfo();
+});
+
+document.querySelectorAll('.pair-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.pair-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    S1.pair = btn.dataset.pair;
+    drawParallel();
+    updatePairInfo();
+  });
+});
+
+// ============================================================
+// SECTION 2: POLYGON EXPLORER
+// ============================================================
+const S2 = {
+  n: 6,
+  method: 'triangulation',
+  animT: 0,
+  animPlaying: false,
+  animStep: 0,       // current step (int, for triangulation/circle)
+  animProgress: 0,   // 0..1 float for walking
+  lastRAF: null
+};
+
+const polyNames = {
+  3: 'Triangle', 4: 'Quadrilateral', 5: 'Pentagon',
+  6: 'Hexagon', 7: 'Heptagon', 8: 'Octagon',
+  9: 'Nonagon', 10: 'Decagon', 11: 'Hendecagon', 12: 'Dodecagon'
+};
+
+function polyVertices(n, cx, cy, r, rotOffset) {
+  const pts = [];
+  const rot = rotOffset !== undefined ? rotOffset : -Math.PI/2; // start from top
+  for (let i = 0; i < n; i++) {
+    const a = rot + (2 * Math.PI * i) / n;
+    pts.push([cx + r * Math.cos(a), cy + r * Math.sin(a)]);
+  }
+  return pts;
+}
+
+function updatePolyStats() {
+  const n = S2.n;
+  const sum = (n - 2) * 180;
+  const oneInt = sum / n;
+  const oneExt = 360 / n;
+  $('polyName').textContent = polyNames[n] || `${n}-gon`;
+  $('polySum').textContent = sum + '°';
+  $('polyOneInt').textContent = oneInt.toFixed(1) + '°';
+  $('polyOneExt').textContent = oneExt.toFixed(1) + '°';
+  $('polyFormula').textContent = `S = (${n} − 2) × 180° = ${n-2} × 180° = ${sum}°`;
+
+  // Re-typeset if MathJax ready
+  if (window.MathJax && window.MathJax.typesetPromise) {
+    window.MathJax.typesetPromise([document.querySelector('.formula-box')]);
+  }
+}
+
+const polyCanvas = $('polygonCanvas');
+const polyCtx = polyCanvas.getContext('2d');
+
+function clearPolyCanvas() {
+  polyCtx.clearRect(0, 0, polyCanvas.width, polyCanvas.height);
+  polyCtx.fillStyle = '#fff';
+  polyCtx.fillRect(0, 0, polyCanvas.width, polyCanvas.height);
+}
+
+function polyFill(pts, fill, stroke, lw) {
+  if (pts.length < 2) return;
+  polyCtx.beginPath();
+  polyCtx.moveTo(pts[0][0], pts[0][1]);
+  for (let i = 1; i < pts.length; i++) polyCtx.lineTo(pts[i][0], pts[i][1]);
+  polyCtx.closePath();
+  if (fill) { polyCtx.fillStyle = fill; polyCtx.fill(); }
+  if (stroke) { polyCtx.strokeStyle = stroke; polyCtx.lineWidth = lw || 2; polyCtx.stroke(); }
+}
+
+// Pastel triangle fills
+const triColors = [
+  'rgba(253,121,168,0.18)', 'rgba(192,39,108,0.12)',
+  'rgba(253,121,168,0.25)', 'rgba(192,39,108,0.08)',
+  'rgba(253,121,168,0.20)', 'rgba(192,39,108,0.15)',
+  'rgba(253,121,168,0.22)', 'rgba(192,39,108,0.10)',
+  'rgba(253,121,168,0.16)', 'rgba(192,39,108,0.20)'
+];
+
+// ---- METHOD 1: Triangulation ----
+function drawTriangulation() {
+  const W = polyCanvas.width, H = polyCanvas.height;
+  const cx = W / 2, cy = H / 2;
+  const r = Math.min(W, H) * 0.35;
+  const n = S2.n;
+  const pts = polyVertices(n, cx, cy, r);
+  const numTri = n - 2;
+  const step = S2.animStep; // 0..numTri (how many triangles revealed)
+
+  clearPolyCanvas();
+
+  // Draw polygon outline
+  polyFill(pts, 'rgba(253,121,168,0.05)', '#fd79a8', 2);
+
+  // Draw triangles from vertex 0
+  for (let i = 0; i < step && i < numTri; i++) {
+    const tri = [pts[0], pts[i + 1], pts[i + 2]];
+    polyFill(tri, triColors[i % triColors.length], '#c0276c', 1.5);
+  }
+
+  // Draw diagonals from vertex 0 (up to step-1 diagonals)
+  polyCtx.strokeStyle = '#c0276c';
+  polyCtx.lineWidth = 1.5;
+  polyCtx.setLineDash([5, 3]);
+  for (let i = 2; i < n - 1 && i - 1 < step; i++) {
+    polyCtx.beginPath();
+    polyCtx.moveTo(pts[0][0], pts[0][1]);
+    polyCtx.lineTo(pts[i][0], pts[i][1]);
+    polyCtx.stroke();
+  }
+  polyCtx.setLineDash([]);
+
+  // Triangle counter
+  const triText = step === 0
+    ? 'Tap ▶ Play to start'
+    : step >= numTri
+      ? `${numTri} triangles × 180° = ${numTri * 180}° = (${n}−2)·180°  ✓`
+      : `${step} triangle${step>1?'s':''} so far… ${step * 180}°`;
+
+  polyCtx.fillStyle = '#c0276c';
+  polyCtx.font = 'bold 14px Inter, sans-serif';
+  polyCtx.textAlign = 'center';
+  polyCtx.fillText(triText, cx, H - 20);
+
+  // Vertex dots
+  pts.forEach((p, i) => {
+    polyCtx.fillStyle = i === 0 ? '#c0276c' : '#fd79a8';
+    polyCtx.beginPath();
+    polyCtx.arc(p[0], p[1], i === 0 ? 6 : 4, 0, Math.PI * 2);
+    polyCtx.fill();
+    // Vertex label
+    const offset = 16;
+    const angle = -Math.PI/2 + (2 * Math.PI * i) / n;
+    polyCtx.fillStyle = '#c0276c';
+    polyCtx.font = '11px Inter, sans-serif';
+    polyCtx.textAlign = 'center';
+    polyCtx.textBaseline = 'middle';
+    polyCtx.fillText(String.fromCharCode(65 + i), p[0] + offset * Math.cos(angle), p[1] + offset * Math.sin(angle));
+  });
+
+  $('polyStepText').textContent = step === 0
+    ? `A regular ${polyNames[n]} can be divided into triangles from one vertex.`
+    : step >= numTri
+      ? `Done! ${n-2} triangles × 180° = ${(n-2)*180}°. Formula: (${n}−2)·180° = ${(n-2)*180}°`
+      : `Drawing diagonal ${step} of ${numTri - 1}… triangle ${step} fills in.`;
+}
+
+// ---- METHOD 2: Walking (exterior angles) ----
+function drawWalking() {
+  const W = polyCanvas.width, H = polyCanvas.height;
+  const cx = W / 2, cy = H / 2;
+  const r = Math.min(W, H) * 0.30;
+  const n = S2.n;
+  const pts = polyVertices(n, cx, cy, r);
+  const t = S2.animProgress; // 0..1 overall progress
+  const numSteps = n; // one turn per vertex
+  const stepT = t * numSteps;
+  const currentVertex = Math.floor(stepT);
+  const vertexFrac = stepT - currentVertex;
+
+  clearPolyCanvas();
+
+  // Draw polygon
+  polyFill(pts, 'rgba(253,121,168,0.08)', '#fd79a8', 2.5);
+
+  const extAngle = 360 / n;
+  let runningSum = 0;
+
+  // Draw exterior arc at each completed vertex
+  for (let i = 0; i <= Math.min(currentVertex, n - 1); i++) {
+    const p = pts[i];
+    const prev = pts[(i - 1 + n) % n];
+    const next = pts[(i + 1) % n];
+
+    // Direction of arrival: from prev to current
+    const arrivalAngle = Math.atan2(p[1] - prev[1], p[0] - prev[0]);
+    // Direction of departure: from current to next
+    const departAngle = Math.atan2(next[1] - p[1], next[0] - p[0]);
+
+    // Exterior angle arc (the turn): from arrivalAngle to departAngle
+    // Fill fraction: if this is the current vertex, use vertexFrac
+    const frac = i < currentVertex ? 1 : (i === currentVertex ? Math.min(vertexFrac * 3, 1) : 0);
+
+    if (frac > 0) {
+      polyCtx.save();
+      polyCtx.globalAlpha = 0.4;
+      polyCtx.fillStyle = '#e84393';
+      polyCtx.beginPath();
+      polyCtx.moveTo(p[0], p[1]);
+      // exterior arc: the angle "turned" is extAngle
+      // compute end of departure extended and draw arc
+      polyCtx.arc(p[0], p[1], 22, arrivalAngle, arrivalAngle + (departAngle - arrivalAngle) * frac + Math.PI, false);
+      // Simpler: just show a small arc at the exterior
+      polyCtx.restore();
+
+      // Draw a clean exterior arc
+      polyCtx.save();
+      polyCtx.strokeStyle = '#e84393';
+      polyCtx.lineWidth = 2.5;
+      polyCtx.globalAlpha = frac;
+      // Exterior angle arc (the supplement of the interior angle at the vertex)
+      // Extended arrival direction:
+      const extArrival = arrivalAngle + Math.PI; // the direction "continuing straight"
+      const extStart = departAngle;
+      const extEnd = extArrival;
+      polyCtx.beginPath();
+      polyCtx.arc(p[0], p[1], 20, extStart, extEnd, false);
+      polyCtx.stroke();
+      // Fill
+      polyCtx.fillStyle = '#e84393';
+      polyCtx.globalAlpha = frac * 0.25;
+      polyCtx.beginPath();
+      polyCtx.moveTo(p[0], p[1]);
+      polyCtx.arc(p[0], p[1], 20, extStart, extEnd, false);
+      polyCtx.closePath();
+      polyCtx.fill();
+      polyCtx.restore();
+
+      runningSum += extAngle * (i < currentVertex ? 1 : vertexFrac);
+    }
+  }
+
+  // Walking dot
+  if (t < 1) {
+    const dotVertex = Math.min(currentVertex, n - 1);
+    const nextVertex = (dotVertex + 1) % n;
+    const segFrac = t < 1 ? (stepT % 1) : 1;
+    const dp = pts[dotVertex];
+    const np = pts[nextVertex];
+    const dotX = dp[0] + (np[0] - dp[0]) * Math.min(segFrac * 2, 1);
+    const dotY = dp[1] + (np[1] - dp[1]) * Math.min(segFrac * 2, 1);
+    polyCtx.fillStyle = '#c0276c';
+    polyCtx.beginPath();
+    polyCtx.arc(dotX, dotY, 7, 0, Math.PI * 2);
+    polyCtx.fill();
+    polyCtx.fillStyle = '#fff';
+    polyCtx.beginPath();
+    polyCtx.arc(dotX, dotY, 3.5, 0, Math.PI * 2);
+    polyCtx.fill();
+  }
+
+  // Running sum display
+  const shownSum = Math.min(currentVertex + 1, n) * extAngle;
+  const sumText = t >= 1
+    ? `Total turn = ${n} × ${extAngle.toFixed(1)}° = 360° ✓  →  Interior sum = ${n}×180° − 360° = ${(n-2)*180}°`
+    : `Turn so far: ${(Math.min(currentVertex, n) * extAngle).toFixed(1)}° (${Math.min(currentVertex, n)} vertices × ${extAngle.toFixed(1)}°)`;
+
+  polyCtx.fillStyle = '#c0276c';
+  polyCtx.font = 'bold 13px Inter, sans-serif';
+  polyCtx.textAlign = 'center';
+  polyCtx.fillText(sumText, cx, H - 20);
+
+  // Vertex dots
+  pts.forEach((p, i) => {
+    polyCtx.fillStyle = i <= currentVertex ? '#c0276c' : '#fdc8dc';
+    polyCtx.beginPath();
+    polyCtx.arc(p[0], p[1], 5, 0, Math.PI * 2);
+    polyCtx.fill();
+  });
+
+  $('polyStepText').textContent = t < 1
+    ? `The walker turns ${extAngle.toFixed(1)}° at each vertex. After all ${n} vertices, total turn = 360°.`
+    : `Total exterior turn = 360°. Interior sum = n·180° − 360° = (n−2)·180°  ✓`;
+}
+
+// ---- METHOD 3: Circle / Center triangles ----
+function drawCircle() {
+  const W = polyCanvas.width, H = polyCanvas.height;
+  const cx = W / 2, cy = H / 2 - 10;
+  const r = Math.min(W, H) * 0.30;
+  const n = S2.n;
+  const pts = polyVertices(n, cx, cy, r);
+  const step = S2.animStep; // 0..n+3 phases: 0=just polygon, 1..n=draw radii, n+1=shade base angles, n+2=show formula
+  const centralAngle = 360 / n;
+  const baseAngle = (180 - centralAngle) / 2;
+
+  clearPolyCanvas();
+
+  // Draw circle
+  if (step >= 1) {
+    polyCtx.strokeStyle = '#fdc8dc';
+    polyCtx.lineWidth = 1.5;
+    polyCtx.beginPath();
+    polyCtx.arc(cx, cy, r, 0, Math.PI * 2);
+    polyCtx.stroke();
+  }
+
+  // Draw polygon
+  polyFill(pts, 'rgba(253,121,168,0.06)', '#fd79a8', 2);
+
+  // Draw n triangles (slices) up to step
+  const revealedSlices = Math.max(0, step - 1);
+  for (let i = 0; i < revealedSlices && i < n; i++) {
+    const tri = [[ cx, cy ], pts[i], pts[(i + 1) % n]];
+    polyFill(tri, triColors[i % triColors.length], '#c0276c', 1);
+  }
+
+  // Draw radii up to step
+  for (let i = 0; i < revealedSlices && i < n; i++) {
+    polyCtx.strokeStyle = '#c0276c';
+    polyCtx.lineWidth = 1.5;
+    polyCtx.beginPath();
+    polyCtx.moveTo(cx, cy);
+    polyCtx.lineTo(pts[i][0], pts[i][1]);
+    polyCtx.stroke();
+  }
+  // Always draw the last edge of the revealed zone
+  if (revealedSlices > 0 && revealedSlices <= n) {
+    polyCtx.strokeStyle = '#c0276c';
+    polyCtx.lineWidth = 1.5;
+    polyCtx.beginPath();
+    polyCtx.moveTo(cx, cy);
+    polyCtx.lineTo(pts[revealedSlices % n][0], pts[revealedSlices % n][1]);
+    polyCtx.stroke();
+  }
+
+  // Central angle arcs
+  if (step >= 2) {
+    for (let i = 0; i < revealedSlices && i < n; i++) {
+      const a1 = -Math.PI/2 + (2 * Math.PI * i) / n;
+      const a2 = a1 + (2 * Math.PI) / n;
+      polyCtx.save();
+      polyCtx.strokeStyle = '#e84393';
+      polyCtx.lineWidth = 2;
+      polyCtx.globalAlpha = 0.7;
+      polyCtx.beginPath();
+      polyCtx.arc(cx, cy, 18, a1, a2, false);
+      polyCtx.stroke();
+      // Central angle label
+      const aMid = (a1 + a2) / 2;
+      polyCtx.fillStyle = '#c0276c';
+      polyCtx.font = 'bold 9px JetBrains Mono, monospace';
+      polyCtx.textAlign = 'center';
+      polyCtx.textBaseline = 'middle';
+      polyCtx.fillText(`${centralAngle.toFixed(0)}°`, cx + Math.cos(aMid) * 30, cy + Math.sin(aMid) * 30);
+      polyCtx.restore();
+    }
+  }
+
+  // Base angle highlighting (step >= n+1)
+  if (step >= n + 1) {
+    for (let i = 0; i < n; i++) {
+      const p = pts[i];
+      const pPrev = [cx, cy];
+      const pNext = pts[(i + 1) % n];
+      // base angle at pts[i] in the triangle (center, pts[i], pts[i+1])
+      const a1dir = Math.atan2(pPrev[1] - p[1], pPrev[0] - p[0]);
+      const a2dir = Math.atan2(pNext[1] - p[1], pNext[0] - p[0]);
+      polyCtx.save();
+      polyCtx.strokeStyle = '#6c5ce7';
+      polyCtx.lineWidth = 2;
+      polyCtx.globalAlpha = 0.8;
+      polyCtx.beginPath();
+      polyCtx.arc(p[0], p[1], 14, Math.min(a1dir, a2dir), Math.max(a1dir, a2dir), false);
+      polyCtx.stroke();
+      polyCtx.restore();
+    }
+  }
+
+  // Formula text
+  const totalSteps = n + 2;
+  if (step >= totalSteps) {
+    polyCtx.fillStyle = '#c0276c';
+    polyCtx.font = 'bold 13px Inter, sans-serif';
+    polyCtx.textAlign = 'center';
+    polyCtx.fillText(`n × (180° − 360°/n) = 180n − 360 = (n−2)·180° ✓`, cx, H - 20);
+  } else {
+    polyCtx.fillStyle = '#c0276c';
+    polyCtx.font = '13px Inter, sans-serif';
+    polyCtx.textAlign = 'center';
+    const desc = step <= 1
+      ? `Inscribed in a circle. Each central angle = ${centralAngle.toFixed(1)}°.`
+      : step <= n
+        ? `Drawing ${revealedSlices} of ${n} radii. Each slice is an isoceles triangle.`
+        : `Base angle at each vertex = (180° − ${centralAngle.toFixed(1)}°)/2 = ${baseAngle.toFixed(1)}°. Two base angles meet at each polygon vertex.`;
+    polyCtx.fillText(desc, cx, H - 20);
+  }
+
+  $('polyStepText').textContent = step <= n
+    ? `${n} radii from center create ${n} isoceles triangles. Central angle = ${centralAngle.toFixed(1)}°.`
+    : step <= n + 1
+      ? `Base angle = (180° − ${centralAngle.toFixed(1)}°) ÷ 2 = ${baseAngle.toFixed(1)}°. Two base angles meet at each polygon vertex.`
+      : `Interior angle = 2 × ${baseAngle.toFixed(1)}° = ${(2*baseAngle).toFixed(1)}°. Sum = ${n} × ${(2*baseAngle).toFixed(1)}° = ${(n*2*baseAngle).toFixed(0)}° = (${n}−2)·180°  ✓`;
+
+  // Center dot
+  polyCtx.fillStyle = '#c0276c';
+  polyCtx.beginPath();
+  polyCtx.arc(cx, cy, 5, 0, Math.PI * 2);
+  polyCtx.fill();
+
+  // Vertex dots
+  pts.forEach(p => {
+    polyCtx.fillStyle = '#fd79a8';
+    polyCtx.beginPath();
+    polyCtx.arc(p[0], p[1], 4, 0, Math.PI * 2);
+    polyCtx.fill();
+  });
+}
+
+function renderPolygon() {
+  if (S2.method === 'triangulation') drawTriangulation();
+  else if (S2.method === 'walking') drawWalking();
+  else drawCircle();
+  updateProofSteps();
+}
+
+// Proof steps per method
+const proofContent = {
+  triangulation: [
+    { n: 1, text: 'Pick any one vertex of the polygon — call it A.' },
+    { n: 2, text: 'Draw all diagonals from A to non-adjacent vertices. This divides the polygon into exactly (n − 2) non-overlapping triangles.' },
+    { n: 3, text: 'Every triangle has interior angles summing to 180°.' },
+    { n: 4, text: 'Together: Sum = (n − 2) × 180°.  For n = 6: 4 × 180° = 720°. ✓' }
+  ],
+  walking: [
+    { n: 1, text: 'Imagine a person walking the perimeter of the polygon. At each vertex, they turn by the exterior angle.' },
+    { n: 2, text: 'After completing the full loop (n vertices), the walker has turned a total of exactly 360° — one full revolution.' },
+    { n: 3, text: 'At each vertex: interior angle + exterior angle = 180° (they form a straight line). Summing over all n vertices: (sum of interiors) + 360° = n × 180°.' },
+    { n: 4, text: 'Rearranging: Sum of interior angles = n × 180° − 360° = (n − 2) × 180°. ✓' }
+  ],
+  circle: [
+    { n: 1, text: 'Inscribe the regular polygon in a circle. Draw lines from the center to every vertex — creating n isoceles triangles.' },
+    { n: 2, text: 'Each central angle = 360° / n. The n central angles sum to 360°.' },
+    { n: 3, text: 'Each triangle is isoceles (two radii = two equal sides). Each base angle = (180° − 360°/n) / 2.' },
+    { n: 4, text: 'Two base angles from adjacent triangles meet at each polygon vertex: interior angle = 2 × (180° − 360°/n)/2 = 180° − 360°/n. Sum = n × (180° − 360°/n) = 180n − 360 = (n−2)·180°. ✓' }
+  ]
+};
+
+const methodTitles = {
+  triangulation: 'Method 1 — Triangulation from One Vertex',
+  walking: 'Method 2 — Walking the Perimeter (Exterior Angles)',
+  circle: 'Method 3 — Inscribed in a Circle (Center Triangles)'
+};
+
+const proofTitles = {
+  triangulation: 'Proof — Triangulation',
+  walking: 'Proof — Exterior Angle Walk',
+  circle: 'Proof — Circle Center Method'
+};
+
+function updateProofSteps() {
+  const steps = proofContent[S2.method];
+  const container = $('polyProofSteps');
+  container.innerHTML = '';
+  steps.forEach(s => {
+    const div = document.createElement('div');
+    div.className = 'proof-step';
+    div.id = `ps2-${s.n}`;
+    div.innerHTML = `<span class="pn">${s.n}</span>${s.text}`;
+    container.appendChild(div);
+  });
+
+  // Highlight current step
+  let activeStep = 1;
+  if (S2.method === 'triangulation') {
+    const numTri = S2.n - 2;
+    if (S2.animStep === 0) activeStep = 1;
+    else if (S2.animStep < numTri) activeStep = 2;
+    else if (S2.animStep === numTri) activeStep = 3;
+    else activeStep = 4;
+  } else if (S2.method === 'walking') {
+    const t = S2.animProgress;
+    if (t < 0.35) activeStep = 1;
+    else if (t < 0.7) activeStep = 2;
+    else if (t < 0.9) activeStep = 3;
+    else activeStep = 4;
+  } else { // circle
+    const totalSteps = S2.n + 2;
+    if (S2.animStep <= 1) activeStep = 1;
+    else if (S2.animStep <= S2.n) activeStep = 2;
+    else if (S2.animStep === S2.n + 1) activeStep = 3;
+    else activeStep = 4;
+  }
+
+  const activeEl = $(`ps2-${activeStep}`);
+  if (activeEl) activeEl.classList.add('active');
+
+  $('polyMethodTitle').textContent = methodTitles[S2.method];
+  $('polyProofTitle').textContent = proofTitles[S2.method];
+}
+
+// Animation loop
+let animFrameId = null;
+let lastAnimTime = 0;
+const ANIM_SPEED_TRI = 0.9;    // steps per second
+const ANIM_SPEED_WALK = 0.25;  // progress per second (full cycle = 4s)
+const ANIM_SPEED_CIRC = 0.9;   // steps per second
+
+function animStep(ts) {
+  if (!S2.animPlaying) return;
+  const dt = lastAnimTime ? (ts - lastAnimTime) / 1000 : 0;
+  lastAnimTime = ts;
+
+  if (S2.method === 'triangulation') {
+    S2.animStep += dt * ANIM_SPEED_TRI;
+    const max = S2.n - 2 + 0.5;
+    if (S2.animStep >= max) {
+      S2.animStep = S2.n - 2;
+      S2.animPlaying = false;
+      $('polyPlayBtn').textContent = '▶ Play';
+    }
+  } else if (S2.method === 'walking') {
+    S2.animProgress += dt * ANIM_SPEED_WALK;
+    if (S2.animProgress >= 1) {
+      S2.animProgress = 1;
+      S2.animPlaying = false;
+      $('polyPlayBtn').textContent = '▶ Play';
+    }
+  } else { // circle
+    S2.animStep += dt * ANIM_SPEED_CIRC;
+    const max = S2.n + 2 + 0.5;
+    if (S2.animStep >= max) {
+      S2.animStep = S2.n + 2;
+      S2.animPlaying = false;
+      $('polyPlayBtn').textContent = '▶ Play';
+    }
+  }
+
+  renderPolygon();
+  if (S2.animPlaying) {
+    animFrameId = requestAnimationFrame(animStep);
+  }
+}
+
+function startAnim() {
+  // Reset
+  if (S2.method === 'triangulation') S2.animStep = 0;
+  else if (S2.method === 'walking') S2.animProgress = 0;
+  else S2.animStep = 0;
+
+  S2.animPlaying = true;
+  lastAnimTime = 0;
+  $('polyPlayBtn').textContent = '⏸ Pause';
+  if (animFrameId) cancelAnimationFrame(animFrameId);
+  animFrameId = requestAnimationFrame(animStep);
+}
+
+function pauseAnim() {
+  S2.animPlaying = false;
+  $('polyPlayBtn').textContent = '▶ Play';
+  if (animFrameId) cancelAnimationFrame(animFrameId);
+  animFrameId = null;
+}
+
+$('polyPlayBtn').addEventListener('click', () => {
+  if (S2.animPlaying) {
+    pauseAnim();
+  } else {
+    // If already at end, restart
+    const atEnd = S2.method === 'triangulation'
+      ? S2.animStep >= S2.n - 2
+      : S2.method === 'walking'
+        ? S2.animProgress >= 1
+        : S2.animStep >= S2.n + 2;
+    if (atEnd) {
+      startAnim();
+    } else {
+      S2.animPlaying = true;
+      lastAnimTime = 0;
+      $('polyPlayBtn').textContent = '⏸ Pause';
+      animFrameId = requestAnimationFrame(animStep);
+    }
+  }
+});
+
+$('nSlider').addEventListener('input', e => {
+  S2.n = +e.target.value;
+  $('nVal').textContent = S2.n;
+  pauseAnim();
+  S2.animStep = 0;
+  S2.animProgress = 0;
+  updatePolyStats();
+  renderPolygon();
+});
+
+document.querySelectorAll('.method-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.method-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    S2.method = tab.dataset.method;
+    S2.animStep = 0;
+    S2.animProgress = 0;
+    pauseAnim();
+    renderPolygon();
+    // Auto-play on method switch
+    setTimeout(startAnim, 200);
+  });
+});
+
+// ============================================================
+// CANVAS RESIZE
+// ============================================================
+function fitParallelCanvas() {
+  const wrap = pCanvas.parentElement;
+  const rect = wrap.getBoundingClientRect();
+  const W = Math.max(360, Math.floor(rect.width));
+  const H = Math.floor(W * 0.56);
+  pCanvas.width = W;
+  pCanvas.height = H;
+  drawParallel();
+}
+
+function fitPolyCanvas() {
+  const wrap = polyCanvas.parentElement;
+  const rect = wrap.getBoundingClientRect();
+  const W = Math.max(360, Math.floor(rect.width));
+  const H = Math.floor(W * 0.60);
+  polyCanvas.width = W;
+  polyCanvas.height = H;
+  renderPolygon();
+}
+
+window.addEventListener('resize', () => {
+  fitParallelCanvas();
+  fitPolyCanvas();
+});
+
+// ============================================================
+// BOOT
+// ============================================================
+updatePairInfo();
+updatePolyStats();
+setTimeout(() => {
+  fitParallelCanvas();
+  fitPolyCanvas();
+  updateProofSteps();
+  // Auto-play the initial method
+  setTimeout(startAnim, 400);
+}, 100);
+
+</script>
+</body>
+</html>

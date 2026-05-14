@@ -58,6 +58,18 @@
   .modal-close { background: transparent; border: none; font-size: 22px; cursor: pointer; color: var(--ink-soft); padding: 0 6px; flex-shrink: 0; line-height: 1; }
   .modal-close:hover { color: var(--student); }
   .modal-iframe { flex: 1; border: none; width: 100%; }
+
+  /* Play With It — interactive activity cards */
+  .kenny-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 6px; }
+  @media (max-width: 600px) { .kenny-cards { grid-template-columns: 1fr; } }
+  .kenny-card { display: block; padding: 16px 18px; background: var(--student-soft); border: 1px solid transparent; border-left: 3px solid var(--student); border-radius: 8px; text-decoration: none; color: var(--ink); transition: all 0.15s; cursor: pointer; position: relative; }
+  .kenny-card:hover { background: var(--paper); border-color: var(--student); box-shadow: 0 4px 14px rgba(253,121,168,0.22); transform: translateY(-1px); }
+  .kc-icon { font-size: 26px; margin-bottom: 6px; line-height: 1; }
+  .kc-title { font-family: var(--serif); font-size: 19px; font-weight: 700; color: var(--student-deep); margin-bottom: 4px; }
+  .kc-desc { font-size: 12.5px; color: var(--ink-soft); line-height: 1.5; padding-right: 24px; }
+  .kc-arrow { position: absolute; top: 18px; right: 18px; color: var(--student); font-size: 18px; font-weight: 700; transition: transform 0.15s; }
+  .kenny-card:hover .kc-arrow { transform: translateX(3px); }
+  .today-badge { display: inline-block; margin-left: 6px; font-size: 9px; font-weight: 700; letter-spacing: 0.08em; background: #c0392b; color: #fff; border-radius: 3px; padding: 2px 6px; vertical-align: middle; text-transform: uppercase; }
 </style>
 </head>
 <body>
@@ -81,6 +93,26 @@
     <h2>This Month</h2>
     <ul class="timeline">
       <li>
+        <span class="date">5/14</span>
+        <a class="popup-link"
+           data-src="2026-05-14/NatalieYoo-2026-05-14-PreAlgebra_Homework-ParallelLinesAndPolygonAngles_Worksheet.pdf"
+           data-fallback="2026-05-14/NatalieYoo-2026-05-14-PreAlgebra_Homework-ParallelLinesAndPolygonAngles_Worksheet.html">
+          Parallel Lines &amp; Polygon Angles &mdash; Homework (20 Q)
+        </a>
+        <span class="pdf-badge">PDF</span>
+        <span class="today-badge">Today</span>
+      </li>
+      <li>
+        <span class="date">5/14</span>
+        <a class="popup-link"
+           data-src="2026-05-14/NatalieYoo-2026-05-14-PreAlgebra_Homework-ParallelLinesAndPolygonAngles_AnswerKey.pdf"
+           data-fallback="2026-05-14/NatalieYoo-2026-05-14-PreAlgebra_Homework-ParallelLinesAndPolygonAngles_AnswerKey.html">
+          Parallel Lines &amp; Polygon Angles &mdash; Answer Key
+        </a>
+        <span class="pdf-badge">PDF</span>
+        <span class="today-badge">Today</span>
+      </li>
+      <li>
         <span class="date">5/7</span>
         <a class="popup-link"
            data-src="2026-05-07/NatalieYoo-2026-05-07-Geometry_AnglesAndRelationships_Worksheet.pdf"
@@ -90,6 +122,22 @@
         <span class="pdf-badge">PDF</span>
       </li>
     </ul>
+  </section>
+
+  <section>
+    <div class="label">Play With It</div>
+    <h2>Interactive Activities <span class="today-badge">New 5/14</span></h2>
+    <p>Drag the slider, rotate the transversal, click an angle pair name to see exactly which angles match. Then explore why every polygon's interior angles add up to <em>(n&minus;2) &middot; 180&deg;</em> &mdash; three different ways.</p>
+    <div class="kenny-cards">
+      <a class="kenny-card popup-link"
+         data-src="interactive/parallel-lines-and-polygon-angles.html"
+         data-label="Parallel Lines &amp; Polygon Angles — Live">
+        <div class="kc-icon">&#128208;</div>
+        <div class="kc-title">Parallel Lines &amp; Polygon Angles</div>
+        <div class="kc-desc">Section 1: rotate a transversal across two parallel lines and click each pair name (corresponding, alternate interior, vertical, &hellip;) to see them light up. Section 2: pick any <strong>n</strong>-gon and watch three different proofs of the interior angle sum animate side-by-side.</div>
+        <div class="kc-arrow">&rarr;</div>
+      </a>
+    </div>
   </section>
 
   <section>
