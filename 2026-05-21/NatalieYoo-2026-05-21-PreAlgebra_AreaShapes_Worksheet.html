@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<!--
+  Worksheet — Area of Triangles, Parallelograms & Trapezoids (20 Q)
+  Natalie Yoo · 6th HM · 2026-05-21
+  ============================================================================
+  Q1-7  Triangles
+  Q8-11 Parallelograms
+  Q12-17 Trapezoids
+  Q18-20 Find missing dimension (reverse formula)
+  ============================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Area Worksheet — Natalie Yoo 2026-05-21</title>
+<script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+@page { size: letter; margin: 0.4in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Times New Roman', serif; color: #000; font-size: 11pt; line-height: 1.5; }
+.page { max-width: 720px; margin: 0 auto; padding: 46px 42px 32px; background: #fff; }
+.page-break { page-break-before: always; }
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.35in 0.4in 0.3in; margin: 0; box-shadow: none; }
+    .problem { page-break-inside: avoid !important; break-inside: avoid !important; }
+    .part-header, .directions, h1, h2 { page-break-after: avoid; break-after: avoid; }
+}
+:root { --c-primary: #c2185b; --c-muted: #555; --c-warning: #d84315; }
+.header { text-align: center; padding-bottom: 8px; margin-bottom: 10px; border-bottom: 2px solid var(--c-primary); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--c-primary); font-weight: bold; }
+.subject-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 4px 3px 6px; font-weight: bold; border: 1.5px solid var(--c-primary); color: var(--c-primary); }
+h1 { font-size: 14pt; margin: 4px 0 6px; font-weight: bold; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; }
+.formula-strip { background: #faf3ff; border: 1px dashed #7b1fa2; padding: 6px 12px; border-radius: 6px; font-size: 10pt; margin: 8px 0 10px; text-align: center; }
+.part-header { font-size: 12pt; font-weight: bold; color: var(--c-primary); margin: 14px 0 4px; padding-bottom: 2px; border-bottom: 1.5px solid var(--c-primary); }
+.directions { font-size: 9.5pt; font-style: italic; color: #333; margin-bottom: 8px; }
+.problem-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 16px; }
+.problem {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 10px;
+    border-left: 3px solid var(--c-primary);
+}
+.problem .qbody { flex: 1; min-width: 0; }
+.problem .qfig { flex: 0 0 auto; }
+.problem .qnum { display: inline-block; min-width: 26px; font-weight: bold; color: var(--c-primary); }
+.problem .ans { font-size: 10pt; color: var(--c-muted); margin-top: 2px; }
+.problem .ans-line { display: inline-block; border-bottom: 1.5px solid #000; min-width: 80px; height: 16px; margin: 0 4px; vertical-align: bottom; }
+.problem .ws { min-height: 60px; margin-top: 4px; border-top: 1px dashed #eee; }
+.shape-fig { background: #fff; border: 1px solid #eee; border-radius: 5px; padding: 2px; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-ALGEBRA</div>
+    <h1>Area of Shapes Worksheet — 20 Questions</h1>
+    <div class="info">
+        <span><strong>Name:</strong> Natalie Yoo</span>
+        <span><strong>Date:</strong> 2026-05-21</span>
+    </div>
+</div>
+
+<div class="formula-strip">
+    <strong>Quick formulas:</strong> &nbsp; Rectangle/parallelogram: $b \cdot h$ &nbsp;·&nbsp;
+    Triangle: $\dfrac{b \cdot h}{2}$ &nbsp;·&nbsp;
+    Trapezoid: $\dfrac{(b_1 + b_2) \cdot h}{2}$
+</div>
+
+<!-- ============== PART A — TRIANGLES ============== -->
+<div class="part-header">Part A — Triangles (use perpendicular height)</div>
+<div class="problem-grid">
+
+<div class="problem">
+    <div class="qbody"><span class="qnum">1)</span> Triangle, b = 10 cm, h = 4 cm. Area = <span class="ans-line"></span><div class="ws"></div></div>
+    <div class="qfig"><svg class="shape-fig" width="100" height="74" viewBox="0 0 100 74"><polygon points="10,60 85,60 50,15" fill="#fce4ec" stroke="#c2185b" stroke-width="1.5"/><line x1="50" y1="15" x2="50" y2="60" stroke="#7b1fa2" stroke-dasharray="3,2"/><text x="48" y="72" text-anchor="middle" font-size="9" fill="#d84315">10 cm</text><text x="54" y="42" font-size="9" fill="#d84315">4 cm</text></svg></div>
+</div>
+
+<div class="problem">
+    <div class="qbody"><span class="qnum">2)</span> Triangle, b = 8 m, h = 5 m. Area = <span class="ans-line"></span><div class="ws"></div></div>
+    <div class="qfig"><svg class="shape-fig" width="100" height="74" viewBox="0 0 100 74"><polygon points="15,60 80,60 60,15" fill="#fce4ec" stroke="#c2185b" stroke-width="1.5"/><line x1="60" y1="15" x2="60" y2="60" stroke="#7b1fa2" stroke-dasharray="3,2"/><text x="48" y="72" text-anchor="middle" font-size="9" fill="#d84315">8 m</text><text x="64" y="42" font-size="9" fill="#d84315">5 m</text></svg></div>
+</div>
+
+<div class="problem">
+    <div class="qbody"><span class="qnum">3)</span> Triangle, b = 12 in, h = 7 in. Area = <span class="ans-line"></span><div class="ws"></div></div>
+    <div class="qfig"><svg class="shape-fig" width="100" height="74" viewBox="0 0 100 74"><polygon points="10,60 90,60 35,15" fill="#fff3b0" stroke="#c2185b" stroke-width="1.5"/><line x1="35" y1="15" x2="35" y2="60" stroke="#7b1fa2" stroke-dasharray="3,2"/><text x="48" y="72" text-anchor="middle" font-size="9" fill="#d84315">12 in</text><text x="39" y="42" font-size="9" fill="#d84315">7 in</text></svg></div>
+</div>
+
+<div class="problem">
+    <div class="qbody"><span class="qnum">4)</span> Triangle, b = 9 yd, h = 6 yd. Area = <span class="ans-line"></span><div class="ws"></div></div>
+    <div class="qfig"><svg class="shape-fig" width="100" height="74" viewBox="0 0 100 74"><polygon points="15,60 85,60 70,15" fill="#fff3b0" stroke="#c2185b" stroke-width="1.5"/><line x1="70" y1="15" x2="70" y2="60" stroke="#7b1fa2" stroke-dasharray="3,2"/><text x="48" y="72" text-anchor="middle" font-size="9" fill="#d84315">9 yd</text><text x="74" y="42" font-size="9" fill="#d84315">6 yd</text></svg></div>
+</div>
+
+<div class="problem">
+    <div class="qbody"><span class="qnum">5)</span> Triangle, b = 15 km, h = 4 km. Area = <span class="ans-line"></span><div class="ws"></div></div>
+    <div class="qfig"><svg class="shape-fig" width="100" height="74" viewBox="0 0 100 74"><polygon points="8,60 90,60 50,18" fill="#cdebd6" stroke="#c2185b" stroke-width="1.5"/><line x1="50" y1="18" x2="50" y2="60" stroke="#7b1fa2" stroke-dasharray="3,2"/><text x="48" y="72" text-anchor="middle" font-size="9" fill="#d84315">15 km</text><text x="54" y="42" font-size="9" fill="#d84315">4 km</text></svg></div>
+</div>
+
+<div class="problem">
+    <div class="qbody"><span class="qnum">6)</span> Triangle, b = 8 in, h = 5.2 in (slant 6 in given but not needed). Area = <span class="ans-line"></span><div class="ws"></div></div>
+    <div class="qfig"><svg class="shape-fig" width="100" height="74" viewBox="0 0 100 74"><polygon points="10,60 90,60 65,15" fill="#cdebd6" stroke="#c2185b" stroke-width="1.5"/><line x1="65" y1="15" x2="65" y2="60" stroke="#7b1fa2" stroke-dasharray="3,2"/><text x="48" y="72" text-anchor="middle" font-size="9" fill="#d84315">8 in</text><text x="69" y="42" font-size="9" fill="#d84315">5.2 in</text></svg></div>
+</div>
+
+<div class="problem">
+    <div class="qbody"><span class="qnum">7)</span> Triangle, b = 11.6 km, h = 6 km. Area = <span class="ans-line"></span><div class="ws"></div></div>
+    <div class="qfig"><svg class="shape-fig" width="100" height="74" viewBox="0 0 100 74"><polygon points="8,60 92,60 30,15" fill="#bee3f8" stroke="#c2185b" stroke-width="1.5"/><line x1="30" y1="15" x2="30" y2="60" stroke="#7b1fa2" stroke-dasharray="3,2"/><text x="48" y="72" text-anchor="middle" font-size="9" fill="#d84315">11.6 km</text><text x="34" y="42" font-size="9" fill="#d84315">6 km</text></svg></div>
+</div>
+
+</div>
+
+<!-- ============== PART B — PARALLELOGRAMS ============== -->
+<div class="part-header">Part B — Parallelograms</div>
+<div class="problem-grid">
+
+<div class="problem">
+    <div class="qbody"><span class="qnum">8)</span> Parallelogram, b = 9 cm, h = 6 cm. Area = <span class="ans-line"></span><div class="ws"></div></div>
+    <div class="qfig"><svg class="shape-fig" width="100" height="74" viewBox="0 0 100 74"><polygon points="10,60 75,60 90,20 25,20" fill="#fff3b0" stroke="#c2185b" stroke-width="1.5"/><line x1="25" y1="20" x2="25" y2="60" stroke="#7b1fa2" stroke-dasharray="3,2"/><text x="48" y="72" text-anchor="middle" font-size="9" fill="#d84315">9 cm</text><text x="20" y="42" text-anchor="end" font-size="9" fill="#d84315">6 cm</text></svg></div>
+</div>
+
+<div class="problem">
+    <div class="qbody"><span class="qnum">9)</span> Parallelogram, b = 12 km, h = 8 km. Area = <span class="ans-line"></span><div class="ws"></div></div>
+    <div class="qfig"><svg class="shape-fig" width="100" height="74" viewBox="0 0 100 74"><polygon points="8,60 80,60 92,20 20,20" fill="#fff3b0" stroke="#c2185b" stroke-width="1.5"/><line x1="20" y1="20" x2="20" y2="60" stroke="#7b1fa2" stroke-dasharray="3,2"/><text x="48" y="72" text-anchor="middle" font-size="9" fill="#d84315">12 km</text><text x="15" y="42" text-anchor="end" font-size="9" fill="#d84315">8 km</text></svg></div>
+</div>
+
+<div class="problem">
+    <div class="qbody"><span class="qnum">10)</span> Parallelogram, b = 14 m, h = 5 m. Area = <span class="ans-line"></span><div class="ws"></div></div>
+    <div class="qfig"><svg class="shape-fig" width="100" height="74" viewBox="0 0 100 74"><polygon points="8,60 88,60 92,20 12,20" fill="#fff3b0" stroke="#c2185b" stroke-width="1.5"/><line x1="12" y1="20" x2="12" y2="60" stroke="#7b1fa2" stroke-dasharray="3,2"/><text x="48" y="72" text-anchor="middle" font-size="9" fill="#d84315">14 m</text><text x="7" y="42" text-anchor="end" font-size="9" fill="#d84315">5 m</text></svg></div>
+</div>
+
+<div class="problem">
+    <div class="qbody"><span class="qnum">11)</span> Parallelogram, b = 9.7 yd, h = 5 yd (slant side 5.8 yd is extra info). Area = <span class="ans-line"></span><div class="ws"></div></div>
+    <div class="qfig"><svg class="shape-fig" width="100" height="74" viewBox="0 0 100 74"><polygon points="10,60 75,60 88,20 23,20" fill="#fff3b0" stroke="#c2185b" stroke-width="1.5"/><line x1="23" y1="20" x2="23" y2="60" stroke="#7b1fa2" stroke-dasharray="3,2"/><text x="48" y="72" text-anchor="middle" font-size="9" fill="#d84315">9.7 yd</text><text x="18" y="42" text-anchor="end" font-size="9" fill="#d84315">5 yd</text></svg></div>
+</div>
+
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============== PART C — TRAPEZOIDS ============== -->
+<div class="part-header">Part C — Trapezoids (use either Way A or Way B from the Notes!)</div>
+<div class="problem-grid">
+
+<div class="problem">
+    <div class="qbody"><span class="qnum">12)</span> Trapezoid, b₁ = 3 cm, b₂ = 6 cm, h = 4 cm. Area = <span class="ans-line"></span><div class="ws"></div></div>
+    <div class="qfig"><svg class="shape-fig" width="100" height="74" viewBox="0 0 100 74"><polygon points="20,60 80,60 65,20 35,20" fill="#cdebd6" stroke="#c2185b" stroke-width="1.5"/><line x1="35" y1="20" x2="35" y2="60" stroke="#7b1fa2" stroke-dasharray="3,2"/><text x="48" y="15" text-anchor="middle" font-size="9" fill="#d84315">3</text><text x="48" y="72" text-anchor="middle" font-size="9" fill="#d84315">6</text><text x="30" y="42" text-anchor="end" font-size="9" fill="#d84315">4</text></svg></div>
+</div>
+
+<div class="problem">
+    <div class="qbody"><span class="qnum">13)</span> Trapezoid, b₁ = 5 m, b₂ = 11 m, h = 4 m. Area = <span class="ans-line"></span><div class="ws"></div></div>
+    <div class="qfig"><svg class="shape-fig" width="100" height="74" viewBox="0 0 100 74"><polygon points="10,60 90,60 65,20 30,20" fill="#cdebd6" stroke="#c2185b" stroke-width="1.5"/><line x1="30" y1="20" x2="30" y2="60" stroke="#7b1fa2" stroke-dasharray="3,2"/><text x="48" y="15" text-anchor="middle" font-size="9" fill="#d84315">5</text><text x="48" y="72" text-anchor="middle" font-size="9" fill="#d84315">11</text><text x="25" y="42" text-anchor="end" font-size="9" fill="#d84315">4</text></svg></div>
+</div>
+
+<div class="problem">
+    <div class="qbody"><span class="qnum">14)</span> Trapezoid, b₁ = 4 km, b₂ = 8 km, h = 3 km. Area = <span class="ans-line"></span><div class="ws"></div></div>
+    <div class="qfig"><svg class="shape-fig" width="100" height="74" viewBox="0 0 100 74"><polygon points="15,60 85,60 65,25 35,25" fill="#cdebd6" stroke="#c2185b" stroke-width="1.5"/><line x1="35" y1="25" x2="35" y2="60" stroke="#7b1fa2" stroke-dasharray="3,2"/><text x="48" y="20" text-anchor="middle" font-size="9" fill="#d84315">4</text><text x="48" y="72" text-anchor="middle" font-size="9" fill="#d84315">8</text><text x="30" y="44" text-anchor="end" font-size="9" fill="#d84315">3</text></svg></div>
+</div>
+
+<div class="problem">
+    <div class="qbody"><span class="qnum">15)</span> Trapezoid, b₁ = 4 yd, b₂ = 1 yd, h = 3.2 yd. Area = <span class="ans-line"></span><div class="ws"></div></div>
+    <div class="qfig"><svg class="shape-fig" width="100" height="74" viewBox="0 0 100 74"><polygon points="42,60 55,60 78,20 18,20" fill="#cdebd6" stroke="#c2185b" stroke-width="1.5"/><line x1="42" y1="20" x2="42" y2="60" stroke="#7b1fa2" stroke-dasharray="3,2"/><text x="48" y="15" text-anchor="middle" font-size="9" fill="#d84315">4</text><text x="48" y="72" text-anchor="middle" font-size="9" fill="#d84315">1</text><text x="37" y="44" text-anchor="end" font-size="9" fill="#d84315">3.2</text></svg></div>
+</div>
+
+<div class="problem">
+    <div class="qbody"><span class="qnum">16)</span> Trapezoid, b₁ = 6 m, b₂ = 3 m, h = 3.9 m. Area = <span class="ans-line"></span><div class="ws"></div></div>
+    <div class="qfig"><svg class="shape-fig" width="100" height="74" viewBox="0 0 100 74"><polygon points="30,60 70,60 80,20 12,20" fill="#cdebd6" stroke="#c2185b" stroke-width="1.5"/><line x1="30" y1="20" x2="30" y2="60" stroke="#7b1fa2" stroke-dasharray="3,2"/><text x="48" y="15" text-anchor="middle" font-size="9" fill="#d84315">6</text><text x="48" y="72" text-anchor="middle" font-size="9" fill="#d84315">3</text><text x="25" y="44" text-anchor="end" font-size="9" fill="#d84315">3.9</text></svg></div>
+</div>
+
+<div class="problem">
+    <div class="qbody"><span class="qnum">17)</span> Trapezoid, b₁ = 4.6 km, b₂ = 11.6 km, h = 6 km. Area = <span class="ans-line"></span><div class="ws"></div></div>
+    <div class="qfig"><svg class="shape-fig" width="100" height="74" viewBox="0 0 100 74"><polygon points="10,60 90,60 65,20 32,20" fill="#cdebd6" stroke="#c2185b" stroke-width="1.5"/><line x1="32" y1="20" x2="32" y2="60" stroke="#7b1fa2" stroke-dasharray="3,2"/><text x="48" y="15" text-anchor="middle" font-size="9" fill="#d84315">4.6</text><text x="48" y="72" text-anchor="middle" font-size="9" fill="#d84315">11.6</text><text x="27" y="42" text-anchor="end" font-size="9" fill="#d84315">6</text></svg></div>
+</div>
+
+</div>
+
+<!-- ============== PART D — REVERSE FORMULA ============== -->
+<div class="part-header">Part D — Find the missing dimension (run the formula backwards!)</div>
+<div class="problem-grid">
+
+<div class="problem"><div class="qbody"><span class="qnum">18)</span> A triangle has area <strong>24 cm²</strong> and height <strong>6 cm</strong>. Find the base. b = <span class="ans-line"></span><div class="ws"></div></div></div>
+<div class="problem"><div class="qbody"><span class="qnum">19)</span> A parallelogram has area <strong>72 m²</strong> and base <strong>9 m</strong>. Find the height. h = <span class="ans-line"></span><div class="ws"></div></div></div>
+<div class="problem"><div class="qbody"><span class="qnum">20)</span> A trapezoid has area <strong>96 cm²</strong>, height <strong>8 cm</strong>, and one base $b_1 = $ <strong>10 cm</strong>. Find the other base. $b_2 = $ <span class="ans-line"></span><div class="ws" style="min-height: 90px;"></div></div></div>
+
+</div>
+
+</div>
+</body>
+</html>

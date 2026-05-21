@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<!--
+  Interactive — Trapezoid Two Ways Explorer
+  Natalie Yoo · 6th HM · 2026-05-21
+  Two visualizations of (b1+b2)·h/2:
+    Mode A — Mirror flip → parallelogram (take half)
+    Mode B — Diagonal split → two triangles (sum)
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trapezoid Two Ways · Natalie Yoo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+:root {
+    --rose: #c2185b;
+    --rose-soft: #fce4ec;
+    --rose-deep: #880e4f;
+    --purple: #7b1fa2;
+    --purple-soft: #f3e5f5;
+    --green: #2e7d32;
+    --green-soft: #d4f7ed;
+    --gold: #d4a017;
+    --gold-soft: #fef3c7;
+    --blue: #1565c0;
+    --blue-soft: #e3f2fd;
+    --ink: #1f2937;
+    --ink-soft: #475569;
+    --bg: #fff5f8;
+    --paper: #fff;
+    --line: #e8d4dd;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg); color: var(--ink); line-height: 1.55; padding: 18px 12px 36px; }
+.wrap { max-width: 820px; margin: 0 auto; background: var(--paper); border-radius: 16px; box-shadow: 0 6px 28px rgba(194,24,91,0.16); overflow: hidden; }
+header.top { background: linear-gradient(135deg, var(--rose-deep) 0%, var(--purple) 100%); color: #fff; padding: 22px 28px; text-align: center; }
+header.top h1 { font-family: 'Playfair Display', 'Georgia', serif; font-weight: 700; font-size: 26px; line-height: 1.2; margin: 4px 0 2px; }
+header.top .sub { font-size: 13px; opacity: 0.92; font-style: italic; }
+
+nav.tabs { display: flex; background: var(--rose-soft); border-bottom: 1px solid var(--line); }
+nav.tabs button {
+    flex: 1; border: none; background: transparent; padding: 12px 8px;
+    font-family: inherit; font-size: 13px; font-weight: 600; color: var(--rose-deep);
+    cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.15s ease;
+}
+nav.tabs button:hover { background: rgba(255,255,255,0.5); }
+nav.tabs button.active { background: var(--paper); border-bottom-color: var(--rose); }
+
+main { padding: 22px 26px 28px; }
+.panel { display: none; }
+.panel.active { display: block; }
+
+.golden {
+    background: var(--gold-soft);
+    border: 2px dashed var(--gold);
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin-bottom: 14px;
+    font-size: 13.5px;
+    line-height: 1.6;
+}
+.golden .head { font-family: 'Playfair Display', serif; font-weight: 700; color: var(--rose-deep); font-size: 15px; margin-bottom: 4px; }
+
+.controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin: 14px 0;
+}
+.ctrl { background: var(--rose-soft); padding: 12px 14px; border-radius: 10px; }
+.ctrl label { display: flex; justify-content: space-between; align-items: baseline; font-size: 11px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--rose-deep); font-weight: 700; margin-bottom: 6px; }
+.ctrl label .v { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; color: var(--blue); }
+.ctrl input[type=range] { width: 100%; accent-color: var(--rose); }
+
+.go-btn {
+    background: linear-gradient(135deg, var(--rose) 0%, var(--purple) 100%);
+    color: #fff;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 22px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(194,24,91,0.3);
+    transition: transform 0.15s ease;
+    margin: 6px 0;
+}
+.go-btn:hover { transform: translateY(-2px); }
+
+.stage { background: var(--paper); border: 1px solid var(--line); border-radius: 10px; padding: 14px; min-height: 240px; display: flex; align-items: center; justify-content: center; margin: 12px 0; }
+.stage svg { max-width: 100%; height: auto; }
+
+.result-card {
+    background: var(--blue-soft);
+    border-radius: 10px;
+    padding: 14px 18px;
+    text-align: center;
+    margin-top: 10px;
+}
+.result-card .head { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); font-weight: 700; }
+.result-card .big { font-family: 'Playfair Display', serif; font-size: 30px; font-weight: 700; color: var(--blue); margin-top: 4px; line-height: 1.1; }
+.result-card .sub { font-size: 12px; color: var(--ink-soft); margin-top: 4px; }
+
+footer.bot { text-align: center; padding: 12px; font-size: 11px; color: var(--ink-soft); border-top: 1px solid var(--line); background: var(--bg); }
+footer.bot strong { color: var(--rose); }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header class="top">
+    <h1>Trapezoid — Two Ways to See Why</h1>
+    <div class="sub">Both interpretations land on the SAME formula: $(b_1 + b_2) \cdot h / 2$.</div>
+</header>
+
+<nav class="tabs" id="tabs">
+    <button class="active" data-panel="pA">Way A — Mirror Flip</button>
+    <button data-panel="pB">Way B — Diagonal Split</button>
+</nav>
+
+<main>
+
+<div class="golden">
+    <div class="head">★ Two interpretations, one formula</div>
+    Use the sliders to change $b_1$, $b_2$, $h$. Press <strong>▶ Animate!</strong> to watch the trapezoid turn into either a parallelogram (Way A) or two triangles (Way B). The area number stays the same.
+</div>
+
+<div class="controls">
+    <div class="ctrl">
+        <label>b₁ (top) <span class="v" id="b1Lbl">3</span></label>
+        <input type="range" id="b1" min="1" max="10" step="0.5" value="3">
+    </div>
+    <div class="ctrl">
+        <label>b₂ (bottom) <span class="v" id="b2Lbl">6</span></label>
+        <input type="range" id="b2" min="1" max="14" step="0.5" value="6">
+    </div>
+    <div class="ctrl">
+        <label>h (height) <span class="v" id="hLbl">4</span></label>
+        <input type="range" id="h" min="1" max="8" step="0.5" value="4">
+    </div>
+</div>
+
+<!-- WAY A — MIRROR FLIP -->
+<section class="panel active" id="pA">
+    <div style="text-align:center;"><button class="go-btn" id="goA">▶ Flip &amp; Match!</button></div>
+    <div class="stage"><svg id="svgA" width="460" height="240" viewBox="0 0 460 240"></svg></div>
+    <div class="result-card">
+        <div class="head">Area (Way A)</div>
+        <div class="big"><span id="areaA">18</span> units²</div>
+        <div class="sub" id="stepA">parallelogram base (b₁+b₂)·h = total, take half → area</div>
+    </div>
+</section>
+
+<!-- WAY B — DIAGONAL SPLIT -->
+<section class="panel" id="pB">
+    <div style="text-align:center;"><button class="go-btn" id="goB">▶ Cut &amp; Split!</button></div>
+    <div class="stage"><svg id="svgB" width="460" height="240" viewBox="0 0 460 240"></svg></div>
+    <div class="result-card">
+        <div class="head">Area (Way B)</div>
+        <div class="big"><span id="areaB">18</span> units²</div>
+        <div class="sub" id="stepB">triangle b₁·h/2 + triangle b₂·h/2</div>
+    </div>
+</section>
+
+</main>
+
+<footer class="bot">
+    Made for <strong>Natalie Yoo</strong> · Newton School · 2026-05-21
+</footer>
+
+</div>
+
+<script>
+const b1S = document.getElementById('b1'), b2S = document.getElementById('b2'), hS = document.getElementById('h');
+const b1Lbl = document.getElementById('b1Lbl'), b2Lbl = document.getElementById('b2Lbl'), hLbl = document.getElementById('hLbl');
+const svgA = document.getElementById('svgA'), svgB = document.getElementById('svgB');
+const goA = document.getElementById('goA'), goB = document.getElementById('goB');
+const areaA = document.getElementById('areaA'), areaB = document.getElementById('areaB');
+const stepA = document.getElementById('stepA'), stepB = document.getElementById('stepB');
+
+let animA = false, animB = false;
+
+function getVals() {
+    const b1 = parseFloat(b1S.value), b2 = parseFloat(b2S.value), h = parseFloat(hS.value);
+    return { b1, b2, h };
+}
+function fmt(n) { return (Math.round(n * 100) / 100).toString(); }
+
+// === WAY A — Mirror flip into parallelogram ===
+function drawA(progress = 0) {
+    const { b1, b2, h } = getVals();
+    const scale = 16;
+    const B1 = b1 * scale, B2 = b2 * scale, H = h * scale;
+    const totalW = B1 + B2 + 30;
+    const x0 = (460 - totalW) / 2;
+    const y0 = (240 - H) / 2;
+    const off1 = (B2 - B1) / 2;
+
+    // Original trapezoid: bottom-left at (x0, y0+H), bottom-right (x0+B2, y0+H), top-right (x0+off1+B1, y0), top-left (x0+off1, y0)
+    const t1 = [[x0, y0+H], [x0+B2, y0+H], [x0+off1+B1, y0], [x0+off1, y0]];
+
+    // Flipped copy final position: attached to the right edge, upside down
+    // It must complete the parallelogram of base (b1+b2)
+    // The flipped trapezoid's top (now bottom) = b2; bottom (now top) = b1
+    // Place so its left edge aligns with original's right edge at the top
+    const t2Final = [
+        [x0+off1+B1, y0],                  // top-left of parallelogram (= original top-right)
+        [x0+off1+B1+B2, y0],               // top-right (this is the flipped trapezoid's bottom-right, now at top)
+        [x0+B2+B1, y0+H],                  // bottom-right
+        [x0+B2, y0+H]                      // bottom-left (= original bottom-right)
+    ];
+
+    // Start position: t2 sitting to the right of the canvas, away
+    const t2Start = [
+        [x0+off1+B1 + 100, y0],
+        [x0+off1+B1+B2 + 100, y0],
+        [x0+B2+B1 + 100, y0+H],
+        [x0+B2 + 100, y0+H]
+    ];
+
+    const t2 = t2Start.map((p, i) => {
+        const f = t2Final[i];
+        return [p[0] + (f[0] - p[0]) * progress, p[1] + (f[1] - p[1]) * progress];
+    });
+
+    let s = '';
+    // Parallelogram ghost when fully assembled
+    if (progress > 0.7) {
+        s += `<polygon points="${t1.map(p=>p.join(',')).join(' ')} ${t2[1].join(',')} ${t2[2].join(',')}" fill="none" stroke="#2e7d32" stroke-width="2" stroke-dasharray="5,3"/>`;
+    }
+    // Original trapezoid
+    s += `<polygon points="${t1.map(p=>p.join(',')).join(' ')}" fill="#cdebd6" stroke="#1565c0" stroke-width="2"/>`;
+    // Flipped copy
+    s += `<polygon points="${t2.map(p=>p.join(',')).join(' ')}" fill="#fce4ec" stroke="#c62828" stroke-width="2" opacity="0.85"/>`;
+    // Labels
+    s += `<text x="${x0+off1+B1/2}" y="${y0-6}" text-anchor="middle" font-size="13" fill="#d84315" font-weight="bold">b₁ = ${fmt(b1)}</text>`;
+    s += `<text x="${x0+B2/2}" y="${y0+H+18}" text-anchor="middle" font-size="13" fill="#d84315" font-weight="bold">b₂ = ${fmt(b2)}</text>`;
+    s += `<text x="${x0-8}" y="${y0+H/2+4}" text-anchor="end" font-size="13" fill="#d84315" font-weight="bold">h = ${fmt(h)}</text>`;
+    if (progress > 0.95) {
+        s += `<text x="${x0+(B1+B2)/2}" y="${y0+H+38}" text-anchor="middle" font-size="14" fill="#2e7d32" font-weight="bold">parallelogram base = b₁+b₂ = ${fmt(b1+b2)}</text>`;
+    }
+    svgA.innerHTML = s;
+
+    const a = (b1+b2)*h/2;
+    areaA.textContent = fmt(a);
+    stepA.innerHTML = `Parallelogram area = (b₁+b₂)·h = (${fmt(b1)}+${fmt(b2)})·${fmt(h)} = ${fmt((b1+b2)*h)}. &nbsp; Trapezoid = half = <strong>${fmt(a)}</strong>`;
+}
+
+// === WAY B — Diagonal split into two triangles ===
+function drawB(progress = 0) {
+    const { b1, b2, h } = getVals();
+    const scale = 16;
+    const B1 = b1 * scale, B2 = b2 * scale, H = h * scale;
+    const x0 = (460 - B2) / 2;
+    const y0 = (240 - H) / 2 - 10;
+    const off1 = (B2 - B1) / 2;
+
+    // Trapezoid vertices:
+    //   A = bottom-left (x0, y0+H)
+    //   B = bottom-right (x0+B2, y0+H)
+    //   C = top-right (x0+off1+B1, y0)
+    //   D = top-left (x0+off1, y0)
+    const A = [x0, y0+H], B = [x0+B2, y0+H], C = [x0+off1+B1, y0], D = [x0+off1, y0];
+
+    // Triangle 1 (top): D, C, A (uses b1 as a side, h as perpendicular height — drawn from A perpendicular to DC line, which has length h since DC is parallel to AB and at vertical distance h)
+    // For simpler interpretation, we use the diagonal from A to C:
+    // Triangle 1 (top): A, D, C  (has the top base b1 = DC; height = h)
+    // Triangle 2 (bottom): A, C, B  (has the bottom base b2 = AB; height = h)
+    const tri1 = [A, D, C];
+    const tri2 = [A, C, B];
+
+    // For animation, slide the two triangles apart
+    const offset = progress * 60;  // separate vertically
+    const tri1Move = tri1.map(p => [p[0], p[1] - offset]);
+    const tri2Move = tri2.map(p => [p[0], p[1] + offset]);
+
+    let s = '';
+    // Diagonal line in original position (for reference when not animating)
+    if (progress < 0.05) {
+        s += `<polygon points="${A.join(',')} ${B.join(',')} ${C.join(',')} ${D.join(',')}" fill="none" stroke="#888" stroke-width="1" stroke-dasharray="3,2"/>`;
+    }
+    // Triangle 1 (top, green)
+    s += `<polygon points="${tri1Move.map(p=>p.join(',')).join(' ')}" fill="#cdebd6" stroke="#2e7d32" stroke-width="2"/>`;
+    // Triangle 2 (bottom, blue)
+    s += `<polygon points="${tri2Move.map(p=>p.join(',')).join(' ')}" fill="#bee3f8" stroke="#1565c0" stroke-width="2"/>`;
+    // Diagonal AC (now belongs to each triangle separately)
+    // Labels
+    const topMidX = (D[0] + C[0]) / 2;
+    s += `<text x="${topMidX}" y="${y0 - offset - 6}" text-anchor="middle" font-size="13" fill="#d84315" font-weight="bold">b₁ = ${fmt(b1)}</text>`;
+    s += `<text x="${(A[0]+B[0])/2}" y="${y0+H + offset + 18}" text-anchor="middle" font-size="13" fill="#d84315" font-weight="bold">b₂ = ${fmt(b2)}</text>`;
+    s += `<text x="${x0-8}" y="${y0+H/2+4}" text-anchor="end" font-size="13" fill="#d84315" font-weight="bold">h = ${fmt(h)}</text>`;
+
+    // Show triangle areas next to each when separated
+    if (progress > 0.5) {
+        s += `<text x="${(D[0]+C[0])/2}" y="${(D[1]+A[1])/2 - offset + 4}" text-anchor="middle" font-size="12" fill="#2e7d32" font-weight="bold">b₁·h/2 = ${fmt(b1*h/2)}</text>`;
+        s += `<text x="${(A[0]+B[0])/2}" y="${(A[1]+C[1])/2 + offset}" text-anchor="middle" font-size="12" fill="#1565c0" font-weight="bold">b₂·h/2 = ${fmt(b2*h/2)}</text>`;
+    }
+
+    svgB.innerHTML = s;
+
+    const a = (b1+b2)*h/2;
+    areaB.textContent = fmt(a);
+    stepB.innerHTML = `Top triangle: ${fmt(b1*h/2)} &nbsp;+&nbsp; Bottom triangle: ${fmt(b2*h/2)} = <strong>${fmt(a)}</strong>`;
+}
+
+[b1S, b2S, hS].forEach(el => el.addEventListener('input', () => {
+    b1Lbl.textContent = fmt(parseFloat(b1S.value));
+    b2Lbl.textContent = fmt(parseFloat(b2S.value));
+    hLbl.textContent = fmt(parseFloat(hS.value));
+    if (!animA) drawA(0);
+    if (!animB) drawB(0);
+}));
+
+goA.addEventListener('click', () => {
+    if (animA) return;
+    animA = true;
+    let t = 0;
+    const id = setInterval(() => {
+        t += 0.025;
+        if (t >= 1) { t = 1; clearInterval(id); animA = false; setTimeout(() => drawA(0), 1800); }
+        drawA(t);
+    }, 25);
+});
+goB.addEventListener('click', () => {
+    if (animB) return;
+    animB = true;
+    let t = 0;
+    const id = setInterval(() => {
+        t += 0.025;
+        if (t >= 1) { t = 1; clearInterval(id); animB = false; setTimeout(() => drawB(0), 1800); }
+        drawB(t);
+    }, 25);
+});
+
+// Tabs
+document.querySelectorAll('#tabs button').forEach(b => {
+    b.addEventListener('click', () => {
+        document.querySelectorAll('#tabs button').forEach(x => x.classList.remove('active'));
+        document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+        b.classList.add('active');
+        document.getElementById(b.dataset.panel).classList.add('active');
+    });
+});
+
+drawA(0);
+drawB(0);
+</script>
+</body>
+</html>

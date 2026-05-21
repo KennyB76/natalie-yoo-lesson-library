@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<!--
+  ============================================================================
+  Notes — Area of Shapes (Concept-First)
+  Natalie Yoo · 6th grade HM · Pre-Algebra · 2026-05-21
+  ----------------------------------------------------------------------------
+  Three sections (per Kenny insight 2026-05-21):
+    1. What IS area? — counting unit squares
+    2. Triangle area — ANY base works; same shape, three valid (b, h) pairs;
+       triangle = half of a parallelogram/rectangle
+    3. Trapezoid area — TWO ways to see (b1+b2)·h/2:
+       Way A — flip a copy upside-down → parallelogram of base (b1+b2), take half
+       Way B — diagonal cut → two triangles: b1·h/2 + b2·h/2 = (b1+b2)·h/2
+  ============================================================================
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Area Notes — Natalie Yoo 2026-05-21</title>
+<script>window.MathJax={tex:{inlineMath:[['$','$'],['\\(','\\)']]}};</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+@page { size: letter; margin: 0.45in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Times New Roman', serif; color: #000; font-size: 11pt; line-height: 1.6; }
+.page { max-width: 720px; margin: 0 auto; padding: 50px 46px 36px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+    html, body { background: #fff; }
+    .page { max-width: none; padding: 0.4in 0.5in 0.35in; margin: 0; box-shadow: none; }
+    .concept-box, .example, .way-card { page-break-inside: avoid !important; break-inside: avoid !important; }
+    .part-header, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+    .page-break { page-break-before: always; break-before: page; }
+}
+:root {
+    --c-primary: #c2185b;
+    --c-primary-dark: #880e4f;
+    --c-accent: #7b1fa2;
+    --c-warning: #d84315;
+    --c-final: #2e7d32;
+    --c-muted: #555;
+}
+h1, h2, h3, .part-header { font-family: 'Libre Baskerville', 'Georgia', serif; }
+.header { text-align: center; padding-bottom: 10px; margin-bottom: 14px; border-bottom: 2px solid var(--c-primary); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--c-primary); font-weight: bold; }
+.subject-tag, .notes-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 4px 3px 7px; font-weight: bold; }
+.subject-tag { border: 1.5px solid var(--c-primary); color: var(--c-primary); }
+.notes-tag { border: 1.5px solid var(--c-final); color: var(--c-final); }
+h1 { font-size: 15pt; margin: 6px 0 8px; font-weight: bold; line-height: 1.25; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 4px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 3px; color: var(--c-muted); }
+
+.part-header { font-size: 14pt; font-weight: bold; color: var(--c-primary); margin: 22px 0 8px; padding-bottom: 4px; border-bottom: 2px solid var(--c-primary); }
+
+.concept-box {
+    border: 2px solid var(--c-accent);
+    border-left-width: 5px;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    background: #faf3ff;
+    font-size: 10.5pt;
+    line-height: 1.65;
+}
+.concept-box .head { font-weight: bold; color: var(--c-accent); margin-bottom: 6px; font-size: 11pt; }
+.concept-box strong { color: var(--c-primary-dark); }
+
+.example {
+    border: 2px solid var(--c-final);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    background: #f3fcf5;
+}
+.example .head { font-weight: bold; color: var(--c-final); margin-bottom: 6px; font-size: 11pt; }
+.formula {
+    display: inline-block;
+    padding: 4px 12px;
+    background: #fff;
+    border: 1.5px dashed var(--c-accent);
+    border-radius: 5px;
+    color: var(--c-primary-dark);
+    font-family: 'Georgia', serif;
+    font-size: 11pt;
+    margin: 4px 0;
+}
+
+.fig-row { display: flex; gap: 16px; align-items: center; margin: 10px 0; flex-wrap: wrap; justify-content: center; }
+.fig-row svg { background: #fff; border: 1px solid #eee; border-radius: 6px; padding: 6px; }
+.fig-row .caption { font-size: 9pt; color: var(--c-muted); text-align: center; margin-top: 4px; }
+.fig-col { display: flex; flex-direction: column; align-items: center; }
+
+.way-card {
+    background: #fff;
+    border: 2px solid var(--c-warning);
+    border-left-width: 5px;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin: 12px 0;
+    page-break-inside: avoid;
+}
+.way-card .head { font-weight: bold; color: var(--c-warning); font-size: 11pt; margin-bottom: 6px; }
+.way-card .body { font-size: 10.5pt; line-height: 1.65; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <span class="subject-tag">PRE-ALGEBRA</span><span class="notes-tag">NOTES</span>
+    <h1>Area of Shapes — Triangle &amp; Trapezoid (with TWO Interpretations)</h1>
+    <div class="info">
+        <span><strong>Student:</strong> Natalie Yoo</span>
+        <span><strong>Date:</strong> 2026-05-21</span>
+    </div>
+    <div class="standard"><strong>Standard:</strong> CCSS.MATH.CONTENT.6.G.A.1 — Find the area of triangles, special quadrilaterals, and polygons by composing into rectangles or decomposing into triangles.</div>
+</div>
+
+<!-- ============== SECTION 1 — WHAT IS AREA? ============== -->
+<div class="part-header">1. What IS Area?</div>
+
+<div class="concept-box">
+    <div class="head">★ The big idea</div>
+    <strong>Area = the number of unit squares that fit inside a shape.</strong> If the unit is meters, the squares are 1 m × 1 m, and we measure area in <strong>m²</strong>. If the unit is centimeters, the squares are 1 cm × 1 cm and we measure in <strong>cm²</strong>.
+    <div class="fig-row">
+        <div class="fig-col">
+            <svg width="170" height="120" viewBox="0 0 170 120">
+                <!-- 4×2 grid -->
+                <g stroke="#c2185b" stroke-width="1.5" fill="#fce4ec">
+                    <rect x="10" y="20" width="35" height="35"/>
+                    <rect x="45" y="20" width="35" height="35"/>
+                    <rect x="80" y="20" width="35" height="35"/>
+                    <rect x="115" y="20" width="35" height="35"/>
+                    <rect x="10" y="55" width="35" height="35"/>
+                    <rect x="45" y="55" width="35" height="35"/>
+                    <rect x="80" y="55" width="35" height="35"/>
+                    <rect x="115" y="55" width="35" height="35"/>
+                </g>
+                <g font-size="14" fill="#880e4f" font-weight="bold" text-anchor="middle">
+                    <text x="27" y="42">1</text><text x="62" y="42">2</text>
+                    <text x="97" y="42">3</text><text x="132" y="42">4</text>
+                    <text x="27" y="77">5</text><text x="62" y="77">6</text>
+                    <text x="97" y="77">7</text><text x="132" y="77">8</text>
+                </g>
+                <text x="80" y="13" text-anchor="middle" font-size="11" fill="#d84315" font-weight="bold">4 m</text>
+                <text x="3" y="78" text-anchor="end" font-size="11" fill="#d84315" font-weight="bold">2 m</text>
+                <text x="80" y="108" text-anchor="middle" font-size="13" fill="#2e7d32" font-weight="bold">Area = 8 m²</text>
+            </svg>
+            <div class="caption">A 4 m × 2 m rectangle holds 8 unit squares</div>
+        </div>
+        <div style="max-width: 270px; font-size: 10.5pt; line-height: 1.65;">
+            <strong>Count them.</strong> The rectangle has 4 columns and 2 rows of 1 m × 1 m squares — that's <strong>8 squares</strong>. Each square = 1 m² of area, so total area = 8 m².<br><br>
+            The same idea works for ANY shape. We just need a way to <em>count</em> the squares — even when the shape doesn't fit nicely on a grid (triangle, trapezoid, etc.). That's where the formulas come from.
+        </div>
+    </div>
+    <div style="margin-top: 6px;">
+        <span class="formula">For a rectangle: $\text{Area} = b \times h$</span>
+    </div>
+</div>
+
+<!-- ============== SECTION 2 — TRIANGLE ============== -->
+<div class="part-header">2. Triangle Area — Any Base Works!</div>
+
+<div class="concept-box">
+    <div class="head">★ Key insight #1 — Triangle = half of a parallelogram</div>
+    Take any triangle. Make a copy, rotate it 180° and place it next to the original. The two triangles form a <strong>parallelogram</strong> (or rectangle) with the same base and height. So:
+    <div class="fig-row">
+        <svg width="240" height="110" viewBox="0 0 240 110">
+            <!-- triangle -->
+            <polygon points="20,90 130,90 70,20" fill="#fce4ec" stroke="#c2185b" stroke-width="2"/>
+            <!-- ghost flipped triangle making a parallelogram -->
+            <polygon points="130,90 70,20 180,20" fill="#fff" stroke="#c2185b" stroke-width="1.5" stroke-dasharray="4,3" opacity="0.8"/>
+            <line x1="70" y1="20" x2="70" y2="90" stroke="#7b1fa2" stroke-width="1.2" stroke-dasharray="3,2"/>
+            <rect x="65" y="85" width="5" height="5" fill="none" stroke="#7b1fa2"/>
+            <text x="75" y="105" text-anchor="middle" font-size="11" fill="#d84315" font-weight="bold">b</text>
+            <text x="58" y="58" text-anchor="end" font-size="11" fill="#d84315" font-weight="bold">h</text>
+            <text x="195" y="50" font-size="10" fill="#7b1fa2">(flipped copy)</text>
+        </svg>
+        <div style="max-width: 250px; font-size: 10.5pt;">
+            Parallelogram area = $b \times h$. <br>
+            <strong>One</strong> triangle = half of that.
+            <div style="margin-top: 6px; text-align: center;">
+                <span class="formula">$\text{Area}_\triangle = \dfrac{b \times h}{2}$</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="concept-box">
+    <div class="head">★ Key insight #2 — ANY of the 3 sides can be the base</div>
+    A triangle has <strong>three sides</strong>. ANY one of them can be called the base — but then the height MUST be the <em>perpendicular</em> distance from that base to the opposite vertex. The same triangle gives you <strong>three different (b, h) pairs</strong>, but they all multiply to the same area.
+    <div class="fig-row">
+        <div class="fig-col">
+            <svg width="150" height="110" viewBox="0 0 150 110">
+                <polygon points="15,95 130,95 80,15" fill="#fff3b0" stroke="#c2185b" stroke-width="2"/>
+                <line x1="80" y1="15" x2="80" y2="95" stroke="#c2185b" stroke-dasharray="3,2"/>
+                <rect x="75" y="90" width="5" height="5" fill="none" stroke="#c2185b"/>
+                <text x="72" y="106" text-anchor="middle" font-size="11" fill="#d84315" font-weight="bold">b₁</text>
+                <text x="84" y="60" font-size="11" fill="#d84315" font-weight="bold">h₁</text>
+            </svg>
+            <div class="caption">Bottom side as base</div>
+        </div>
+        <div class="fig-col">
+            <svg width="150" height="110" viewBox="0 0 150 110">
+                <polygon points="15,95 130,95 80,15" fill="#cdebd6" stroke="#c2185b" stroke-width="2"/>
+                <!-- height from B to side AC -->
+                <line x1="130" y1="95" x2="50" y2="35" stroke="#c2185b" stroke-dasharray="3,2"/>
+                <text x="60" y="58" font-size="11" fill="#d84315" font-weight="bold">h₂</text>
+                <text x="50" y="45" font-size="11" fill="#d84315" font-weight="bold">b₂</text>
+            </svg>
+            <div class="caption">Left slant side as base</div>
+        </div>
+        <div class="fig-col">
+            <svg width="150" height="110" viewBox="0 0 150 110">
+                <polygon points="15,95 130,95 80,15" fill="#bee3f8" stroke="#c2185b" stroke-width="2"/>
+                <line x1="15" y1="95" x2="100" y2="55" stroke="#c2185b" stroke-dasharray="3,2"/>
+                <text x="100" y="50" font-size="11" fill="#d84315" font-weight="bold">b₃</text>
+                <text x="55" y="78" font-size="11" fill="#d84315" font-weight="bold">h₃</text>
+            </svg>
+            <div class="caption">Right slant side as base</div>
+        </div>
+    </div>
+    <strong>$b_1 \cdot h_1 = b_2 \cdot h_2 = b_3 \cdot h_3$</strong> — three different multiplications, same area. Pick whichever pair is easiest to read off the figure.
+</div>
+
+<div class="example">
+    <div class="head">Worked Example — Triangle b = 10 cm, h = 4 cm</div>
+    Area = $\dfrac{10 \times 4}{2} = \dfrac{40}{2} = $ <strong>20 cm²</strong>
+    <div style="margin-top: 4px; font-size: 9.5pt; color: var(--c-muted); font-style: italic;">
+        Important: 4 cm is the perpendicular distance from the chosen 10-cm base to the top vertex — NOT the slanted side.
+    </div>
+</div>
+
+<div class="page-break"></div>
+
+<!-- ============== SECTION 3 — TRAPEZOID TWO WAYS ============== -->
+<div class="part-header">3. Trapezoid Area — TWO Ways to See It</div>
+
+<div class="concept-box">
+    <div class="head">★ The formula (memorize the IDEA, not the symbols)</div>
+    A trapezoid has two parallel sides — call them $b_1$ (top) and $b_2$ (bottom) — and a perpendicular height $h$ between them.
+    <div style="text-align: center; margin: 6px 0;">
+        <span class="formula" style="font-size: 13pt;">$\text{Area}_\text{trap} = \dfrac{(b_1 + b_2) \times h}{2}$</span>
+    </div>
+    <strong>WHY does it look like that?</strong> There are two equally good explanations. Pick the one that "clicks" for you — both prove the formula is correct.
+</div>
+
+<!-- WAY A -->
+<div class="way-card">
+    <div class="head">WAY A — Half of TWO trapezoids (flip into a parallelogram)</div>
+    <div class="body">
+        Take the trapezoid. Make an <strong>identical copy</strong>. Flip the copy upside down and slide it next to the original. The two trapezoids together form a <strong>parallelogram</strong>.
+        <div class="fig-row">
+            <svg width="290" height="120" viewBox="0 0 290 120">
+                <!-- original trapezoid -->
+                <polygon points="40,90 130,90 110,30 60,30" fill="#cdebd6" stroke="#1565c0" stroke-width="2"/>
+                <line x1="60" y1="30" x2="60" y2="90" stroke="#7b1fa2" stroke-dasharray="3,2"/>
+                <text x="85" y="22" text-anchor="middle" font-size="11" fill="#d84315" font-weight="bold">b₁</text>
+                <text x="85" y="106" text-anchor="middle" font-size="11" fill="#d84315" font-weight="bold">b₂</text>
+                <text x="53" y="63" text-anchor="end" font-size="11" fill="#d84315" font-weight="bold">h</text>
+                <!-- flipped copy attached -->
+                <polygon points="130,90 110,30 220,30 250,90" fill="#fce4ec" stroke="#c62828" stroke-width="2" stroke-dasharray="4,3"/>
+                <text x="180" y="50" font-size="10" fill="#c62828">(flipped copy)</text>
+                <!-- parallelogram outline emphasis -->
+                <text x="145" y="116" text-anchor="middle" font-size="10" fill="#2e7d32" font-weight="bold">→ parallelogram of base (b₁ + b₂)</text>
+            </svg>
+        </div>
+        <ul style="margin: 4px 0 4px 22px;">
+            <li>Parallelogram area = base × height = $(b_1 + b_2) \cdot h$</li>
+            <li>One trapezoid = HALF of that → divide by 2</li>
+            <li>Area = $\dfrac{(b_1 + b_2) \cdot h}{2}$ ✓</li>
+        </ul>
+    </div>
+</div>
+
+<!-- WAY B -->
+<div class="way-card">
+    <div class="head">WAY B — SUM of two triangles (cut along the diagonal)</div>
+    <div class="body">
+        Take the trapezoid. Draw a diagonal from one corner to the opposite corner. This cuts the trapezoid into <strong>two triangles</strong> sharing the same perpendicular height $h$ — but with different bases ($b_1$ and $b_2$).
+        <div class="fig-row">
+            <svg width="290" height="120" viewBox="0 0 290 120">
+                <!-- trapezoid -->
+                <polygon points="40,90 250,90 230,30 80,30" fill="#fff" stroke="#1565c0" stroke-width="2"/>
+                <!-- diagonal -->
+                <line x1="40" y1="90" x2="230" y2="30" stroke="#c62828" stroke-width="2"/>
+                <!-- top triangle: shaded -->
+                <polygon points="40,90 230,30 80,30" fill="#cdebd6" opacity="0.5"/>
+                <!-- bottom triangle: shaded different color -->
+                <polygon points="40,90 250,90 230,30" fill="#bee3f8" opacity="0.5"/>
+                <!-- height markers -->
+                <line x1="80" y1="30" x2="80" y2="90" stroke="#7b1fa2" stroke-dasharray="3,2"/>
+                <text x="76" y="63" text-anchor="end" font-size="10" fill="#7b1fa2" font-weight="bold">h</text>
+                <text x="155" y="22" text-anchor="middle" font-size="11" fill="#d84315" font-weight="bold">b₁ (top)</text>
+                <text x="145" y="106" text-anchor="middle" font-size="11" fill="#d84315" font-weight="bold">b₂ (bottom)</text>
+                <text x="170" y="62" font-size="10" fill="#2e7d32" font-weight="bold">△₁: b₁·h/2</text>
+                <text x="150" y="80" font-size="10" fill="#1565c0" font-weight="bold">△₂: b₂·h/2</text>
+            </svg>
+        </div>
+        <ul style="margin: 4px 0 4px 22px;">
+            <li>Top triangle area = $\dfrac{b_1 \cdot h}{2}$</li>
+            <li>Bottom triangle area = $\dfrac{b_2 \cdot h}{2}$</li>
+            <li>Trapezoid = sum: $\dfrac{b_1 \cdot h}{2} + \dfrac{b_2 \cdot h}{2} = \dfrac{(b_1 + b_2) \cdot h}{2}$ ✓</li>
+        </ul>
+        Same answer. Different picture in your head. <strong>Both interpretations live behind that one formula.</strong>
+    </div>
+</div>
+
+<div class="example">
+    <div class="head">Worked Example — Trapezoid b₁ = 3, b₂ = 6, h = 4 (all in cm)</div>
+    Area = $\dfrac{(3 + 6) \times 4}{2} = \dfrac{9 \times 4}{2} = \dfrac{36}{2} = $ <strong>18 cm²</strong>
+    <div style="font-size: 9.5pt; color: var(--c-muted); font-style: italic; margin-top: 4px;">
+        Way A check: two trapezoids → 9 × 4 = 36 parallelogram, half = 18. ✓<br>
+        Way B check: triangle 3·4/2 = 6 + triangle 6·4/2 = 12, sum = 18. ✓
+    </div>
+</div>
+
+<!-- ============== SUMMARY ============== -->
+<div class="part-header">★ One-Page Summary</div>
+<div class="concept-box">
+    <ul style="margin: 4px 0 4px 22px; line-height: 2;">
+        <li><strong>Area</strong> = count the unit squares (m², cm², in², …).</li>
+        <li><strong>Rectangle:</strong> $\text{Area} = b \cdot h$</li>
+        <li><strong>Triangle:</strong> $\text{Area} = \dfrac{b \cdot h}{2}$ &nbsp; (any side can be base; height must be perpendicular)</li>
+        <li><strong>Trapezoid:</strong> $\text{Area} = \dfrac{(b_1 + b_2) \cdot h}{2}$ &nbsp; (Way A: half of doubled-up parallelogram &middot; Way B: sum of two triangles)</li>
+    </ul>
+</div>
+
+</div>
+</body>
+</html>
