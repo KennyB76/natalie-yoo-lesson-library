@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circles Worksheet — Natalie Yoo (2026-05-28)</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  startup: { ready: () => { MathJax.startup.defaultReady(); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+/* ===== base-print.css ===== */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+  html, body { background: #fff; }
+  .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+  .problem, .answer-block, .reminder, .parent-note, .example, .word-problem { page-break-inside: avoid; break-inside: avoid; }
+  .part-header, .directions, .problem-header, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+  .page-break { page-break-before: always; break-before: page; }
+}
+/* ===== theme-girl.css ===== */
+:root {
+  --color-primary: #c2185b; --color-primary-dark: #880e4f; --color-accent: #7b1fa2;
+  --color-header-border: #c2185b; --color-final-answer: #2e7d32; --color-warning: #d84315;
+  --color-parent-note: #6a1b9a; --color-tag-bg: transparent; --color-tag-border: #c2185b;
+  --color-tag-text: #c2185b; --color-muted: #555; --color-rule: #ccc;
+}
+/* ===== level-middle.css ===== */
+body { font-family: 'Times New Roman', serif; font-size: 11pt; line-height: 1.5; }
+.header { text-align: center; padding-bottom: 12px; margin-bottom: 18px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag, .key-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 8px 3px; font-weight: bold; }
+.subject-tag { border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 15pt; margin: 6px 0 10px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 5px; color: var(--color-muted); }
+.part-header { font-size: 12pt; font-weight: bold; color: var(--color-primary); margin: 22px 0 6px 0; padding-bottom: 3px; border-bottom: 2px solid var(--color-primary); }
+.directions { font-size: 10pt; font-style: italic; color: #333; margin-bottom: 12px; line-height: 1.5; }
+.directions strong { color: #000; font-style: normal; }
+.problem { margin: 12px 0; font-size: 11pt; line-height: 1.6; }
+.q-num { display: inline-block; min-width: 26px; font-weight: bold; color: var(--color-primary); }
+.ans-line { display: inline-block; border-bottom: 1.5px solid #000; min-width: 80px; height: 18px; margin: 0 4px; vertical-align: bottom; }
+.work-space { min-height: 100px; margin-left: 28px; margin-top: 4px; }
+.word-problem .work-space { min-height: 110px; }
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 22px; padding-top: 6px; }
+/* ===== worksheet extras ===== */
+.reminder { border: 1.5px dashed var(--color-warning); padding: 10px 14px; margin: 14px 0; font-size: 10pt; line-height: 1.6; }
+.reminder b { color: var(--color-warning); }
+.figbox { display: flex; flex-direction: column; align-items: center; margin: 8px 0 0 28px; }
+.figbox svg { border: 1px solid #ccc; }
+.figcap { font-size: 9pt; color: #555; margin-top: 4px; }
+.vocab-table { border-collapse: collapse; width: 100%; margin: 6px 0 0 0; font-size: 10.5pt; }
+.vocab-table td { border: 1px solid #999; padding: 6px 8px; vertical-align: top; }
+.vocab-table td.term { width: 130px; font-weight: bold; color: var(--color-primary); }
+.wordbank { border: 1px solid var(--color-accent); padding: 8px 12px; margin: 4px 0 10px 28px; font-size: 10pt; }
+.wordbank b { color: var(--color-accent); }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="subject-tag">PRE-ALGEBRA</div>
+    <h1>Circles: Parts, Circumference, and Area (with $\pi$)</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Natalie Yoo</span>
+      <span><strong>Date:</strong> 2026-05-28</span>
+    </div>
+    <div class="standard"><strong>Standard:</strong> CCSS.MATH.CONTENT.7.G.B.4 &mdash; Know and use the formulas for the area and circumference of a circle and use them to solve problems; give an informal derivation of the relationship between the circumference and area of a circle.</div>
+  </div>
+
+  <div class="reminder">
+    <b>Remember from class:</b> The word <em>circle</em> comes from the Latin <em>circulus</em> = "little ring." &nbsp;
+    $\pi = \dfrac{C}{D} \approx 3.14$ &nbsp;&bull;&nbsp; Circumference $C = \pi D = 2\pi r$ &nbsp;&bull;&nbsp; Area $A = \pi r^2$ (answer in <b>square</b> units). Use $\pi = 3.14$ unless a question says otherwise.
+  </div>
+
+  <div class="part-header">Part A &middot; Parts of a Circle (Vocabulary)</div>
+  <div class="directions"><strong>Directions:</strong> Use the word bank to answer. Each word is used once.</div>
+  <div class="wordbank"><b>Word bank:</b> radius &nbsp;&bull;&nbsp; diameter &nbsp;&bull;&nbsp; chord &nbsp;&bull;&nbsp; arc &nbsp;&bull;&nbsp; center &nbsp;&bull;&nbsp; circumference &nbsp;&bull;&nbsp; area</div>
+
+  <div class="problem">
+    <span class="q-num">1.</span> The set of all points that are the same distance from the center is the edge of the circle. The straight segment from the center to that edge is the <span class="ans-line"></span>.
+  </div>
+  <div class="problem">
+    <span class="q-num">2.</span> A chord that passes straight through the center, splitting the circle into two equal halves, is the <span class="ans-line"></span>. It is exactly <span class="ans-line"></span> times as long as the radius.
+  </div>
+  <div class="problem">
+    <span class="q-num">3.</span> Match each label to the correct word from the word bank. Write the word on each line.
+    <div class="figbox">
+      <svg width="260" height="220" viewBox="0 0 260 220" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="130" cy="110" r="90" fill="none" stroke="#c2185b" stroke-width="2.5"/>
+        <!-- center -->
+        <circle cx="130" cy="110" r="3.5" fill="#000"/>
+        <!-- radius -->
+        <line x1="130" y1="110" x2="220" y2="110" stroke="#000" stroke-width="1.8"/>
+        <!-- diameter -->
+        <line x1="40" y1="110" x2="220" y2="110" stroke="#000" stroke-width="1.8"/>
+        <!-- chord -->
+        <line x1="70" y1="180" x2="200" y2="50" stroke="#000" stroke-width="1.8"/>
+        <!-- arc highlight -->
+        <path d="M 220 110 A 90 90 0 0 1 130 200" fill="none" stroke="#7b1fa2" stroke-width="4"/>
+        <!-- labels -->
+        <text x="118" y="103" font-size="13" font-family="serif">a</text>
+        <text x="175" y="103" font-size="13" font-family="serif">b</text>
+        <text x="55" y="103" font-size="13" font-family="serif">c</text>
+        <text x="150" y="70" font-size="13" font-family="serif">d</text>
+        <text x="205" y="175" font-size="13" font-family="serif" fill="#7b1fa2">e</text>
+      </svg>
+      <div class="figcap">a, b, c, d, e</div>
+    </div>
+    <div style="margin-left:28px; margin-top:6px;">
+      a (the dot in the middle) = <span class="ans-line"></span> &nbsp;&nbsp;
+      b (center to edge) = <span class="ans-line"></span> <br>
+      c (edge to edge through middle) = <span class="ans-line"></span> &nbsp;&nbsp;
+      d (slanted edge to edge, not through middle) = <span class="ans-line"></span> <br>
+      e (the curved purple part of the edge) = <span class="ans-line"></span>
+    </div>
+  </div>
+  <div class="problem">
+    <span class="q-num">4.</span> The total distance <em>around</em> the outside of a circle is its <span class="ans-line"></span>. The amount of flat space <em>inside</em> the circle is its <span class="ans-line"></span>.
+  </div>
+
+  <div class="part-header page-break">Part B &middot; Radius &harr; Diameter</div>
+  <div class="directions"><strong>Directions:</strong> Use $D = 2r$ and $r = \dfrac{D}{2}$. Show your work.</div>
+
+  <div class="problem">
+    <span class="q-num">5.</span> A circle has radius $r = 6$ cm. What is its diameter?
+    <div class="work-space"></div>
+  </div>
+  <div class="problem">
+    <span class="q-num">6.</span> A circle has diameter $D = 18$ in. What is its radius?
+    <div class="work-space"></div>
+  </div>
+
+  <div class="part-header">Part C &middot; Circumference &nbsp;($C = \pi D = 2\pi r$, use $\pi = 3.14$)</div>
+  <div class="directions"><strong>Directions:</strong> Find the circumference. Round to two decimal places. Include units.</div>
+
+  <div class="problem">
+    <span class="q-num">7.</span> A circle has radius $r = 5$ m. Find the circumference $C = 2\pi r$.
+    <div class="work-space"></div>
+  </div>
+  <div class="problem">
+    <span class="q-num">8.</span> A circle has diameter $D = 10$ cm. Find the circumference $C = \pi D$.
+    <div class="work-space"></div>
+  </div>
+  <div class="problem page-break">
+    <span class="q-num">9.</span> A round pizza has a diameter of $14$ in. How far is it around the crust (the circumference)?
+    <div class="work-space"></div>
+  </div>
+
+  <div class="part-header">Part D &middot; Area &nbsp;($A = \pi r^2$, answer in square units)</div>
+  <div class="directions"><strong>Directions:</strong> Find the area. Use $\pi = 3.14$ unless told otherwise. <strong>Square the radius first, then multiply by $\pi$.</strong></div>
+
+  <div class="problem">
+    <span class="q-num">10.</span> A circle has radius $r = 4$ cm. Find the area $A = \pi r^2$ (use $\pi = 3.14$).
+    <div class="work-space"></div>
+  </div>
+  <div class="problem">
+    <span class="q-num">11.</span> A circle has diameter $D = 20$ ft. First find $r$, then find the area (use $\pi = 3.14$).
+    <div class="work-space"></div>
+  </div>
+  <div class="problem">
+    <span class="q-num">12.</span> A circle has radius $r = 7$ cm. Find the area using the fraction $\pi = \dfrac{22}{7}$. (Hint: this $r$ makes the $7$ cancel nicely!)
+    <div class="work-space"></div>
+  </div>
+  <div class="problem page-break">
+    <span class="q-num">13.</span> A circle has diameter $D = 28$ m. Find $r$, then find the area using $\pi = \dfrac{22}{7}$.
+    <div class="work-space"></div>
+  </div>
+
+  <div class="part-header">Part E &middot; Half &amp; Quarter Circles</div>
+  <div class="directions"><strong>Directions:</strong> Find the area of the shaded region. A half circle is $\frac{1}{2}$ of a full circle's area; a quarter circle is $\frac{1}{4}$. Use $\pi = 3.14$.</div>
+
+  <div class="problem">
+    <span class="q-num">14.</span> Find the area of this <strong>half circle</strong> (radius $r = 6$ cm).
+    <div class="figbox">
+      <svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 30 100 A 70 70 0 0 1 170 100 Z" fill="#fce4ec" stroke="#c2185b" stroke-width="2.5"/>
+        <line x1="30" y1="100" x2="170" y2="100" stroke="#000" stroke-width="1.5"/>
+        <line x1="100" y1="100" x2="170" y2="100" stroke="#7b1fa2" stroke-width="1.5"/>
+        <text x="128" y="115" font-size="12" font-family="serif" fill="#7b1fa2">r = 6 cm</text>
+      </svg>
+      <div class="figcap">half circle</div>
+    </div>
+    <div class="work-space"></div>
+  </div>
+  <div class="problem">
+    <span class="q-num">15.</span> Find the area of this <strong>quarter circle</strong> (radius $r = 10$ in).
+    <div class="figbox">
+      <svg width="140" height="140" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 25 115 L 25 25 A 90 90 0 0 1 115 115 Z" fill="#fce4ec" stroke="#c2185b" stroke-width="2.5"/>
+        <line x1="25" y1="115" x2="25" y2="25" stroke="#7b1fa2" stroke-width="1.5"/>
+        <text x="30" y="75" font-size="12" font-family="serif" fill="#7b1fa2">r = 10 in</text>
+      </svg>
+      <div class="figcap">quarter circle</div>
+    </div>
+    <div class="work-space"></div>
+  </div>
+
+  <div class="part-header page-break">Part F &middot; Explain in Words (Think First!)</div>
+  <div class="directions"><strong>Directions:</strong> Write full sentences. For these, your <strong>reasoning</strong> matters as much as the number.</div>
+
+  <div class="problem word-problem">
+    <span class="q-num">16.</span> The circumference of a circular garden is $C = 6.28$ m.
+    <br>(a) In words, explain how you can use the circumference to find the radius. Then find $r$.
+    <br>(b) Now find the area of the garden. Show how you got it.
+    <br>(c) <strong>Bonus &mdash; explain before formulas:</strong> If you <em>doubled</em> the radius of this garden, what would happen to the circumference? What would happen to the area? Explain <em>in your own words first</em> (without numbers), then check with the formulas.
+    <div class="work-space" style="min-height:200px;"></div>
+  </div>
+
+  <div class="footer">Created by Newton School 2026-05-28 &copy; Copyright</div>
+</div>
+</body>
+</html>

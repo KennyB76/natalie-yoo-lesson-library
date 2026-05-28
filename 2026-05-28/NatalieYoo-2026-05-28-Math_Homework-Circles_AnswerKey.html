@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circles Answer Key — Natalie Yoo (2026-05-28)</title>
+<script>
+window.MathJax = {
+  tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+  startup: { ready: () => { MathJax.startup.defaultReady(); } }
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+/* ===== base-print.css ===== */
+@page { size: letter; margin: 0.5in; }
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: #fafafa; }
+body { font-family: 'Century Schoolbook', 'Times New Roman', serif; color: #000; }
+.page { max-width: 720px; margin: 0 auto; padding: 70px 50px 40px 50px; background: #fff; }
+.page-break { page-break-before: always; break-before: page; }
+@media print {
+  html, body { background: #fff; }
+  .page { max-width: none; padding: 0.7in 0.6in 0.5in 0.6in; margin: 0; box-shadow: none; }
+  .problem, .answer-block, .reminder, .parent-note, .example, .word-problem { page-break-inside: avoid; break-inside: avoid; }
+  .part-header, .directions, .problem-header, h1, h2, h3 { page-break-after: avoid; break-after: avoid; }
+  .page-break { page-break-before: always; break-before: page; }
+}
+/* ===== theme-girl.css ===== */
+:root {
+  --color-primary: #c2185b; --color-primary-dark: #880e4f; --color-accent: #7b1fa2;
+  --color-header-border: #c2185b; --color-final-answer: #2e7d32; --color-warning: #d84315;
+  --color-parent-note: #6a1b9a; --color-tag-bg: transparent; --color-tag-border: #c2185b;
+  --color-tag-text: #c2185b; --color-muted: #555; --color-rule: #ccc;
+}
+/* ===== level-middle.css ===== */
+body { font-family: 'Times New Roman', serif; font-size: 10pt; line-height: 1.5; }
+.header { text-align: center; padding-bottom: 12px; margin-bottom: 18px; border-bottom: 2px solid var(--color-header-border); }
+.school-name { font-size: 9pt; letter-spacing: 4px; color: var(--color-primary); font-weight: bold; }
+.subject-tag, .key-tag { display: inline-block; padding: 2px 10px; font-size: 8pt; letter-spacing: 2px; margin: 5px 3px 8px 3px; font-weight: bold; }
+.subject-tag { border: 1.5px solid var(--color-primary); color: var(--color-primary); }
+.key-tag { border: 1.5px solid var(--color-warning); color: var(--color-warning); }
+h1 { font-size: 15pt; margin: 6px 0 10px 0; font-weight: bold; line-height: 1.3; }
+.info { display: flex; justify-content: space-between; font-size: 10pt; margin-top: 6px; }
+.standard { font-size: 8pt; font-style: italic; margin-top: 5px; color: var(--color-muted); }
+.part-header { font-size: 12pt; font-weight: bold; color: var(--color-primary); margin: 22px 0 6px 0; padding-bottom: 3px; border-bottom: 2px solid var(--color-primary); }
+.footer { text-align: center; font-size: 8pt; color: #666; border-top: 1px solid var(--color-rule); margin-top: 22px; padding-top: 6px; }
+.answer-block { margin: 14px 0; padding: 10px 14px; border: 1px solid #ddd; border-radius: 4px; }
+.problem-header { font-weight: bold; color: var(--color-primary); font-size: 11pt; margin-bottom: 5px; }
+.problem-text { font-size: 10pt; padding: 6px 10px; background: #f7f7f7; border-left: 3px solid #bbb; margin-bottom: 8px; line-height: 1.5; }
+.concept-tag { display: inline-block; font-size: 8pt; padding: 2px 8px; margin: 2px 3px 5px 0; border: 1px solid var(--color-tag-border); color: var(--color-tag-text); border-radius: 10px; }
+.solution { margin: 6px 0; padding-left: 8px; border-left: 3px solid var(--color-final-answer); }
+.solution-step { margin: 4px 0; font-size: 10pt; line-height: 1.6; }
+.final-answer { display: inline-block; border: 2px solid var(--color-final-answer); color: var(--color-final-answer); font-weight: bold; padding: 4px 12px; border-radius: 4px; margin-top: 6px; font-size: 11pt; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="school-name">NEWTON SCHOOL</div>
+    <div class="key-tag">ANSWER KEY</div>
+    <h1>Circles: Parts, Circumference, and Area (with $\pi$)</h1>
+    <div class="info">
+      <span><strong>Student:</strong> Natalie Yoo</span>
+      <span><strong>Date:</strong> 2026-05-28</span>
+    </div>
+    <div class="standard"><strong>Standard:</strong> CCSS.MATH.CONTENT.7.G.B.4 &mdash; circumference and area of a circle. Key formulas: $\pi = \frac{C}{D}$, $C = \pi D = 2\pi r$, $A = \pi r^2$.</div>
+  </div>
+
+  <div class="part-header">Part A &middot; Parts of a Circle</div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 1</div>
+    <div class="problem-text">The segment from the center to the edge.</div>
+    <span class="concept-tag">vocabulary</span>
+    <div class="final-answer">radius</div>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 2</div>
+    <div class="problem-text">Chord through the center; how many times the radius?</div>
+    <span class="concept-tag">vocabulary</span><span class="concept-tag">D = 2r</span>
+    <div class="solution"><div class="solution-step">The diameter goes across the whole circle through the center; it equals two radii.</div></div>
+    <div class="final-answer">diameter &nbsp;|&nbsp; 2 times</div>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 3</div>
+    <div class="problem-text">Match the labels a&ndash;e on the diagram.</div>
+    <span class="concept-tag">vocabulary</span>
+    <div class="solution">
+      <div class="solution-step"><b>a</b> = center &nbsp; (the dot in the middle)</div>
+      <div class="solution-step"><b>b</b> = radius &nbsp; (center to edge)</div>
+      <div class="solution-step"><b>c</b> = diameter &nbsp; (edge to edge through the middle)</div>
+      <div class="solution-step"><b>d</b> = chord &nbsp; (edge to edge, but NOT through the middle)</div>
+      <div class="solution-step"><b>e</b> = arc &nbsp; (a curved piece of the edge)</div>
+    </div>
+    <div class="final-answer">a center, b radius, c diameter, d chord, e arc</div>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 4</div>
+    <div class="problem-text">Distance around vs. space inside.</div>
+    <span class="concept-tag">vocabulary</span>
+    <div class="solution"><div class="solution-step">Around the outside = circumference. Flat space inside = area.</div></div>
+    <div class="final-answer">circumference &nbsp;|&nbsp; area</div>
+  </div>
+
+  <div class="part-header">Part B &middot; Radius &harr; Diameter</div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 5</div>
+    <div class="problem-text">$r = 6$ cm. Find $D$.</div>
+    <span class="concept-tag">D = 2r</span>
+    <div class="solution"><div class="solution-step">$D = 2r = 2 \times 6 = 12$</div></div>
+    <div class="final-answer">$D = 12$ cm</div>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 6</div>
+    <div class="problem-text">$D = 18$ in. Find $r$.</div>
+    <span class="concept-tag">r = D/2</span>
+    <div class="solution"><div class="solution-step">$r = \dfrac{D}{2} = \dfrac{18}{2} = 9$</div></div>
+    <div class="final-answer">$r = 9$ in</div>
+  </div>
+
+  <div class="part-header page-break">Part C &middot; Circumference ($\pi = 3.14$)</div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 7</div>
+    <div class="problem-text">$r = 5$ m. Find $C = 2\pi r$.</div>
+    <span class="concept-tag">C = 2&pi;r</span>
+    <div class="solution">
+      <div class="solution-step">$C = 2\pi r = 2 \times 3.14 \times 5$</div>
+      <div class="solution-step">$C = 6.28 \times 5 = 31.4$</div>
+    </div>
+    <div class="final-answer">$C = 31.4$ m</div>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 8</div>
+    <div class="problem-text">$D = 10$ cm. Find $C = \pi D$.</div>
+    <span class="concept-tag">C = &pi;D</span>
+    <div class="solution"><div class="solution-step">$C = \pi D = 3.14 \times 10 = 31.4$</div></div>
+    <div class="final-answer">$C = 31.4$ cm</div>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 9</div>
+    <div class="problem-text">Pizza, $D = 14$ in. Find the circumference.</div>
+    <span class="concept-tag">C = &pi;D</span><span class="concept-tag">word problem</span>
+    <div class="solution"><div class="solution-step">$C = \pi D = 3.14 \times 14 = 43.96$</div></div>
+    <div class="final-answer">$C = 43.96$ in</div>
+  </div>
+
+  <div class="part-header">Part D &middot; Area ($A = \pi r^2$)</div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 10</div>
+    <div class="problem-text">$r = 4$ cm. Find $A$, $\pi = 3.14$.</div>
+    <span class="concept-tag">A = &pi;r&sup2;</span>
+    <div class="solution">
+      <div class="solution-step">Square first: $r^2 = 4^2 = 16$</div>
+      <div class="solution-step">$A = \pi r^2 = 3.14 \times 16 = 50.24$</div>
+    </div>
+    <div class="final-answer">$A = 50.24$ cm$^2$</div>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 11</div>
+    <div class="problem-text">$D = 20$ ft. Find $r$ then $A$, $\pi = 3.14$.</div>
+    <span class="concept-tag">r = D/2</span><span class="concept-tag">A = &pi;r&sup2;</span>
+    <div class="solution">
+      <div class="solution-step">$r = \dfrac{20}{2} = 10$</div>
+      <div class="solution-step">$r^2 = 10^2 = 100$</div>
+      <div class="solution-step">$A = 3.14 \times 100 = 314$</div>
+    </div>
+    <div class="final-answer">$A = 314$ ft$^2$</div>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 12</div>
+    <div class="problem-text">$r = 7$ cm. Find $A$ using $\pi = \frac{22}{7}$.</div>
+    <span class="concept-tag">A = &pi;r&sup2;</span><span class="concept-tag">&pi; = 22/7</span>
+    <div class="solution">
+      <div class="solution-step">$A = \dfrac{22}{7} \times 7^2 = \dfrac{22}{7} \times 49$</div>
+      <div class="solution-step">$= 22 \times \dfrac{49}{7} = 22 \times 7 = 154$ &nbsp;(the 7 cancels!)</div>
+    </div>
+    <div class="final-answer">$A = 154$ cm$^2$</div>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 13</div>
+    <div class="problem-text">$D = 28$ m. Find $r$ then $A$ using $\pi = \frac{22}{7}$.</div>
+    <span class="concept-tag">r = D/2</span><span class="concept-tag">&pi; = 22/7</span>
+    <div class="solution">
+      <div class="solution-step">$r = \dfrac{28}{2} = 14$</div>
+      <div class="solution-step">$A = \dfrac{22}{7} \times 14^2 = \dfrac{22}{7} \times 196 = 22 \times 28 = 616$</div>
+    </div>
+    <div class="final-answer">$A = 616$ m$^2$</div>
+  </div>
+
+  <div class="part-header page-break">Part E &middot; Half &amp; Quarter Circles</div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 14</div>
+    <div class="problem-text">Half circle, $r = 6$ cm. Find the area, $\pi = 3.14$.</div>
+    <span class="concept-tag">A = &pi;r&sup2;</span><span class="concept-tag">half = &frac12;</span>
+    <div class="solution">
+      <div class="solution-step">Full circle: $A = 3.14 \times 6^2 = 3.14 \times 36 = 113.04$</div>
+      <div class="solution-step">Half of it: $\dfrac{113.04}{2} = 56.52$</div>
+    </div>
+    <div class="final-answer">$A = 56.52$ cm$^2$</div>
+  </div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 15</div>
+    <div class="problem-text">Quarter circle, $r = 10$ in. Find the area, $\pi = 3.14$.</div>
+    <span class="concept-tag">A = &pi;r&sup2;</span><span class="concept-tag">quarter = &frac14;</span>
+    <div class="solution">
+      <div class="solution-step">Full circle: $A = 3.14 \times 10^2 = 314$</div>
+      <div class="solution-step">Quarter of it: $\dfrac{314}{4} = 78.5$</div>
+    </div>
+    <div class="final-answer">$A = 78.5$ in$^2$</div>
+  </div>
+
+  <div class="part-header">Part F &middot; Explain in Words</div>
+
+  <div class="answer-block">
+    <div class="problem-header">Problem 16</div>
+    <div class="problem-text">Garden circumference $C = 6.28$ m. (a) explain &amp; find $r$; (b) find area; (c) bonus: double the radius.</div>
+    <span class="concept-tag">C = 2&pi;r</span><span class="concept-tag">A = &pi;r&sup2;</span><span class="concept-tag">reasoning</span>
+    <div class="solution">
+      <div class="solution-step"><b>(a)</b> Since $C = 2\pi r$, I can undo it: divide the circumference by $2\pi$ to get the radius. $r = \dfrac{C}{2\pi} = \dfrac{6.28}{2 \times 3.14} = \dfrac{6.28}{6.28} = 1$. So $r = 1$ m.</div>
+      <div class="solution-step"><b>(b)</b> $A = \pi r^2 = 3.14 \times 1^2 = 3.14$ m$^2$.</div>
+      <div class="solution-step"><b>(c) In words first:</b> Circumference grows in a "fair" way &mdash; it is a length, so doubling the radius simply <b>doubles</b> the distance around. Area is different because it fills a 2-D space (length &times; width feel), so doubling the radius makes it <b>four times</b> as big.</div>
+      <div class="solution-step"><b>Check:</b> New $r = 2$. New $C = 2\pi(2) = 4\pi = 12.56$ m &rarr; that is $2\times$ the old $6.28$. ✓ &nbsp; New $A = \pi(2)^2 = 4\pi = 12.56$ m$^2$ &rarr; that is $4\times$ the old $3.14$. ✓</div>
+    </div>
+    <div class="final-answer">$r = 1$ m, &nbsp; $A = 3.14$ m$^2$; &nbsp; double $r$ &rarr; $C \times 2$, &nbsp; $A \times 4$</div>
+  </div>
+
+  <div class="footer">Created by Newton School 2026-05-28 &copy; Copyright</div>
+</div>
+</body>
+</html>

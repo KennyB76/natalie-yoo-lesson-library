@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<!--
+  Newton School · Live Classroom interactive
+  Student: Natalie Yoo · 2026-05-28 · Topic: Circles (parts, C = 2πr, A = πr², π = C/D)
+  Self-contained single HTML. Theme: rose pink (matches portal).
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Circles — Play With It · Natalie Yoo</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+window.MathJax = { tex: { inlineMath: [['$','$'],['\\(','\\)']] } };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+<style>
+  :root{
+    --pink:#fd79a8; --pink-soft:#fff0f6; --pink-deep:#c0276c; --pink-line:#f8c6dc;
+    --ink:#1f1a1d; --ink-soft:#6b5560; --paper:#ffffff; --bg:#fff8fb; --line:#efd9e4;
+    --r-color:#e84393; --d-color:#6c5ce7; --chord-color:#0984a3; --arc-color:#e17055;
+    --serif:'Playfair Display',Georgia,serif; --sans:'Inter',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.55;padding:18px;}
+  .wrap{max-width:920px;margin:0 auto;}
+  header.top{text-align:center;margin-bottom:18px;}
+  header.top .eyebrow{font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--pink-deep);font-weight:700;}
+  header.top h1{font-family:var(--serif);font-size:34px;font-weight:700;margin:6px 0 4px;}
+  header.top p{font-size:14px;color:var(--ink-soft);}
+  .tabs{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:18px 0;}
+  .tab{font-family:var(--sans);font-weight:600;font-size:13.5px;padding:9px 16px;border-radius:999px;border:1.5px solid var(--pink-line);background:var(--paper);color:var(--ink-soft);cursor:pointer;transition:.15s;}
+  .tab:hover{border-color:var(--pink);color:var(--pink-deep);}
+  .tab.active{background:var(--pink);border-color:var(--pink);color:#fff;box-shadow:0 4px 12px rgba(253,121,168,.35);}
+  .panel{display:none;background:var(--paper);border-radius:16px;box-shadow:0 6px 24px rgba(192,39,108,.08);border:1px solid var(--line);overflow:hidden;}
+  .panel.active{display:block;}
+  .panel-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:0;}
+  @media(max-width:760px){.panel-grid{grid-template-columns:1fr;}}
+  .stage{padding:22px;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#fff,var(--pink-soft));min-height:380px;}
+  .side{padding:24px 26px;border-left:1px solid var(--line);}
+  @media(max-width:760px){.side{border-left:none;border-top:1px solid var(--line);}}
+  .side h2{font-family:var(--serif);font-size:21px;margin-bottom:8px;}
+  .side .lead{font-size:13.5px;color:var(--ink-soft);margin-bottom:16px;}
+  svg{max-width:100%;height:auto;touch-action:none;}
+  .ctrl{margin:14px 0;}
+  .ctrl label{display:flex;justify-content:space-between;font-size:13px;font-weight:600;margin-bottom:6px;}
+  .ctrl label span.val{color:var(--pink-deep);font-variant-numeric:tabular-nums;}
+  input[type=range]{width:100%;accent-color:var(--pink);height:6px;cursor:pointer;}
+  .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px;}
+  .stat{background:var(--pink-soft);border-radius:10px;border-left:3px solid var(--pink);padding:10px 12px;}
+  .stat .lab{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--pink-deep);font-weight:700;}
+  .stat .num{font-size:18px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:2px;}
+  .stat .formula{font-size:11px;color:var(--ink-soft);margin-top:2px;}
+  .legend{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;font-size:12px;}
+  .legend span{display:inline-flex;align-items:center;gap:5px;}
+  .swatch{width:14px;height:4px;border-radius:2px;display:inline-block;}
+  .toggle-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;}
+  .chip{font-size:12px;font-weight:600;padding:6px 11px;border-radius:999px;border:1.5px solid var(--pink-line);background:#fff;color:var(--ink-soft);cursor:pointer;user-select:none;}
+  .chip.on{background:var(--pink-soft);border-color:var(--pink);color:var(--pink-deep);}
+  .note{background:var(--bg);border-left:3px solid var(--pink);border-radius:8px;padding:12px 14px;font-size:13px;margin-top:16px;font-style:italic;color:var(--ink);}
+  .btn{font-family:var(--sans);font-weight:700;font-size:13.5px;padding:10px 18px;border-radius:999px;border:none;background:var(--pink);color:#fff;cursor:pointer;transition:.15s;box-shadow:0 4px 12px rgba(253,121,168,.35);}
+  .btn:hover{background:var(--pink-deep);}
+  .btn.ghost{background:#fff;color:var(--pink-deep);border:1.5px solid var(--pink);box-shadow:none;}
+  .pi-row{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;font-size:14px;margin:6px 0;}
+  .pi-big{font-family:var(--serif);font-size:30px;font-weight:700;color:var(--pink-deep);font-variant-numeric:tabular-nums;}
+  table.pi{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:10px;}
+  table.pi th,table.pi td{border:1px solid var(--line);padding:6px 8px;text-align:center;}
+  table.pi th{background:var(--pink-soft);color:var(--pink-deep);}
+  table.pi td.ratio{font-weight:700;color:var(--pink-deep);}
+  footer{text-align:center;font-size:11.5px;color:var(--ink-soft);margin-top:22px;}
+  .hint{font-size:12px;color:var(--ink-soft);margin-top:6px;}
+  .wedges-controls{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-top:6px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="eyebrow">Newton School &middot; Play With It</div>
+    <h1>The Circle</h1>
+    <p>Drag, slide, and watch &mdash; from <em>circulus</em> (the little ring) to $C=2\pi r$ and $A=\pi r^2$.</p>
+  </header>
+
+  <div class="tabs">
+    <button class="tab active" data-tab="parts">1 &middot; Parts of a Circle</button>
+    <button class="tab" data-tab="pi">2 &middot; Discover &pi; = C &divide; D</button>
+    <button class="tab" data-tab="live">3 &middot; Live r, D, C, A</button>
+    <button class="tab" data-tab="area">4 &middot; Why A = &pi;r&sup2;</button>
+  </div>
+
+  <!-- ============ PANEL 1: PARTS ============ -->
+  <section class="panel active" id="panel-parts">
+    <div class="panel-grid">
+      <div class="stage">
+        <svg id="partsSvg" width="380" height="380" viewBox="0 0 380 380">
+          <circle cx="190" cy="190" r="140" fill="#fff" stroke="var(--pink)" stroke-width="3"/>
+          <!-- arc -->
+          <path id="g-arc" d="M 330 190 A 140 140 0 0 1 190 330" fill="none" stroke="var(--arc-color)" stroke-width="8" style="display:none"/>
+          <!-- diameter -->
+          <line id="g-dia" x1="50" y1="190" x2="330" y2="190" stroke="var(--d-color)" stroke-width="3.5" style="display:none"/>
+          <!-- radius -->
+          <line id="g-rad" x1="190" y1="190" x2="330" y2="190" stroke="var(--r-color)" stroke-width="3.5" style="display:none"/>
+          <!-- chord -->
+          <line id="g-chord" x1="95" y1="290" x2="300" y2="95" stroke="var(--chord-color)" stroke-width="3.5" style="display:none"/>
+          <!-- center -->
+          <circle id="g-ctr" cx="190" cy="190" r="5" fill="var(--ink)" style="display:none"/>
+          <text id="g-lab" x="190" y="365" text-anchor="middle" font-family="Inter" font-size="15" font-weight="700" fill="var(--pink-deep)"></text>
+        </svg>
+      </div>
+      <div class="side">
+        <h2>Tap a word, watch it glow</h2>
+        <p class="lead">Every circle is built from these pieces. The word <strong>circle</strong> comes from Latin <em>circulus</em> &mdash; "a little ring."</p>
+        <div class="toggle-row">
+          <span class="chip" data-part="ctr">Center</span>
+          <span class="chip" data-part="rad">Radius</span>
+          <span class="chip" data-part="dia">Diameter</span>
+          <span class="chip" data-part="chord">Chord</span>
+          <span class="chip" data-part="arc">Arc</span>
+        </div>
+        <div class="note" id="partsNote">Tap any word above. <strong>Radius</strong> = center to the edge. <strong>Diameter</strong> = all the way across through the center (it is $2r$). A <strong>chord</strong> touches the edge twice but skips the center. An <strong>arc</strong> is a curved slice of the edge.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PANEL 2: PI ============ -->
+  <section class="panel" id="panel-pi">
+    <div class="panel-grid">
+      <div class="stage">
+        <svg width="380" height="320" viewBox="0 0 380 320">
+          <!-- the circle being "unrolled" -->
+          <circle id="piCircle" cx="120" cy="150" r="90" fill="#fff" stroke="var(--pink)" stroke-width="3"/>
+          <line id="piDia" x1="30" y1="150" x2="210" y2="150" stroke="var(--d-color)" stroke-width="3"/>
+          <text x="120" y="142" text-anchor="middle" font-size="12" font-family="Inter" fill="var(--d-color)" font-weight="700">D</text>
+          <!-- unrolled circumference bar made of D-length chunks -->
+          <g id="piBar"></g>
+          <text x="285" y="270" text-anchor="middle" font-size="11" font-family="Inter" fill="var(--ink-soft)">C laid out flat</text>
+        </svg>
+      </div>
+      <div class="side">
+        <h2>The number hiding in every circle</h2>
+        <p class="lead">In class we measured "all the way around" (C) and "across" (D) for real objects, then divided. Slide to try different circles &mdash; the ratio barely moves.</p>
+        <table class="pi">
+          <tr><th>Object</th><th>C (cm)</th><th>D (cm)</th><th>C &divide; D</th></tr>
+          <tr><td>Cup</td><td>35</td><td>12</td><td class="ratio">2.92</td></tr>
+          <tr><td>Plate</td><td>94</td><td>31</td><td class="ratio">3.03</td></tr>
+          <tr><td>Lid</td><td>114</td><td>39.5</td><td class="ratio">2.89</td></tr>
+        </table>
+        <div class="ctrl" style="margin-top:16px;">
+          <label>Diameter D <span class="val" id="piDval">6.0 cm</span></label>
+          <input type="range" id="piSlider" min="3" max="11" step="0.1" value="6">
+        </div>
+        <div class="pi-row">C &divide; D always lands on &nbsp;<span class="pi-big" id="piResult">3.14</span></div>
+        <div class="note">No matter how big the circle is, $\dfrac{C}{D}$ is always the same special number: $\pi \approx 3.14$. So $C = \pi D = 2\pi r$.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PANEL 3: LIVE ============ -->
+  <section class="panel" id="panel-live">
+    <div class="panel-grid">
+      <div class="stage">
+        <svg id="liveSvg" width="380" height="380" viewBox="0 0 380 380">
+          <circle id="liveFill" cx="190" cy="190" r="120" fill="rgba(253,121,168,.14)" stroke="var(--pink)" stroke-width="3"/>
+          <line id="liveRad" x1="190" y1="190" x2="310" y2="190" stroke="var(--r-color)" stroke-width="4"/>
+          <circle id="liveCtr" cx="190" cy="190" r="5" fill="var(--ink)"/>
+          <circle id="liveHandle" cx="310" cy="190" r="11" fill="var(--r-color)" stroke="#fff" stroke-width="3" style="cursor:grab"/>
+          <text id="liveRlab" x="250" y="180" text-anchor="middle" font-size="13" font-family="Inter" font-weight="700" fill="var(--r-color)">r</text>
+        </svg>
+      </div>
+      <div class="side">
+        <h2>Drag the dot &mdash; everything updates</h2>
+        <p class="lead">Grab the pink handle and pull. The radius changes, and so do the diameter, the distance around, and the space inside. (Using $\pi=3.14$.)</p>
+        <div class="ctrl">
+          <label>Radius r <span class="val" id="rVal">5.0 units</span></label>
+          <input type="range" id="rSlider" min="1" max="9" step="0.1" value="5">
+        </div>
+        <div class="stat-grid">
+          <div class="stat"><div class="lab">Radius</div><div class="num" id="sR">5.0</div><div class="formula">center &rarr; edge</div></div>
+          <div class="stat"><div class="lab">Diameter</div><div class="num" id="sD">10.0</div><div class="formula">$D = 2r$</div></div>
+          <div class="stat"><div class="lab">Circumference</div><div class="num" id="sC">31.40</div><div class="formula">$C = 2\pi r$</div></div>
+          <div class="stat"><div class="lab">Area</div><div class="num" id="sA">78.50</div><div class="formula">$A = \pi r^2$ (units$^2$)</div></div>
+        </div>
+        <div class="note" id="liveNote">Watch closely: when you double the radius, the circumference doubles &mdash; but the area jumps to <strong>four times</strong> as big. Area lives in two directions!</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PANEL 4: AREA ============ -->
+  <section class="panel" id="panel-area">
+    <div class="panel-grid">
+      <div class="stage">
+        <svg id="areaSvg" width="400" height="360" viewBox="0 0 400 360"></svg>
+      </div>
+      <div class="side">
+        <h2>Euclid's slice-and-rearrange</h2>
+        <p class="lead">Cut the circle into skinny wedges, then lay them in a zig-zag row. The more slices, the flatter the bottom &mdash; it turns into a rectangle!</p>
+        <div class="wedges-controls">
+          <button class="btn" id="sliceMore">More slices &rarr;</button>
+          <button class="btn ghost" id="sliceReset">Reset</button>
+        </div>
+        <div class="ctrl" style="margin-top:14px;">
+          <label>Slices <span class="val" id="wedgeVal">8</span></label>
+          <input type="range" id="wedgeSlider" min="6" max="60" step="2" value="8">
+        </div>
+        <div class="note">The rearranged shape is almost a rectangle. Its height is the radius $r$, and its width is half the way around, $\pi r$. So the area is height &times; width $= r \times \pi r = \pi r^2$. <strong>That is where $A=\pi r^2$ comes from!</strong></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>Newton School &middot; Made for Natalie Yoo &middot; 2026-05-28</footer>
+</div>
+
+<script>
+/* ---------- tabs ---------- */
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    document.getElementById('panel-'+t.dataset.tab).classList.add('active');
+    if(t.dataset.tab==='area') drawWedges();
+  });
+});
+
+/* ---------- Panel 1: parts ---------- */
+const partInfo = {
+  ctr:{el:'g-ctr',lab:'CENTER — the middle point',txt:'The <strong>center</strong> is the point every edge point is the same distance from.'},
+  rad:{el:'g-rad',lab:'RADIUS — center to edge',txt:'The <strong>radius</strong> goes from the center straight out to the edge.'},
+  dia:{el:'g-dia',lab:'DIAMETER — all the way across',txt:'The <strong>diameter</strong> passes through the center, edge to edge. It is exactly $2r$ long.'},
+  chord:{el:'g-chord',lab:'CHORD — edge to edge, skips center',txt:'A <strong>chord</strong> joins two edge points but does NOT go through the center. (A diameter is the longest chord.)'},
+  arc:{el:'g-arc',lab:'ARC — a curved piece of the edge',txt:'An <strong>arc</strong> is a curved slice of the circle’s edge.'}
+};
+document.querySelectorAll('#panel-parts .chip').forEach(c=>{
+  c.addEventListener('click',()=>{
+    const p=c.dataset.part, info=partInfo[p];
+    const wasOn=c.classList.contains('on');
+    document.querySelectorAll('#panel-parts .chip').forEach(x=>x.classList.remove('on'));
+    Object.values(partInfo).forEach(i=>document.getElementById(i.el).style.display='none');
+    document.getElementById('g-lab').textContent='';
+    if(!wasOn){
+      c.classList.add('on');
+      document.getElementById(info.el).style.display='';
+      document.getElementById('g-lab').textContent='';
+      document.getElementById('partsNote').innerHTML=info.txt;
+      if(window.MathJax&&MathJax.typeset) MathJax.typeset([document.getElementById('partsNote')]);
+    } else {
+      document.getElementById('partsNote').innerHTML='Tap any word above to light up that part of the circle.';
+    }
+  });
+});
+
+/* ---------- Panel 2: pi ---------- */
+const piSlider=document.getElementById('piSlider'),
+      piDval=document.getElementById('piDval'),
+      piResult=document.getElementById('piResult'),
+      piBar=document.getElementById('piBar');
+function drawPi(){
+  const D=parseFloat(piSlider.value);
+  piDval.textContent=D.toFixed(1)+' cm';
+  // tiny natural wobble around 3.14 to feel like real measurement
+  const ratio=(3.14159 + (Math.sin(D*3.1)*0.02)).toFixed(2);
+  piResult.textContent=ratio;
+  // unrolled bar: 3 full D chunks + a 0.14 sliver
+  const px=42; // pixels per cm visual
+  const unit=Math.min(px, 330/(D*3.2)); // keep on screen
+  const y=235;
+  let html='';
+  for(let i=0;i<3;i++){
+    const x=20+i*D*unit;
+    html+=`<rect x="${x}" y="${y}" width="${D*unit-2}" height="20" fill="var(--pink-soft)" stroke="var(--d-color)" stroke-width="1.5"/>`;
+    html+=`<text x="${x+D*unit/2}" y="${y+14}" text-anchor="middle" font-size="9" font-family="Inter" fill="var(--d-color)">D</text>`;
+  }
+  const x4=20+3*D*unit;
+  html+=`<rect x="${x4}" y="${y}" width="${0.1416*D*unit}" height="20" fill="var(--pink)" stroke="var(--pink-deep)" stroke-width="1.5"/>`;
+  piBar.innerHTML=html;
+}
+piSlider.addEventListener('input',drawPi);
+drawPi();
+
+/* ---------- Panel 3: live ---------- */
+const rSlider=document.getElementById('rSlider'),
+      PI=3.14, cx=190, cy=190, maxPx=135, maxR=9;
+const liveFill=document.getElementById('liveFill'),
+      liveRad=document.getElementById('liveRad'),
+      liveHandle=document.getElementById('liveHandle'),
+      liveRlab=document.getElementById('liveRlab');
+function setLive(r){
+  r=Math.max(1,Math.min(maxR,r));
+  rSlider.value=r;
+  const px=maxPx*(r/maxR);
+  liveFill.setAttribute('r',px);
+  liveRad.setAttribute('x2',cx+px);
+  liveHandle.setAttribute('cx',cx+px);
+  liveRlab.setAttribute('x',cx+px/2);
+  document.getElementById('rVal').textContent=r.toFixed(1)+' units';
+  document.getElementById('sR').textContent=r.toFixed(1);
+  document.getElementById('sD').textContent=(2*r).toFixed(1);
+  document.getElementById('sC').textContent=(2*PI*r).toFixed(2);
+  document.getElementById('sA').textContent=(PI*r*r).toFixed(2);
+}
+rSlider.addEventListener('input',e=>setLive(parseFloat(e.target.value)));
+// drag handle
+let dragging=false;
+const svg=document.getElementById('liveSvg');
+function pt(evt){
+  const rect=svg.getBoundingClientRect();
+  const sx=380/rect.width;
+  const clientX=(evt.touches?evt.touches[0].clientX:evt.clientX);
+  return (clientX-rect.left)*sx;
+}
+liveHandle.addEventListener('mousedown',()=>{dragging=true;liveHandle.style.cursor='grabbing';});
+liveHandle.addEventListener('touchstart',e=>{dragging=true;e.preventDefault();});
+window.addEventListener('mousemove',e=>{if(!dragging)return;const x=pt(e);const px=Math.max(15,Math.min(maxPx,x-cx));setLive((px/maxPx)*maxR);});
+window.addEventListener('touchmove',e=>{if(!dragging)return;const x=pt(e);const px=Math.max(15,Math.min(maxPx,x-cx));setLive((px/maxPx)*maxR);},{passive:false});
+window.addEventListener('mouseup',()=>{dragging=false;liveHandle.style.cursor='grab';});
+window.addEventListener('touchend',()=>{dragging=false;});
+setLive(5);
+
+/* ---------- Panel 4: area wedges ---------- */
+const areaSvg=document.getElementById('areaSvg'),
+      wedgeSlider=document.getElementById('wedgeSlider'),
+      wedgeVal=document.getElementById('wedgeVal');
+function drawWedges(){
+  const n=parseInt(wedgeSlider.value);
+  wedgeVal.textContent=n;
+  const R=80, total=360, rowW=Math.PI*R, startX=200-rowW/2, baseY=300;
+  let svg='';
+  // top circle reference (small, faint)
+  const colorA='rgba(253,121,168,.55)', colorB='rgba(108,92,231,.45)';
+  for(let i=0;i<n;i++){
+    const a0=(i/n)*2*Math.PI, a1=((i+1)/n)*2*Math.PI;
+    const flip=(i%2===1);
+    // wedge as triangle approximation, placed in a row
+    const w=rowW/n;
+    const x=startX+i*w;
+    const tipX=x+w/2;
+    const fill=flip?colorB:colorA;
+    if(!flip){
+      svg+=`<path d="M ${x} ${baseY} L ${tipX} ${baseY-R} L ${x+w} ${baseY} Z" fill="${fill}" stroke="#fff" stroke-width="1"/>`;
+    } else {
+      svg+=`<path d="M ${x} ${baseY-R} L ${tipX} ${baseY} L ${x+w} ${baseY-R} Z" fill="${fill}" stroke="#fff" stroke-width="1"/>`;
+    }
+  }
+  // rectangle outline that it approaches
+  svg+=`<rect x="${startX}" y="${baseY-R}" width="${rowW}" height="${R}" fill="none" stroke="var(--pink-deep)" stroke-width="2" stroke-dasharray="6 4"/>`;
+  svg+=`<text x="200" y="${baseY+22}" text-anchor="middle" font-size="12" font-family="Inter" fill="var(--pink-deep)" font-weight="700">width &asymp; &pi;r</text>`;
+  svg+=`<text x="${startX-12}" y="${baseY-R/2}" text-anchor="middle" font-size="12" font-family="Inter" fill="var(--r-color)" font-weight="700" transform="rotate(-90 ${startX-12} ${baseY-R/2})">height = r</text>`;
+  // small intact circle up top
+  svg+=`<circle cx="60" cy="70" r="40" fill="rgba(253,121,168,.15)" stroke="var(--pink)" stroke-width="2"/>`;
+  for(let i=0;i<n;i++){
+    const a=(i/n)*2*Math.PI;
+    svg+=`<line x1="60" y1="70" x2="${60+40*Math.cos(a)}" y2="${70+40*Math.sin(a)}" stroke="var(--pink)" stroke-width="0.8" opacity="0.6"/>`;
+  }
+  svg+=`<text x="60" y="128" text-anchor="middle" font-size="10" font-family="Inter" fill="var(--ink-soft)">same circle, ${n} slices</text>`;
+  areaSvg.innerHTML=svg;
+}
+wedgeSlider.addEventListener('input',drawWedges);
+document.getElementById('sliceMore').addEventListener('click',()=>{
+  wedgeSlider.value=Math.min(60,parseInt(wedgeSlider.value)+6);drawWedges();
+});
+document.getElementById('sliceReset').addEventListener('click',()=>{
+  wedgeSlider.value=8;drawWedges();
+});
+drawWedges();
+</script>
+</body>
+</html>
